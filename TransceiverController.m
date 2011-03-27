@@ -124,7 +124,7 @@
         NSSocketPort *communicationsPort = [[NSSocketPort alloc] init];
         if(![[NSSocketPortNameServer sharedInstance] registerPort:communicationsPort 
                                                              name:@"Heterodyne"]) {
-            NSLog(@"Couldn't register port\n");
+            NSLog(@"[@ %s]: Couldn't register port\n", [self class], (char *) _cmd);
         }
         controlConnection = [NSConnection connectionWithReceivePort:communicationsPort sendPort:nil];
         [controlConnection setRootObject:self];
