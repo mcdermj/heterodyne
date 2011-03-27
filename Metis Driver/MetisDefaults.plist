@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MetisDriver.dither</key>
+	<false/>
+	<key>MetisDriver.mercuryPresent</key>
+	<true/>
+	<key>MetisDriver.micGain</key>
+	<integer>1</integer>
+	<key>MetisDriver.oneTwentyTwoMHzSource</key>
+	<integer>0</integer>
+	<key>MetisDriver.penelopePresent</key>
+	<false/>
+	<key>MetisDriver.random</key>
+	<false/>
+	<key>MetisDriver.sampleRate</key>
+	<integer>192000</integer>
+	<key>MetisDriver.tenMHzSource</key>
+	<integer>0</integer>
+	<key>MetisDriver.txGain</key>
+	<integer>1</integer>
+</dict>
+</plist>
