@@ -133,7 +133,7 @@
 	while(entries < requestedSize) 
 		if([sizeLock waitUntilDate:timeout] == NO) {
             [sizeLock unlock];
-            NSLog(@"[%@ %s]: Timeout expired\n", [self class], (char *) _cmd);
+            //NSLog(@"[%@ %s]: Timeout expired\n", [self class], (char *) _cmd);
             return NULL;
         }
 		

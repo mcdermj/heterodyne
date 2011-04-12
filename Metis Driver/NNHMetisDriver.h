@@ -82,9 +82,10 @@ typedef struct _metisDiscoveryRequest{
 
 typedef struct _metisDiscoveryReply {
 	short magic;
-	char opcode;
-	unsigned int ip;
+	char status;
 	char mac[6];
+    char version;
+    char padding[50];
 } __attribute__((packed)) MetisDiscoveryReply;
 
 typedef struct _metisStartStop {
@@ -93,6 +94,28 @@ typedef struct _metisStartStop {
 	char startStop;
 	char padding[60];
 } __attribute__((packed)) MetisStartStop;
+
+typedef struct _metisErase {
+    short magic;
+    char opcode;
+    char command;
+    char padding[60];
+} __attribute__((packed)) MetisErase;
+
+typedef struct _metisProgramRequest {
+    short magic;
+    char opcode;
+    char command;
+    int size;
+    char data[256];
+} __attribute__((packed)) MetisProgramRequest;
+
+typedef struct _metisProgramReply {
+    short magic;
+    char reply;
+    char mac[6];
+    char padding[51];
+} __attribute__((packed)) MetisProgramReply;
 
 @class XTDTTSP;
 
@@ -173,9 +196,21 @@ typedef struct _metisStartStop {
 	XTDTTSP *sdr;
 	
 	IBOutlet NSView *configWindow;
+    
+    NSLock *socketServiceLoopLock;
+    NSLock *writeLoopLock;
+    
+    IBOutlet NSPanel *erasingSheet;
+    IBOutlet NSPanel *programmingSheet;
+    IBOutlet NSProgressIndicator *eraseSpinny;
+    BOOL cancelProgramming;
+    
+    char latestFirmware;
 }
 
 -(id)initWithSDR:(XTDTTSP *)newSdr;
+
+-(IBAction)doUpgradeMetis:(id)sender;
 
 @property (readonly) OzyInputBuffers *ep4Buffers;
 @property (readonly) int mercuryVersion;
