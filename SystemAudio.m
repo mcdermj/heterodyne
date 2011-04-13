@@ -142,7 +142,7 @@ OSStatus audioUnitCallback (void *userData, AudioUnitRenderActionFlags *actionFl
 	
 	NSData *audioBuffer = [buffer waitForSize: auBuffer->mDataByteSize withTimeout:[NSDate dateWithTimeIntervalSinceNow:0.5]];
 	if(audioBuffer == NULL) {
-		NSLog(@"[SystemAudioThread fillBuffer]: Couldn't get a fresh buffer.\n");
+		// NSLog(@"[%@ %s]: Couldn't get a fresh buffer.\n", [self class], (char *) _cmd);
 		return;
 	}
 	

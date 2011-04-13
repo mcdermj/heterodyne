@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys">
@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="507"/>
+			<integer value="96"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -54,10 +54,10 @@
 			<object class="NSWindowTemplate" id="49585669">
 				<int key="NSWindowStyleMask">3</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{14, 678}, {435, 240}}</string>
-				<int key="NSWTFlags">-461896704</int>
+				<string key="NSWindowRect">{{14, 621}, {625, 297}}</string>
+				<int key="NSWTFlags">1685586944</int>
 				<string key="NSWindowTitle">Hardware</string>
-				<string key="NSWindowClass">NSPanel</string>
+				<string key="NSWindowClass">NSWindow</string>
 				<object class="BWSelectableToolbar" key="NSViewClass" id="509631643">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
 						<characters key="NS.bytes">16417548-BF06-4491-B18A-9AD05362441F</characters>
@@ -834,7 +834,7 @@
 										<object class="NSCustomView" id="1037859800">
 											<reference key="NSNextResponder" ref="906400"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrame">{{168, 20}, {247, 200}}</string>
+											<string key="NSFrame">{{168, -3}, {437, 280}}</string>
 											<reference key="NSSuperview" ref="906400"/>
 											<reference key="NSNextKeyView" ref="906400"/>
 											<string key="NSClassName">NSView</string>
@@ -852,7 +852,7 @@
 														<object class="NSTableView" id="649699227">
 															<reference key="NSNextResponder" ref="56547387"/>
 															<int key="NSvFlags">276</int>
-															<string key="NSFrameSize">{138, 198}</string>
+															<string key="NSFrameSize">{138, 255}</string>
 															<reference key="NSSuperview" ref="56547387"/>
 															<reference key="NSNextKeyView" ref="1036731634"/>
 															<int key="NSTag">55</int>
@@ -931,7 +931,7 @@
 															<int key="NSTableViewDraggingDestinationStyle">0</int>
 														</object>
 													</object>
-													<string key="NSFrame">{{1, 1}, {138, 198}}</string>
+													<string key="NSFrame">{{1, 1}, {138, 255}}</string>
 													<reference key="NSSuperview" ref="461766869"/>
 													<reference key="NSNextKeyView" ref="649699227"/>
 													<reference key="NSDocView" ref="649699227"/>
@@ -960,7 +960,7 @@
 													<double key="NSPercent">0.57142859697341919</double>
 												</object>
 											</object>
-											<string key="NSFrame">{{20, 20}, {140, 200}}</string>
+											<string key="NSFrame">{{20, 20}, {140, 257}}</string>
 											<reference key="NSSuperview" ref="906400"/>
 											<reference key="NSNextKeyView" ref="56547387"/>
 											<int key="NSsFlags">530</int>
@@ -970,7 +970,7 @@
 											<bytes key="NSScrollAmts">QSAAAEEgAABCIAAAQiAAAA</bytes>
 										</object>
 									</object>
-									<string key="NSFrameSize">{435, 240}</string>
+									<string key="NSFrameSize">{625, 297}</string>
 									<reference key="NSSuperview"/>
 									<reference key="NSNextKeyView" ref="461766869"/>
 								</object>
@@ -1592,7 +1592,7 @@ U3RyaW5nAZSEASskRjQ1RTY0MTQtNTUyNC00QUY5LTkzMUEtNDMxRjU4NDFENjU2hpKEhIQHTlNWYWx1
 ZQCUhAEqhIQLe0NHU2l6ZT1kZH2agYoBgTIBhpKElpckOUE5MEU4ODItRDRGQi00NUFFLTg3MUEtQUIy
 RDlGMDEzRkE1hpKEmJmZmoF9AYH8AIaShJaXJEIwQThEN0QzLURCOEYtNDI1Mi05QzAwLTA2QzM1NEMz
 NjQ2NIaShJiZmZqBjAGBcAGGkoSWlyQ3RTZBOTIyOC1DOUYzLTRGMjEtODA1NC1FNEJGM0YyRjZCQTiG
-koSYmZmagbMBgT4BhpKElpckQkYzRTRDOEYtRkY5RC00NzFBLTlEN0MtQjdBQkREQkZDMzJBhpKEmJmZ
+koSYmZmagXECgXcBhpKElpckQkYzRTRDOEYtRkY5RC00NzFBLTlEN0MtQjdBQkREQkZDMzJBhpKEmJmZ
 moGkAYFxAYaShJaXJDMwQTFDRjgwLTU3NjItNDk5OC04NDA2LTc5RUY5REQwRjk0OYaShJiZmZqBjAGB
 0wCGkoSWlyQwRDU5NTBEMS1ENEE4LTQ0QzYtOURCQy0yNTFDRkVGODUyRTKGkoSYmZmagZABgfYAhoY</bytes>
 						</object>
@@ -3289,9 +3289,9 @@ moGkAYFxAYaShJaXJDMwQTFDRjgwLTU3NjItNDk5OC04NDA2LTc5RUY5REQwRjk0OYaShJiZmZqBjAGB
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{83, 603}, {435, 240}}</string>
+					<string>{{83, 546}, {625, 297}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{83, 603}, {435, 240}}</string>
+					<string>{{83, 546}, {625, 297}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{81, 895}, {616, 0}}</string>
@@ -3876,14 +3876,6 @@ moGkAYFxAYaShJaXJDMwQTFDRjgwLTU3NjItNDk5OC04NDA2LTc5RUY5REQwRjk0OYaShJiZmZqBjAGB
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="926755161">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Sparkle.framework/Headers/SUUpdater.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSPanel</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSPanel.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

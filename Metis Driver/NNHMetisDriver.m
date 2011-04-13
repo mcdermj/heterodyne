@@ -162,6 +162,29 @@
 		sdr = newSdr;
         
         processingBlock = [XTDSPBlock dspBlockWithBlockSize:1024]; 
+        
+        socketServiceLoopLock = [[NSLock alloc] init];
+        writeLoopLock = [[NSLock alloc] init];
+        
+        //  Find the bundled Metis version
+        latestFirmware = 0;
+        NSBundle *thisBundle = [NSBundle bundleForClass:[self class]];
+        
+        NSArray *firmwareArray = [thisBundle pathsForResourcesOfType:@"rbf" 
+                                                         inDirectory:nil];
+		
+        for(NSString *firmwarePath in firmwareArray) {
+            float version;
+            char intVersion;
+            
+            NSScanner *firmwareScanner = [NSScanner scannerWithString:[firmwarePath lastPathComponent]];
+            [firmwareScanner scanString:@"Metis_V" intoString:nil];
+            [firmwareScanner scanFloat:&version];
+            intVersion = (char) (version * 10);
+            latestFirmware = intVersion > latestFirmware ? intVersion : latestFirmware;
+        }
+        
+        NSLog(@"[%@ %s] Latest firmware version is %d\n", [self class], (char *) _cmd, latestFirmware);
 	}
 	
 	return self;
@@ -678,7 +701,7 @@
 			continue;
 		}
 		
-		if(ntohs(reply.magic) == 0xEFFE && reply.opcode == 0x02) {
+		if(ntohs(reply.magic) == 0xEFFE && reply.status == 0x02) {
 			if(replyAddress.sin_addr.s_addr == 0) {
 				NSLog(@"[%@ %s] Null IP address received\n", [self class], (char *) _cmd);
 				sleep(1);
@@ -694,13 +717,18 @@
 				gotDiscovery = YES;
 			}
 		} else {
-			if(inet_ntop(AF_INET, &(reply.ip), ipAddr, 32) == NULL) {
+			if(inet_ntop(AF_INET, &(replyAddress.sin_addr.s_addr), ipAddr, 32) == NULL) {
 				NSLog(@"[%@ %s] Invalid packet from unknown IP: %s\n", [self class], (char *) _cmd, strerror(errno));
 			} else {				
-				NSLog(@"[%@ %s] Invalid packet received from %s magic = %#hx opcode = %#hhx.\n", [self class], (char *) _cmd, ipAddr, reply.magic, reply.opcode);
+				NSLog(@"[%@ %s] Invalid packet received from %s magic = %#hx status = %#hhx.\n", [self class], (char *) _cmd, ipAddr, reply.magic, reply.status);
 			}
 		}
 	}
+    
+    if(reply.version < latestFirmware) {
+        [self performSelectorOnMainThread:@selector(doAutoUpgradeFirmware) withObject:nil waitUntilDone:NO];
+        NSLog(@"[%@ %s] Detected old firmware %d\n", [self class], (char *) _cmd, reply.version);
+    }
 	
 	timeout.tv_sec = 0;
 	if(setsockopt(metisSocket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1) {
@@ -710,6 +738,7 @@
 	
 	return gotDiscovery;
 }
+
 
 -(BOOL) sendStartPacket {
     int bytesWritten;
@@ -744,7 +773,8 @@
 	
 	stopDiscovery = NO;
 	
-	if([self performDiscovery] == NO) return NO;
+	if([self performDiscovery] == NO) 
+        return NO;
 	
 	if([self sendStartPacket] == NO) 
         return NO;
@@ -761,6 +791,7 @@
 	int bytesWritten;
 	
 	stopDiscovery = YES;
+    running = NO;
 	
 	stopPacket.magic = htons(0xEFFE);
 	stopPacket.opcode = 0x04;
@@ -783,12 +814,9 @@
 		NSLog(@"[%@ %s] Short write to network.\n", [self class], (char *) _cmd);
 		return NO;
 	}
-	
-	running = NO;
+
 	return YES;
 }	
-
-
 
 -(void)socketServiceLoop {
 	struct thread_time_constraint_policy ttcpolicy;
@@ -813,7 +841,7 @@
 	} 
 	
 	struct timeval timeout;
-	timeout.tv_sec = 5;
+	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;	
 	
 	if(setsockopt(metisSocket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1) {
@@ -823,6 +851,7 @@
     NSMutableData *metisData = [NSMutableData dataWithLength:sizeof(MetisPacket)];
     MetisPacket *buffer = (MetisPacket *) [metisData bytes];
 	
+    [socketServiceLoopLock lock];
 	while(running == YES) {
 				
 		bytesRead = recvfrom(metisSocket, 
@@ -834,9 +863,11 @@
 		
 		if(bytesRead == -1) {
 			if(errno == EAGAIN) {
-				NSLog(@"[%@ %s]: No data from Metis in 5 seconds, retrying\n", [self class], (char *) _cmd);
-                [self sendStartPacket];
-                [self kickStart];
+				NSLog(@"[%@ %s]: No data from Metis in 1 second, retrying\n", [self class], (char *) _cmd);
+                if(running) {
+                    [self sendStartPacket];
+                    [self kickStart];
+                }
 			} else {
 				NSLog(@"[%@ %s] Network Read Failed: %s\n", [self class], (char *) _cmd, strerror(errno));
 			}
@@ -858,6 +889,8 @@
 			NSLog(@"[%@ %s] Invalid packet received: %@\n", [self class], (char *) _cmd, metisData);
 		}
 	}
+    [socketServiceLoopLock unlock];
+    NSLog(@"[%@ %s] Socket service loop ending\n", [self class], (char *) _cmd);
 }
 
 -(void)socketWriteLoop {
@@ -892,8 +925,13 @@
 	} 	
 	NSLog(@"[%@ %s]: Beginning write thread\n", [self class], (char *) _cmd);
 	
+    [writeLoopLock lock];
 	while(running == YES) {
-		bufferData = [outputBuffer waitForSize:sizeof(packet->packets[0].samples) * 2];
+		bufferData = [outputBuffer waitForSize:sizeof(packet->packets[0].samples) * 2 withTimeout:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+        if(bufferData == NULL) {
+            NSLog(@"[%@ %s] Write loop timeout\n", [self class], (char *) _cmd);
+            continue;
+        }
 		const unsigned char *buffer = [bufferData bytes];
 		
 		mox = NO;
@@ -927,6 +965,7 @@
 			continue;
 		}
 	}
+    [writeLoopLock unlock];
 	
 	NSLog(@"Write Loop ends\n");
 }
@@ -953,6 +992,307 @@
 		strcpy(ipString, "0.0.0.0\0");
 
 	return [NSString stringWithCString:ipString encoding: NSASCIIStringEncoding];
+}
+
+-(void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)context {
+}
+
+-(void)fatalAlert:(NSString *)title description:(NSString *)description {
+    NSAlert *fatalAlert = [[NSAlert alloc] init];
+    NSWindow *window;
+    
+    [fatalAlert setAlertStyle:NSWarningAlertStyle];
+    [fatalAlert setShowsHelp: NO];
+    [fatalAlert setInformativeText:description];
+    [fatalAlert setMessageText:title];
+    [fatalAlert addButtonWithTitle:@"OK"];
+
+    if([[configWindow window] isVisible]) 
+        window = [configWindow window];
+    else
+        window = nil;
+    
+    [fatalAlert beginSheetModalForWindow:window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+-(int)waitForResponse:(char)response {
+    MetisProgramReply buffer;
+    ssize_t read;
+    
+    while(cancelProgramming == NO) {
+        memset(&buffer, 0, sizeof(buffer));
+        read = recvfrom(metisSocket, &buffer, sizeof(buffer), 0, NULL, 0);
+        if(read == -1) {
+            if(errno == EAGAIN || errno == EINTR) continue;
+            NSLog(@"[%@ %s]: Error reading from socket: %s\n", [self class], (char *) _cmd, strerror(errno));
+            return -1;
+        }
+        
+        if(cancelProgramming) return 1;
+        
+        if(buffer.reply == response) 
+            return 0;
+    }
+    
+    return 1;
+}
+
+-(void)emptyBuffer {
+    MetisProgramReply buffer;
+    ssize_t read;
+    
+    while(1) {
+        read = recvfrom(metisSocket, &buffer, sizeof(buffer), 0, NULL, 0);
+        if(read == -1) {
+            if(errno == EINTR) continue;
+            return;
+        }
+    }
+}
+
+-(void)beginSheet:(NSWindow *)sheet {
+    NSWindow *window;
+    
+    if(sheet == nil) {
+        NSLog(@"Sheet is nil!\n");
+        return;
+    }
+    
+    if([[configWindow window] isVisible]) 
+        window = [configWindow window];
+    else
+        window = nil;
+    
+    [NSApp beginSheet:sheet 
+       modalForWindow:window 
+        modalDelegate:self 
+       didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) 
+          contextInfo:nil];
+}
+
+-(void)doAutoUpgradeFirmware {
+    NSAlert *firmwareAlert = [[NSAlert alloc] init];
+    
+    [firmwareAlert setAlertStyle:NSWarningAlertStyle];
+    [firmwareAlert setShowsHelp: NO];
+    [firmwareAlert setInformativeText:@"The firmware on your metis board is not the most current available.  Do you want to upgrade to the latest version?"];
+    [firmwareAlert setMessageText:@"Metis Firmware Is Out of Date"];
+    [firmwareAlert addButtonWithTitle:@"Upgrade"];
+    [firmwareAlert addButtonWithTitle:@"Do Not Upgrade"];
+    
+    [firmwareAlert beginSheetModalForWindow:nil modalDelegate:self didEndSelector:@selector(firmwareUpgradeDidEnd:returnCode:contextInfo:) contextInfo:nil];
+}
+
+-(void)firmwareUpgradeDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    NSData *firmware;
+    
+    if(returnCode != NSAlertFirstButtonReturn) return;
+    
+    if([[configWindow window] isVisible]) {
+        [[configWindow window] orderOut:self];
+    }
+    
+    if(erasingSheet == nil) 
+        [NSBundle loadNibNamed:@"ProgrammerSheets" owner:self];
+    
+    [self beginSheet:erasingSheet];
+    [eraseSpinny startAnimation:self];
+    
+    NSString *filename =
+    [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"Metis_V%.1f", (float) latestFirmware / 10.0f] ofType:@"rbf"];
+    
+    firmware = [NSData dataWithContentsOfFile:filename];
+    if(firmware == nil) {
+        NSLog(@"[%@ %s] Couldn't open file: %@\n", [self class], (char *) _cmd, filename);
+        [self fatalAlert:@"Error Opening File" 
+             description:@"The firmware file could not be opened."];
+        return;
+    }
+
+    
+    [NSThread detachNewThreadSelector:@selector(programMetis:) toTarget:self withObject:firmware];
+}
+
+-(void)setProgressBar:(NSNumber *)progress {
+   [[[programmingSheet contentView] viewWithTag:128] setDoubleValue:[progress doubleValue]];
+}
+
+-(int)eraseFirmware {
+    MetisErase eraseRequest;
+    int bytesWritten;
+
+    eraseRequest.magic = htons(0xEFFE);
+    eraseRequest.opcode = 0x03;
+    eraseRequest.command = 0x02;
+    memset(&eraseRequest.padding, 0, sizeof(eraseRequest.padding));
+    
+    bytesWritten = sendto(metisSocket,
+						  &eraseRequest,
+						  sizeof(eraseRequest),
+						  0,
+						  (struct sockaddr *) &metisAddressStruct,
+						  sizeof(metisAddressStruct));
+	
+	if(bytesWritten == -1) {
+		NSLog(@"[%@ %s] Network write failed: %s\n", [self class], (char *) _cmd, strerror(errno));
+		return -1;
+	}
+	
+	if(bytesWritten != sizeof(eraseRequest)) {
+		NSLog(@"[%@ %s] Short write to network.\n", [self class], (char *) _cmd);
+		return -1;
+	}
+    
+    return [self waitForResponse:0x03];
+}
+
+-(int)programFirmware:(NSData *)firmware {
+    MetisProgramRequest programRequest;
+    int bytesWritten;
+    int result;
+    
+    programRequest.magic = htons(0xEFFE);
+    programRequest.opcode = 0x03;
+    programRequest.command = 0x01;
+    
+    
+    programRequest.size = (int) [firmware length] / 256;
+    if((int)[firmware length] % 256 > 0) ++programRequest.size;
+    programRequest.size = htonl(programRequest.size);
+    
+    for(NSRange currentRange = NSMakeRange(0, 256); currentRange.location < [firmware length]; currentRange.location += currentRange.length) {
+        
+        currentRange.length = currentRange.location + currentRange.length > [firmware length] ? [firmware length] - currentRange.location : currentRange.length;
+        
+        NSMutableData *firmwareData = [NSMutableData dataWithData:[firmware subdataWithRange:currentRange]];
+        
+        if([firmwareData length] < 256) {
+            NSMutableData *padding = [NSMutableData dataWithLength:256 - [firmwareData length]];
+            memset([padding mutableBytes], 0xFF, [padding length]);
+            [firmwareData appendData:padding];
+        }
+        
+        memcpy(programRequest.data, [firmwareData bytes], [firmwareData length]);
+        
+        bytesWritten = sendto(metisSocket, &programRequest, sizeof(programRequest), 0, (struct sockaddr *) &metisAddressStruct, sizeof(metisAddressStruct));
+        if(bytesWritten == -1) {
+            NSLog(@"[%@ %s]: Couldn't send the packet: %s (%d)\n", [self class], (char *) _cmd, strerror(errno), errno);
+        }
+        
+        result = [self waitForResponse:0x04];
+        
+        if(result != 0) return result;
+               
+        [self performSelectorOnMainThread:@selector(setProgressBar:) withObject:[NSNumber numberWithInt:currentRange.location] waitUntilDone:NO];
+    }
+    
+    return 0;
+}
+
+-(void)programMetis:(NSData *)firmware {
+
+    cancelProgramming = NO;
+    
+    //  Stop Metis
+    [self stop];
+    
+    //  Acquire locks for the loops
+    [socketServiceLoopLock lock];
+    [writeLoopLock lock];
+    
+    [self emptyBuffer];
+    
+    switch([self eraseFirmware]) {
+        case -1:
+            [NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:erasingSheet waitUntilDone:NO];
+            [self fatalAlert:@"Erase Failed" description:@"The Metis board could not be erased"];
+        case 1:
+            [socketServiceLoopLock unlock];
+            [writeLoopLock unlock];
+            return;
+    }
+    
+    [NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:erasingSheet waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(beginSheet:) withObject:programmingSheet waitUntilDone:NO];
+    
+    NSProgressIndicator *progressBar = [[programmingSheet contentView] viewWithTag:128];
+    [progressBar setMinValue:0];
+    [progressBar setMaxValue:(double)[firmware length]];
+    [progressBar setDoubleValue:0];
+    
+    switch([self programFirmware:firmware]) {
+        case -1:
+            [NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:erasingSheet waitUntilDone:NO];
+            [self fatalAlert:@"Programming Failed" description:@"The Metis board could not be programmed"];
+        case 1:
+            [socketServiceLoopLock unlock];
+            [writeLoopLock unlock];
+            [self emptyBuffer];
+            return;
+    }
+    
+     [NSApp performSelectorOnMainThread:@selector(endSheet:) withObject:programmingSheet waitUntilDone:NO];
+    
+    [socketServiceLoopLock unlock];
+    [writeLoopLock unlock];
+    
+    //  Wait for Metis to restart
+    sleep(1);
+    [self start];
+}
+
+-(void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    [sheet orderOut:self];
+    if(returnCode == NSCancelButton) {
+        cancelProgramming = YES;
+    }
+}
+
+-(void)openPanelDidEnd:(NSOpenPanel *)openPanel returnCode:(int)returnCode contextInfo:(void *)context {
+    NSData *firmware;
+    
+    [openPanel orderOut:self];
+    if(returnCode != NSOKButton) return;
+    
+    firmware = [NSData dataWithContentsOfURL:[openPanel URL]];
+    if(firmware == nil) {
+        NSLog(@"[%@ %s] Couldn't open file: %@\n", [self class], (char *) _cmd, [openPanel URL]);
+        [self fatalAlert:@"Error Opening File" 
+             description:@"The firmware file could not be opened."];
+        return;
+    }
+    
+    [self beginSheet:erasingSheet];
+    [eraseSpinny startAnimation:self];
+    
+    [NSThread detachNewThreadSelector:@selector(programMetis:) toTarget:self withObject:firmware];
+}
+
+-(IBAction)doUpgradeMetis:(id)sender {
+    //  Get the file to upgrade with from the user (don't know how to handle the default file)
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
+    [openPanel setCanChooseDirectories:NO];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setCanChooseFiles:YES];
+    [openPanel setAllowedFileTypes:[NSArray arrayWithObject:@"rbf"]];
+    
+    if(!erasingSheet) 
+        [NSBundle loadNibNamed:@"ProgrammerSheets" owner:self];
+    
+    [openPanel beginSheetForDirectory:nil 
+                                 file:nil 
+                                types:[NSArray arrayWithObject:@"rbf"] 
+                       modalForWindow:[configWindow window] 
+                        modalDelegate:self 
+                       didEndSelector:@selector(openPanelDidEnd:returnCode:contextInfo:) 
+                          contextInfo:nil];
+    
+}
+
+-(IBAction)doCancelButton:(id)sender {
+        [NSApp endSheet:[sender window] 
+             returnCode:NSCancelButton];
 }
 
 @end

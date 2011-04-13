@@ -130,6 +130,8 @@
 		09D32500131DCE9E00E0D88B /* XTUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957651512A82B6A0099B615 /* XTUtils.framework */; };
 		09D7B6A8112F40B300B7E47D /* Ozy_Janus.rbf in Resources */ = {isa = PBXBuildFile; fileRef = 09D7B6A6112F40B300B7E47D /* Ozy_Janus.rbf */; };
 		09D7B6A9112F40B300B7E47D /* ozyfw-sdr1k.hex in Resources */ = {isa = PBXBuildFile; fileRef = 09D7B6A7112F40B300B7E47D /* ozyfw-sdr1k.hex */; };
+		09E1C6FB13543B7C00AB046F /* ProgrammerSheets.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09E1C6FA13543B7C00AB046F /* ProgrammerSheets.xib */; };
+		09E1C6FD1354660300AB046F /* Metis_V1.2.rbf in Resources */ = {isa = PBXBuildFile; fileRef = 09E1C6FC1354660300AB046F /* Metis_V1.2.rbf */; };
 		09E357011131C46E0049D5A7 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E357001131C46E0049D5A7 /* BWToolkitFramework.framework */; };
 		09E357381131C4DF0049D5A7 /* XTPanadapterDataMUX.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E357371131C4DF0049D5A7 /* XTPanadapterDataMUX.m */; };
 		09E6792511E0E1DE00DFD3B7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E6792411E0E1DE00DFD3B7 /* AudioUnit.framework */; };
@@ -326,6 +328,8 @@
 		09D32317131B1ABA00E0D88B /* OzyDriver.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = OzyDriver.icns; sourceTree = "<group>"; };
 		09D7B6A6112F40B300B7E47D /* Ozy_Janus.rbf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ozy_Janus.rbf; sourceTree = "<group>"; };
 		09D7B6A7112F40B300B7E47D /* ozyfw-sdr1k.hex */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ozyfw-sdr1k.hex"; sourceTree = "<group>"; };
+		09E1C6FA13543B7C00AB046F /* ProgrammerSheets.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgrammerSheets.xib; sourceTree = "<group>"; };
+		09E1C6FC1354660300AB046F /* Metis_V1.2.rbf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Metis_V1.2.rbf; sourceTree = "<group>"; };
 		09E357001131C46E0049D5A7 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BWToolkitFramework.framework; sourceTree = "<group>"; };
 		09E357361131C4DF0049D5A7 /* XTPanadapterDataMUX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTPanadapterDataMUX.h; sourceTree = "<group>"; };
 		09E357371131C4DF0049D5A7 /* XTPanadapterDataMUX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTPanadapterDataMUX.m; sourceTree = "<group>"; };
@@ -482,6 +486,8 @@
 				095763F412A7F2FF0099B615 /* MetisDriver-Info.plist */,
 				0957641F12A7F5120099B615 /* NNHMetisDriver.h */,
 				091E950A12EC99A700DF211E /* NNHMetisDriver.xib */,
+				09E1C6FC1354660300AB046F /* Metis_V1.2.rbf */,
+				09E1C6FA13543B7C00AB046F /* ProgrammerSheets.xib */,
 				0957642012A7F5120099B615 /* NNHMetisDriver.m */,
 				09D32096131725C300E0D88B /* MetisDefaults.plist */,
 				09D321A41318856800E0D88B /* MetisDriver.icns */,
@@ -844,6 +850,8 @@
 				091E950B12EC99A700DF211E /* NNHMetisDriver.xib in Resources */,
 				09D32097131725C300E0D88B /* MetisDefaults.plist in Resources */,
 				09D321A51318856800E0D88B /* MetisDriver.icns in Resources */,
+				09E1C6FB13543B7C00AB046F /* ProgrammerSheets.xib in Resources */,
+				09E1C6FD1354660300AB046F /* Metis_V1.2.rbf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
