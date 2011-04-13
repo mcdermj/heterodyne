@@ -23,7 +23,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "XTHeterodyneHardwareDriver.h"
-#import "dttsp.h"
 
 #define MODE_LSB 0
 #define MODE_USB 1
@@ -47,6 +46,7 @@
 @class XTDTTSP;
 @class XTWorkerThread;
 @class XTSMeterView;
+@class XTPanadapterDataMUX;
 
 @interface TransceiverController : NSObject {
 	
@@ -115,6 +115,8 @@
 	NSTimer *meterTimer;
     
     NSConnection *controlConnection;
+    
+    XTPanadapterDataMUX IBOutlet *mux;
 }
 
 @property int frequency;
@@ -151,6 +153,7 @@
 @property (readonly) NSString *band;
 @property (readonly) NSDictionary *bandPlan;
 @property (readonly) NSArray *drivers;
+@property IBOutlet XTPanadapterDataMUX *mux;
 
 -(void)updateMeter:(NSTimer *) _timer;
 -(void)saveParams;

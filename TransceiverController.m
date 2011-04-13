@@ -24,6 +24,7 @@
 #import "XTWorkerThread.h"
 #import "XTImageTextCell.h"
 #import "XTSMeterView.h"
+#import "XTPanadapterDataMUX.h"
 
 #import "XTDTTSP.h"
 
@@ -61,6 +62,7 @@
 @synthesize preamp;
 @synthesize bandPlan;
 @synthesize drivers;
+@synthesize mux;
 
 +(NSArray *)pluginPaths {
 	NSArray *librarySearchPaths;
@@ -89,6 +91,7 @@
 		NSMutableArray *tempDrivers = [NSMutableArray array];
 		
 		sdr = [[XTDTTSP alloc] init];
+        
 		filterCalibrationOffset = 3.0f * (11.0f - log10f(1024.0f));
 		preampOffset = -20.0;
 		subMeterReading = meterReading = -70.0;
@@ -124,7 +127,7 @@
         NSSocketPort *communicationsPort = [[NSSocketPort alloc] init];
         if(![[NSSocketPortNameServer sharedInstance] registerPort:communicationsPort 
                                                              name:@"Heterodyne"]) {
-            NSLog(@"[@ %s]: Couldn't register port\n", [self class], (char *) _cmd);
+            NSLog(@"[%@ %s]: Couldn't register port\n", [self class], (char *) _cmd);
         }
         controlConnection = [NSConnection connectionWithReceivePort:communicationsPort sendPort:nil];
         [controlConnection setRootObject:self];
@@ -135,7 +138,7 @@
 }
 
 -(void)awakeFromNib {
-    
+    [mux setCallback:@selector(tapSpectrumWithRealData:) withTarget:sdr];
 }
 
 -(void)stop {
@@ -433,14 +436,12 @@
 -(void)setPan:(float) aPanValue {
 	[self willChangeValueForKey:@"pan"];
 	pan = aPanValue;
-	SetRXPan(0, 0, pan);
 	[self didChangeValueForKey:@"pan"];
 }
 
 -(void)setSubPan:(float) aPanValue {
 	[self willChangeValueForKey:@"pan"];
 	subPan = aPanValue;
-	SetRXPan(0, 1, subPan);
 	[self didChangeValueForKey:@"pan"];
 }
 
@@ -470,8 +471,6 @@
 		[self didChangeValueForKey:@"subFrequency"];
 		diffFrequency = frequency - subFrequency;
 	}
-		
-	SetRXOsc(0, 1, (double) diffFrequency);
 }
 
 -(void)setAGC:(int) theAGCSetting {
@@ -479,19 +478,14 @@
 	AGC = theAGCSetting;
 	switch(theAGCSetting) {
 		case AGC_OFF:
-			SetRXAGC(0, 0, agcOFF);
 			break;
 		case AGC_LONG:
-			SetRXAGC(0, 0, agcLONG);
 			break;
 		case AGC_SLOW:
-			SetRXAGC(0, 0, agcSLOW);
 			break;
 		case AGC_MED:
-			SetRXAGC(0, 0, agcMED);
 			break;
 		case AGC_FAST:
-			SetRXAGC(0, 0, agcFAST);
 			break;
 	}
 	[self didChangeValueForKey:@"AGC"];
@@ -502,19 +496,14 @@
 	subAGC = theAGCSetting;
 	switch(theAGCSetting) {
 		case AGC_OFF:
-			SetRXAGC(0, 1, agcOFF);
 			break;
 		case AGC_LONG:
-			SetRXAGC(0, 1, agcLONG);
 			break;
 		case AGC_SLOW:
-			SetRXAGC(0, 1, agcSLOW);
 			break;
 		case AGC_MED:
-			SetRXAGC(0, 1, agcMED);
 			break;
 		case AGC_FAST:
-			SetRXAGC(0, 1, agcFAST);
 			break;
 	}
 	[self didChangeValueForKey:@"subAGC"];
@@ -533,14 +522,12 @@
 	
 	[self willChangeValueForKey:@"subFrequency"];
 	subFrequency = theFrequency;
-	SetRXOsc(0, 1, (double) diffFrequency);
 	[self didChangeValueForKey:@"subFrequency"];
 }
 
 -(void)setSubEnabled:(BOOL) isEnabled {
 	[self willChangeValueForKey:@"subEnabled"];
 	subEnabled = isEnabled;
-	SetSubRXSt(0, 1, subEnabled);
 	[self didChangeValueForKey:@"subEnabled"];
 	if(isEnabled == NO) {
 		self.subMeterReading = -70.0;
@@ -551,10 +538,6 @@
 	[self willChangeValueForKey:@"mode"];
 	mode = theMode;
 
-	SetMode(0, 0, mode);
-	SetMode(1, 0, mode);
-	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetTXFilter(1, filterLow, filterHigh);
 	[self didChangeValueForKey:@"mode"];
 	[self recalcFilterPresets];
 }
@@ -563,8 +546,6 @@
 	[self willChangeValueForKey:@"subMode"];
 	subMode = theMode;
 	
-	SetMode(0, 1, subMode);
-	SetRXFilter(0, 1, subFilterLow, subFilterHigh);
 	[self didChangeValueForKey:@"subMode"];
 	[self recalcSubFilterPresets];
 }
@@ -585,8 +566,6 @@
 		[self didChangeValueForKey:@"filterLow"];
 	}
 
-	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetTXFilter(1, filterLow, filterHigh);
 	[self didChangeValueForKey:@"filterHigh"];
 }
 
@@ -601,8 +580,6 @@
 		[self didChangeValueForKey:@"filterHigh"];
 	}
 
-	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetTXFilter(1, filterLow, filterHigh);
 	[self didChangeValueForKey:@"filterLow"];
 }
 
@@ -617,7 +594,6 @@
 		[self didChangeValueForKey:@"subFilterLow"];
 	}
 	
-	SetRXFilter(0, 1, subFilterLow, subFilterHigh);
 	[self didChangeValueForKey:@"subFilterHigh"];
 }
 
@@ -632,45 +608,22 @@
 		[self didChangeValueForKey:@"subFilterHigh"];
 	}
 	
-	SetRXFilter(0, 1, subFilterLow, subFilterHigh);
 	[self didChangeValueForKey:@"subFilterLow"];
 }
 
 -(void)setVolume:(double)theVolume {
 	[self willChangeValueForKey:@"volume"];
 	volume = theVolume;
-	SetRXOutputGain(0, 0, volume);
 	[self didChangeValueForKey:@"volume"];
 }
 
 -(void)setSubVolume: (double)theVolume {
 	[self willChangeValueForKey: @"subVolume"];
 	subVolume = theVolume;
-	SetRXOutputGain(0, 1, subVolume);
 	[self didChangeValueForKey:@"subVolume"];
 }
 
 -(void)initDSP {
-	SetSampleRate((double)sampleRate);
-	
-	SetSubRXSt(0, 0, TRUE);
-	SetRXOsc(0, 0, 0.0);
-	SetRXOutputGain(0, 0, volume);
-	SetMode(0, 0, mode);
-	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetRXPan(0, 0, pan);
-	
-	SetRXOsc(0, 1, (double) subFrequency - frequency);
-	SetRXOutputGain(0, 1, subVolume);
-	SetMode(0, 1, subMode);
-	SetRXFilter(0, 1, filterLow, filterHigh);
-	SetRXPan(0, 1, subPan);
-	
-	SetSubRXSt(0, 1, subEnabled);
-	
-	SetTXOsc(1, 0.0);
-	SetMode(1, 0, mode);
-	SetTXFilter(1, filterLow, filterHigh);
 }
 
 -(void)setSystemAudioGain: (float)_systemAudioGain {
@@ -685,9 +638,7 @@
 	noiseReduction = isNoiseReduction;
 	[self didChangeValueForKey:@"noiseReduction"];
 	if(noiseReduction == YES) {
-		SetNR(0, 0, 1);
 	} else {
-		SetNR(0, 0, 0);
 	}
 }
 
@@ -696,9 +647,7 @@
 	autoNotchFilter = isAutoNotchFilter;
 	[self didChangeValueForKey:@"autoNotchFilter"];
 	if(autoNotchFilter == YES) {
-		SetANF(0, 0, 1);
 	} else {
-		SetANF(0, 0, 0);
 	}
 }
 
@@ -707,9 +656,7 @@
 	noiseBlanker = isNoiseBlanker;
 	[self didChangeValueForKey:@"noiseBlanker"];
 	if(noiseBlanker == YES) {
-		SetNB(0, 0, 1);
 	} else {
-		SetNB(0, 0, 0);
 	}
 }
 
@@ -718,9 +665,7 @@
 	binaural = isBinaural;
 	[self didChangeValueForKey:@"binaural"];
 	if(binaural == YES) {
-		SetBIN(0, 0, 1);
 	} else {
-		SetBIN(0, 0, 0);
 	}
 }
 
@@ -729,9 +674,7 @@
 	subNoiseReduction = isNoiseReduction;
 	[self didChangeValueForKey:@"subNoiseReduction"];
 	if(subNoiseReduction == YES) {
-		SetNR(0, 1, 1);
 	} else {
-		SetNR(0, 1, 0);
 	}
 }
 
@@ -740,9 +683,7 @@
 	subAutoNotchFilter = isAutoNotchFilter;
 	[self didChangeValueForKey:@"subAutoNotchFilter"];
 	if(subAutoNotchFilter == YES) {
-		SetANF(0, 1, 1);
 	} else {
-		SetANF(0, 1, 0);
 	}
 }
 
@@ -751,9 +692,7 @@
 	subNoiseBlanker = isNoiseBlanker;
 	[self didChangeValueForKey:@"subNoiseBlanker"];
 	if(subNoiseBlanker == YES) {
-		SetNB(0, 1, 1);
 	} else {
-		SetNB(0, 1, 0);
 	}
 }
 
@@ -762,17 +701,15 @@
 	subBinaural = isBinaural;
 	[self didChangeValueForKey:@"subBinaural"];
 	if(subBinaural == YES) {
-		SetBIN(0, 1, 1);
 	} else {
-		SetBIN(0, 1, 0);
 	}
 }
 
 -(void)updateMeter:(NSTimer *) _timer {
-	[self setMeterReading: (CalculateRXMeter(0, 0, 0) + preampOffset + filterCalibrationOffset) ];
-    [meter setSignal: (CalculateRXMeter(0, 0, 0) + preampOffset + filterCalibrationOffset + receiverCalibration)];
+	[self setMeterReading:  preampOffset + filterCalibrationOffset ];
+    [meter setSignal:  preampOffset + filterCalibrationOffset + receiverCalibration];
 	if(subEnabled == YES) {
-		[self setSubMeterReading: (CalculateRXMeter(0, 1, 0) + preampOffset + filterCalibrationOffset) ];
+		[self setSubMeterReading: preampOffset + filterCalibrationOffset ];
 	}
 }
 

@@ -26,6 +26,9 @@
 
 @class SystemAudio;
 @class OzyRingBuffer;
+@class XTSoftwareDefinedRadio;
+@class XTDSPBlock;
+@class XTPanadapterDataMUX;
 
 @interface XTDTTSP : NSObject {
 	
@@ -36,15 +39,22 @@
 	DSPSplitComplex systemSamples;
 	NSMutableData *sampleBufferData;
 	DSPComplex *sampleBuffer;
+    
+    XTSoftwareDefinedRadio *mainReciver;
+    XTDSPBlock *processingBlock;
 	
 	// ivars
 	int sampleRate;
+    
+    XTPanadapterDataMUX *mux;
 
 }
 
 @property int sampleRate;
+@property XTPanadapterDataMUX *mux;
 
 -(void)audioCallbackForThread: (int)thread realIn:(float *)realIn imagIn:(float *)imagIn realOut:(float *)realOut imagOut:(float *)imagOut size:(int)size;
 -(void)start;
 -(void)stop;
+-(void)processBlock:(XTDSPBlock *)block;
 @end

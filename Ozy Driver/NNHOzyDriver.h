@@ -25,6 +25,7 @@
 #include <IOKit/IOKitLib.h>
 #include <IOKit/IOCFPlugIn.h>
 #include <IOKit/usb/IOUSBLib.h>
+#include <mach/thread_policy.h>
 
 #import "XTHeterodyneHardwareDriver.h"
 
@@ -59,6 +60,14 @@ typedef struct _ozyPacket {
 	char header[5];
 	OzySamplesIn samples[63];
 } __attribute__((packed)) OzyPacket;
+
+//  This should be in system headers but is commented out in the header file
+kern_return_t   thread_policy_set(
+                                  thread_t                                        thread,
+                                  thread_policy_flavor_t          flavor,
+                                  thread_policy_t                         policy_info,
+                                  mach_msg_type_number_t          count);
+
 
 #define OZY_PACKET_SIZE sizeof(OzyPacket)
 #define OZY_PACKETS_PER_INPUT_BUFFER 17

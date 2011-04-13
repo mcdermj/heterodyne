@@ -46,6 +46,9 @@
 	FFTSetup fftSetup;
 	
 	NSLock *bufferLock;
+    
+    id callbackTarget;
+    SEL callbackSelector;
 }
 
 @property float receiveCalibrationOffset;
@@ -55,6 +58,7 @@
 -(NSData *) rawData;
 -(void) threadMain;
 -(void) awakeFromNib;
+-(void)setCallback:(SEL)callback withTarget:(id)target;
 
 
 @end

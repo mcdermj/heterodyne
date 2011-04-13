@@ -23,8 +23,6 @@
 #import "MacHPSDRAppDelegate.h"
 #import "XTHeterodyneHardwareDriver.h"
 
-#import "dttsp.h"
-
 @implementation MacHPSDRAppDelegate
 
 @synthesize window;

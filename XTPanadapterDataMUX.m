@@ -21,11 +21,9 @@
 // $Id$
 
 #import "XTPanadapterDataMUX.h"
+#import "XTRealData.h"
 
-#import <mach/mach_time.h>
-
-#include "dttsp.h"
-
+#include <mach/mach_time.h>
 
 @implementation XTPanadapterDataMUX
 
@@ -39,7 +37,7 @@
 		preampOffset = -20.0;
 		smoothingFactor = 13;
 		
-		spectrumBuffer = malloc(SPECTRUM_BUFFER_SIZE * sizeof(float));
+		//spectrumBuffer = malloc(SPECTRUM_BUFFER_SIZE * sizeof(float));
 		averageBuffer = malloc(SPECTRUM_BUFFER_SIZE * sizeof(float));
 		smoothBuffer = malloc(SPECTRUM_BUFFER_SIZE * sizeof(float));
 
@@ -65,6 +63,11 @@
 	return self;
 }
 
+-(void)setCallback:(SEL)callback withTarget:(id)target {
+    callbackSelector = callback;
+    callbackTarget = target;
+}
+
 -(void)awakeFromNib {
 	[NSThread detachNewThreadSelector:@selector(threadMain) 
 							 toTarget:self 
@@ -87,7 +90,8 @@
 -(NSData *) smoothBufferData {
 	NSData *bufferData;
 	[bufferLock lock];
-	bufferData = [NSData dataWithBytes:smoothBuffer length:SPECTRUM_BUFFER_SIZE * sizeof(float)];
+	// bufferData = [NSData dataWithBytes:smoothBuffer length:SPECTRUM_BUFFER_SIZE * sizeof(float)];
+    bufferData = [NSData dataWithBytes:averageBuffer length:SPECTRUM_BUFFER_SIZE * sizeof(float)];
 	[bufferLock unlock];
 	return bufferData;
 }
@@ -105,6 +109,8 @@
 	int64_t timeleft;
 	static mach_timebase_info_data_t tbi;
 	double timeScale;
+    XTRealData *dataBuffer = [XTRealData realDataWithElements:SPECTRUM_BUFFER_SIZE];
+    spectrumBuffer = [dataBuffer elements];
 		
 	mach_timebase_info(&tbi);
 	timeScale = ((double) tbi.numer / (double) tbi.denom);
@@ -114,11 +120,12 @@
 	while(1) {
 		
 		startTime = mach_absolute_time();
-		
-		Process_Panadapter(0, spectrumBuffer);
-		
+        
+        [callbackTarget performSelector:callbackSelector withObject:dataBuffer];
+				
 		if ([bufferLock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:1.0]] == YES) {
-			if(initAverage == YES) {
+            memcpy(averageBuffer, spectrumBuffer, SPECTRUM_BUFFER_SIZE * sizeof(float));
+ /*		  if(initAverage == YES) {
 				memcpy(averageBuffer, spectrumBuffer, SPECTRUM_BUFFER_SIZE * sizeof(float));
 				initAverage = NO;
 			} else {
@@ -145,8 +152,8 @@
 			memcpy(smoothBuffer + (SPECTRUM_BUFFER_SIZE / 2), fftIn.realp, (SPECTRUM_BUFFER_SIZE / 2) * sizeof(float));
 			
 			//  Apply any user calibration
-			vDSP_vsadd(smoothBuffer, 1, &receiveCalibrationOffset, smoothBuffer, 1, SPECTRUM_BUFFER_SIZE);
-						
+			vDSP_vsadd(smoothBuffer, 1, &receiveCalibrationOffset, smoothBuffer, 1, SPECTRUM_BUFFER_SIZE); */
+            
 			[bufferLock unlock];
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"XTPanAdapterDataReady" object:self];
 		} else {

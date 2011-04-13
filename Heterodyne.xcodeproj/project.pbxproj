@@ -71,48 +71,50 @@
 		09662EAA11329D3A00DE74C5 /* BGHUDAppKit.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 09662DB511328A1600DE74C5 /* BGHUDAppKit.framework */; };
 		09662EAB11329D3A00DE74C5 /* BWToolkitFramework.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 09E357001131C46E0049D5A7 /* BWToolkitFramework.framework */; };
 		096D1A8F1325CA3D0026F0F2 /* utils-probes.d in Sources */ = {isa = PBXBuildFile; fileRef = 096D1A8E1325CA3D0026F0F2 /* utils-probes.d */; };
+		09705577134CAE50002D8C0A /* AGCPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09705575134CAE44002D8C0A /* AGCPanel.xib */; };
+		09705579134CAFE9002D8C0A /* Dark LED.png in Resources */ = {isa = PBXBuildFile; fileRef = 09705578134CAFE9002D8C0A /* Dark LED.png */; };
+		0970557B134CAFF2002D8C0A /* Red LED.png in Resources */ = {isa = PBXBuildFile; fileRef = 0970557A134CAFF2002D8C0A /* Red LED.png */; };
 		0978BCD31320C43200B8976C /* SystemAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 09422F75112B96AE004937FC /* SystemAudio.m */; };
 		0978BE3713219D0600B8976C /* SystemAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 09422F74112B96AE004937FC /* SystemAudio.h */; };
+		0979F5EC1340610900F67E20 /* XTBlackmanHarrisWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5CC1340610900F67E20 /* XTBlackmanHarrisWindow.h */; };
+		0979F5ED1340610900F67E20 /* XTBlackmanHarrisWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5CD1340610900F67E20 /* XTBlackmanHarrisWindow.m */; };
+		0979F5EE1340610900F67E20 /* XTDSPAMDemodulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5CE1340610900F67E20 /* XTDSPAMDemodulator.h */; };
+		0979F5EF1340610900F67E20 /* XTDSPAMDemodulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5CF1340610900F67E20 /* XTDSPAMDemodulator.m */; };
+		0979F5F01340610900F67E20 /* XTDSPAutomaticGainControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5D01340610900F67E20 /* XTDSPAutomaticGainControl.h */; };
+		0979F5F11340610900F67E20 /* XTDSPAutomaticGainControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5D11340610900F67E20 /* XTDSPAutomaticGainControl.m */; };
+		0979F5F21340610900F67E20 /* XTDSPBandpassFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5D21340610900F67E20 /* XTDSPBandpassFilter.h */; };
+		0979F5F31340610900F67E20 /* XTDSPBandpassFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5D31340610900F67E20 /* XTDSPBandpassFilter.m */; };
+		0979F5F41340610900F67E20 /* XTDSPBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5D41340610900F67E20 /* XTDSPBlock.h */; };
+		0979F5F61340610900F67E20 /* XTDSPDemodulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5D61340610900F67E20 /* XTDSPDemodulator.h */; };
+		0979F5F71340610900F67E20 /* XTDSPDemodulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5D71340610900F67E20 /* XTDSPDemodulator.m */; };
+		0979F5F81340610900F67E20 /* XTDSPFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5D81340610900F67E20 /* XTDSPFilter.h */; };
+		0979F5F91340610900F67E20 /* XTDSPFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5D91340610900F67E20 /* XTDSPFilter.m */; };
+		0979F5FA1340610900F67E20 /* XTDSPFixedGain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5DA1340610900F67E20 /* XTDSPFixedGain.h */; };
+		0979F5FB1340610900F67E20 /* XTDSPFixedGain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5DB1340610900F67E20 /* XTDSPFixedGain.m */; };
+		0979F5FC1340610900F67E20 /* XTDSPHighpassFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5DC1340610900F67E20 /* XTDSPHighpassFilter.h */; };
+		0979F5FD1340610900F67E20 /* XTDSPHighpassFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5DD1340610900F67E20 /* XTDSPHighpassFilter.m */; };
+		0979F5FE1340610900F67E20 /* XTDSPLowpassFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5DE1340610900F67E20 /* XTDSPLowpassFilter.h */; };
+		0979F5FF1340610900F67E20 /* XTDSPLowpassFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5DF1340610900F67E20 /* XTDSPLowpassFilter.m */; };
+		0979F6001340610900F67E20 /* XTDSPModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5E01340610900F67E20 /* XTDSPModule.h */; };
+		0979F6011340610900F67E20 /* XTDSPModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5E11340610900F67E20 /* XTDSPModule.m */; };
+		0979F6021340610900F67E20 /* XTDSPSpectrumTap.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5E21340610900F67E20 /* XTDSPSpectrumTap.h */; };
+		0979F6031340610900F67E20 /* XTDSPSpectrumTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5E31340610900F67E20 /* XTDSPSpectrumTap.m */; };
+		0979F6041340610900F67E20 /* XTRealData.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5E41340610900F67E20 /* XTRealData.h */; };
+		0979F6061340610900F67E20 /* XTSoftwareDefinedRadio.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5E61340610900F67E20 /* XTSoftwareDefinedRadio.h */; };
+		0979F6071340610900F67E20 /* XTSoftwareDefinedRadio.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5E71340610900F67E20 /* XTSoftwareDefinedRadio.m */; };
+		0979F6081340610900F67E20 /* XTSplitComplexData.h in Headers */ = {isa = PBXBuildFile; fileRef = 0979F5E81340610900F67E20 /* XTSplitComplexData.h */; };
+		0979F6091340610900F67E20 /* XTSplitComplexData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5E91340610900F67E20 /* XTSplitComplexData.m */; };
+		0979F60B1340630400F67E20 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0979F60A1340630300F67E20 /* OpenCL.framework */; };
+		0979F60C134081A200F67E20 /* XTDSPBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5D51340610900F67E20 /* XTDSPBlock.m */; };
+		0979F60D134081BF00F67E20 /* XTRealData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0979F5E51340610900F67E20 /* XTRealData.m */; };
+		0979F60F134081DD00F67E20 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0979F60E134081DC00F67E20 /* Accelerate.framework */; };
 		097A24BF112FD524000E8478 /* AboutBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 097A24BE112FD524000E8478 /* AboutBoxView.m */; };
 		097A253E112FE704000E8478 /* Heterodyne.icns in Resources */ = {isa = PBXBuildFile; fileRef = 097A253D112FE704000E8478 /* Heterodyne.icns */; };
 		097A254C112FE831000E8478 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 097A254B112FE831000E8478 /* Sparkle.framework */; };
 		097A2555112FE859000E8478 /* Sparkle.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 097A254B112FE831000E8478 /* Sparkle.framework */; };
 		097A255C112FE97C000E8478 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 097A255B112FE97C000E8478 /* dsa_pub.pem */; };
-		097A269C1130855F000E8478 /* fftw3f.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
-		097A26A8113085D3000E8478 /* fftw3f.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
-		09C2E29E1123608F00FBD312 /* am_demod.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2791123608F00FBD312 /* am_demod.c */; };
-		09C2E29F1123608F00FBD312 /* banal.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27A1123608F00FBD312 /* banal.c */; };
-		09C2E2A01123608F00FBD312 /* bufvec.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27B1123608F00FBD312 /* bufvec.c */; };
-		09C2E2A11123608F00FBD312 /* correctIQ.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27C1123608F00FBD312 /* correctIQ.c */; };
-		09C2E2A21123608F00FBD312 /* cwtones.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27D1123608F00FBD312 /* cwtones.c */; };
-		09C2E2A31123608F00FBD312 /* cxops.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27E1123608F00FBD312 /* cxops.c */; };
-		09C2E2A41123608F00FBD312 /* dcblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27F1123608F00FBD312 /* dcblock.c */; };
-		09C2E2A51123608F00FBD312 /* dttspagc.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2801123608F00FBD312 /* dttspagc.c */; };
-		09C2E2A61123608F00FBD312 /* fastrig.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2811123608F00FBD312 /* fastrig.c */; };
-		09C2E2A71123608F00FBD312 /* filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2821123608F00FBD312 /* filter.c */; };
-		09C2E2A81123608F00FBD312 /* fm_demod.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2831123608F00FBD312 /* fm_demod.c */; };
-		09C2E2A91123608F00FBD312 /* graphiceq.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2841123608F00FBD312 /* graphiceq.c */; };
-		09C2E2AA1123608F00FBD312 /* hilbert.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2851123608F00FBD312 /* hilbert.c */; };
-		09C2E2AB1123608F00FBD312 /* isoband.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2861123608F00FBD312 /* isoband.c */; };
-		09C2E2AF1123608F00FBD312 /* lmadf.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E28A1123608F00FBD312 /* lmadf.c */; };
-		09C2E2B01123608F00FBD312 /* malloc16.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E28B1123608F00FBD312 /* malloc16.c */; };
-		09C2E2B11123608F00FBD312 /* meter.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E28C1123608F00FBD312 /* meter.c */; };
-		09C2E2B31123608F00FBD312 /* noiseblanker.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E28E1123608F00FBD312 /* noiseblanker.c */; };
-		09C2E2B41123608F00FBD312 /* oscillator.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E28F1123608F00FBD312 /* oscillator.c */; };
-		09C2E2B51123608F00FBD312 /* ovsv.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2901123608F00FBD312 /* ovsv.c */; };
-		09C2E2B61123608F00FBD312 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2911123608F00FBD312 /* resample.c */; };
-		09C2E2B71123608F00FBD312 /* resampleF.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2921123608F00FBD312 /* resampleF.c */; };
-		09C2E2B81123608F00FBD312 /* ringb.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2931123608F00FBD312 /* ringb.c */; };
-		09C2E2B91123608F00FBD312 /* sdr.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2941123608F00FBD312 /* sdr.c */; };
-		09C2E2BA1123608F00FBD312 /* sdrexport.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2951123608F00FBD312 /* sdrexport.c */; };
-		09C2E2BB1123608F00FBD312 /* spectrum.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2961123608F00FBD312 /* spectrum.c */; };
-		09C2E2BC1123608F00FBD312 /* speechproc.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2971123608F00FBD312 /* speechproc.c */; };
-		09C2E2BD1123608F00FBD312 /* splitfields.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2981123608F00FBD312 /* splitfields.c */; };
-		09C2E2BE1123608F00FBD312 /* spottone.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2991123608F00FBD312 /* spottone.c */; };
-		09C2E2BF1123608F00FBD312 /* update.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E29A1123608F00FBD312 /* update.c */; };
-		09C2E2C01123608F00FBD312 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E29B1123608F00FBD312 /* window.c */; };
-		09C2E2C11123608F00FBD312 /* winmain.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E29C1123608F00FBD312 /* winmain.c */; };
-		09C2E2C21123608F00FBD312 /* wscompand.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E29D1123608F00FBD312 /* wscompand.c */; };
+		09946D7113428C750052C43F /* XTDSPComplexRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 09946D6F13428C740052C43F /* XTDSPComplexRingBuffer.h */; };
+		09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */; };
 		09C2E3BC112372E100FBD312 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C2E3BB112372E100FBD312 /* CoreFoundation.framework */; };
 		09D320441317084C00E0D88B /* XTAudioUnits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
 		09D320671317087800E0D88B /* XTAudioUnits.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
@@ -199,7 +201,6 @@
 				0957652612A82BE20099B615 /* XTUtils.framework in Copy Framework Files */,
 				09662EAA11329D3A00DE74C5 /* BGHUDAppKit.framework in Copy Framework Files */,
 				09662EAB11329D3A00DE74C5 /* BWToolkitFramework.framework in Copy Framework Files */,
-				097A26A8113085D3000E8478 /* fftw3f.framework in Copy Framework Files */,
 				097A2555112FE859000E8478 /* Sparkle.framework in Copy Framework Files */,
 			);
 			name = "Copy Framework Files";
@@ -265,89 +266,49 @@
 		0957658F12A838080099B615 /* XTAudioUnits-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XTAudioUnits-Info.plist"; sourceTree = "<group>"; };
 		09662DB511328A1600DE74C5 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
 		096D1A8E1325CA3D0026F0F2 /* utils-probes.d */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.dtrace; path = "utils-probes.d"; sourceTree = "<group>"; };
+		09705575134CAE44002D8C0A /* AGCPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AGCPanel.xib; sourceTree = "<group>"; };
+		09705578134CAFE9002D8C0A /* Dark LED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dark LED.png"; sourceTree = "<group>"; };
+		0970557A134CAFF2002D8C0A /* Red LED.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Red LED.png"; sourceTree = "<group>"; };
 		0978BC461320A96100B8976C /* XTUtils-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "XTUtils-Info.plist"; sourceTree = "<group>"; };
+		0979F5CC1340610900F67E20 /* XTBlackmanHarrisWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTBlackmanHarrisWindow.h; sourceTree = "<group>"; };
+		0979F5CD1340610900F67E20 /* XTBlackmanHarrisWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTBlackmanHarrisWindow.m; sourceTree = "<group>"; };
+		0979F5CE1340610900F67E20 /* XTDSPAMDemodulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPAMDemodulator.h; sourceTree = "<group>"; };
+		0979F5CF1340610900F67E20 /* XTDSPAMDemodulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPAMDemodulator.m; sourceTree = "<group>"; };
+		0979F5D01340610900F67E20 /* XTDSPAutomaticGainControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPAutomaticGainControl.h; sourceTree = "<group>"; };
+		0979F5D11340610900F67E20 /* XTDSPAutomaticGainControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPAutomaticGainControl.m; sourceTree = "<group>"; };
+		0979F5D21340610900F67E20 /* XTDSPBandpassFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPBandpassFilter.h; sourceTree = "<group>"; };
+		0979F5D31340610900F67E20 /* XTDSPBandpassFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPBandpassFilter.m; sourceTree = "<group>"; };
+		0979F5D41340610900F67E20 /* XTDSPBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPBlock.h; sourceTree = "<group>"; };
+		0979F5D51340610900F67E20 /* XTDSPBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPBlock.m; sourceTree = "<group>"; };
+		0979F5D61340610900F67E20 /* XTDSPDemodulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPDemodulator.h; sourceTree = "<group>"; };
+		0979F5D71340610900F67E20 /* XTDSPDemodulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPDemodulator.m; sourceTree = "<group>"; };
+		0979F5D81340610900F67E20 /* XTDSPFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPFilter.h; sourceTree = "<group>"; };
+		0979F5D91340610900F67E20 /* XTDSPFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPFilter.m; sourceTree = "<group>"; };
+		0979F5DA1340610900F67E20 /* XTDSPFixedGain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPFixedGain.h; sourceTree = "<group>"; };
+		0979F5DB1340610900F67E20 /* XTDSPFixedGain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPFixedGain.m; sourceTree = "<group>"; };
+		0979F5DC1340610900F67E20 /* XTDSPHighpassFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPHighpassFilter.h; sourceTree = "<group>"; };
+		0979F5DD1340610900F67E20 /* XTDSPHighpassFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPHighpassFilter.m; sourceTree = "<group>"; };
+		0979F5DE1340610900F67E20 /* XTDSPLowpassFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPLowpassFilter.h; sourceTree = "<group>"; };
+		0979F5DF1340610900F67E20 /* XTDSPLowpassFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPLowpassFilter.m; sourceTree = "<group>"; };
+		0979F5E01340610900F67E20 /* XTDSPModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPModule.h; sourceTree = "<group>"; };
+		0979F5E11340610900F67E20 /* XTDSPModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPModule.m; sourceTree = "<group>"; };
+		0979F5E21340610900F67E20 /* XTDSPSpectrumTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPSpectrumTap.h; sourceTree = "<group>"; };
+		0979F5E31340610900F67E20 /* XTDSPSpectrumTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPSpectrumTap.m; sourceTree = "<group>"; };
+		0979F5E41340610900F67E20 /* XTRealData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTRealData.h; sourceTree = "<group>"; };
+		0979F5E51340610900F67E20 /* XTRealData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTRealData.m; sourceTree = "<group>"; };
+		0979F5E61340610900F67E20 /* XTSoftwareDefinedRadio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSoftwareDefinedRadio.h; sourceTree = "<group>"; };
+		0979F5E71340610900F67E20 /* XTSoftwareDefinedRadio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSoftwareDefinedRadio.m; sourceTree = "<group>"; };
+		0979F5E81340610900F67E20 /* XTSplitComplexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSplitComplexData.h; sourceTree = "<group>"; };
+		0979F5E91340610900F67E20 /* XTSplitComplexData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSplitComplexData.m; sourceTree = "<group>"; };
+		0979F60A1340630300F67E20 /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		0979F60E134081DC00F67E20 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		097A24BD112FD524000E8478 /* AboutBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutBoxView.h; sourceTree = "<group>"; };
 		097A24BE112FD524000E8478 /* AboutBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutBoxView.m; sourceTree = "<group>"; };
 		097A253D112FE704000E8478 /* Heterodyne.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Heterodyne.icns; sourceTree = "<group>"; };
 		097A254B112FE831000E8478 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		097A255B112FE97C000E8478 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		097A269B1130855F000E8478 /* fftw3f.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = fftw3f.framework; sourceTree = "<group>"; };
-		09C2E24F1123608F00FBD312 /* am_demod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = am_demod.h; sourceTree = "<group>"; };
-		09C2E2501123608F00FBD312 /* banal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = banal.h; sourceTree = "<group>"; };
-		09C2E2511123608F00FBD312 /* bufvec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufvec.h; sourceTree = "<group>"; };
-		09C2E2521123608F00FBD312 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		09C2E2531123608F00FBD312 /* dttsp-complex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dttsp-complex.h"; sourceTree = "<group>"; };
-		09C2E2541123608F00FBD312 /* correctIQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = correctIQ.h; sourceTree = "<group>"; };
-		09C2E2551123608F00FBD312 /* cwtones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cwtones.h; sourceTree = "<group>"; };
-		09C2E2561123608F00FBD312 /* cxops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxops.h; sourceTree = "<group>"; };
-		09C2E2571123608F00FBD312 /* datatypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datatypes.h; sourceTree = "<group>"; };
-		09C2E2581123608F00FBD312 /* dcblock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dcblock.h; sourceTree = "<group>"; };
-		09C2E2591123608F00FBD312 /* defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
-		09C2E25A1123608F00FBD312 /* dttspagc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dttspagc.h; sourceTree = "<group>"; };
-		09C2E25B1123608F00FBD312 /* fastrig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastrig.h; sourceTree = "<group>"; };
-		09C2E25C1123608F00FBD312 /* fftw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw.h; sourceTree = "<group>"; };
-		09C2E25D1123608F00FBD312 /* fftw3_fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3_fix.h; sourceTree = "<group>"; };
-		09C2E25E1123608F00FBD312 /* fftw3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
-		09C2E25F1123608F00FBD312 /* filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		09C2E2601123608F00FBD312 /* fm_demod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fm_demod.h; sourceTree = "<group>"; };
-		09C2E2611123608F00FBD312 /* fromsys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fromsys.h; sourceTree = "<group>"; };
-		09C2E2621123608F00FBD312 /* graphiceq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphiceq.h; sourceTree = "<group>"; };
-		09C2E2631123608F00FBD312 /* hilbert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hilbert.h; sourceTree = "<group>"; };
-		09C2E2641123608F00FBD312 /* iosdr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iosdr.h; sourceTree = "<group>"; };
-		09C2E2651123608F00FBD312 /* isoband.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isoband.h; sourceTree = "<group>"; };
-		09C2E2661123608F00FBD312 /* keyer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyer.h; sourceTree = "<group>"; };
-		09C2E2671123608F00FBD312 /* lmadf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmadf.h; sourceTree = "<group>"; };
-		09C2E2681123608F00FBD312 /* local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
-		09C2E2691123608F00FBD312 /* malloc16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = malloc16.h; sourceTree = "<group>"; };
-		09C2E26A1123608F00FBD312 /* meter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meter.h; sourceTree = "<group>"; };
-		09C2E26B1123608F00FBD312 /* noiseblanker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noiseblanker.h; sourceTree = "<group>"; };
-		09C2E26C1123608F00FBD312 /* oscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oscillator.h; sourceTree = "<group>"; };
-		09C2E26D1123608F00FBD312 /* ovsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ovsv.h; sourceTree = "<group>"; };
-		09C2E26E1123608F00FBD312 /* resample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resample.h; sourceTree = "<group>"; };
-		09C2E26F1123608F00FBD312 /* resampleF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resampleF.h; sourceTree = "<group>"; };
-		09C2E2701123608F00FBD312 /* ringb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringb.h; sourceTree = "<group>"; };
-		09C2E2711123608F00FBD312 /* sdrexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdrexport.h; sourceTree = "<group>"; };
-		09C2E2721123608F00FBD312 /* spectrum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum.h; sourceTree = "<group>"; };
-		09C2E2731123608F00FBD312 /* speechproc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speechproc.h; sourceTree = "<group>"; };
-		09C2E2741123608F00FBD312 /* splitfields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = splitfields.h; sourceTree = "<group>"; };
-		09C2E2751123608F00FBD312 /* spottone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spottone.h; sourceTree = "<group>"; };
-		09C2E2761123608F00FBD312 /* update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = update.h; sourceTree = "<group>"; };
-		09C2E2771123608F00FBD312 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
-		09C2E2781123608F00FBD312 /* wscompand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wscompand.h; sourceTree = "<group>"; };
-		09C2E2791123608F00FBD312 /* am_demod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = am_demod.c; sourceTree = "<group>"; };
-		09C2E27A1123608F00FBD312 /* banal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = banal.c; sourceTree = "<group>"; };
-		09C2E27B1123608F00FBD312 /* bufvec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bufvec.c; sourceTree = "<group>"; };
-		09C2E27C1123608F00FBD312 /* correctIQ.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = correctIQ.c; sourceTree = "<group>"; };
-		09C2E27D1123608F00FBD312 /* cwtones.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cwtones.c; sourceTree = "<group>"; };
-		09C2E27E1123608F00FBD312 /* cxops.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cxops.c; sourceTree = "<group>"; };
-		09C2E27F1123608F00FBD312 /* dcblock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dcblock.c; sourceTree = "<group>"; };
-		09C2E2801123608F00FBD312 /* dttspagc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dttspagc.c; sourceTree = "<group>"; };
-		09C2E2811123608F00FBD312 /* fastrig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastrig.c; sourceTree = "<group>"; };
-		09C2E2821123608F00FBD312 /* filter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filter.c; sourceTree = "<group>"; };
-		09C2E2831123608F00FBD312 /* fm_demod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fm_demod.c; sourceTree = "<group>"; };
-		09C2E2841123608F00FBD312 /* graphiceq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = graphiceq.c; sourceTree = "<group>"; };
-		09C2E2851123608F00FBD312 /* hilbert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hilbert.c; sourceTree = "<group>"; };
-		09C2E2861123608F00FBD312 /* isoband.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = isoband.c; sourceTree = "<group>"; };
-		09C2E28A1123608F00FBD312 /* lmadf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmadf.c; sourceTree = "<group>"; };
-		09C2E28B1123608F00FBD312 /* malloc16.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = malloc16.c; sourceTree = "<group>"; };
-		09C2E28C1123608F00FBD312 /* meter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = meter.c; sourceTree = "<group>"; };
-		09C2E28E1123608F00FBD312 /* noiseblanker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = noiseblanker.c; sourceTree = "<group>"; };
-		09C2E28F1123608F00FBD312 /* oscillator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = oscillator.c; sourceTree = "<group>"; };
-		09C2E2901123608F00FBD312 /* ovsv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ovsv.c; sourceTree = "<group>"; };
-		09C2E2911123608F00FBD312 /* resample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resample.c; sourceTree = "<group>"; };
-		09C2E2921123608F00FBD312 /* resampleF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resampleF.c; sourceTree = "<group>"; };
-		09C2E2931123608F00FBD312 /* ringb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ringb.c; sourceTree = "<group>"; };
-		09C2E2941123608F00FBD312 /* sdr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sdr.c; sourceTree = "<group>"; };
-		09C2E2951123608F00FBD312 /* sdrexport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sdrexport.c; sourceTree = "<group>"; };
-		09C2E2961123608F00FBD312 /* spectrum.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spectrum.c; sourceTree = "<group>"; };
-		09C2E2971123608F00FBD312 /* speechproc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speechproc.c; sourceTree = "<group>"; };
-		09C2E2981123608F00FBD312 /* splitfields.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = splitfields.c; sourceTree = "<group>"; };
-		09C2E2991123608F00FBD312 /* spottone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spottone.c; sourceTree = "<group>"; };
-		09C2E29A1123608F00FBD312 /* update.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = update.c; sourceTree = "<group>"; };
-		09C2E29B1123608F00FBD312 /* window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = window.c; sourceTree = "<group>"; };
-		09C2E29C1123608F00FBD312 /* winmain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = winmain.c; sourceTree = "<group>"; };
-		09C2E29D1123608F00FBD312 /* wscompand.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wscompand.c; sourceTree = "<group>"; };
-		09C2E37C11236F0B00FBD312 /* dttsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dttsp.h; sourceTree = "<group>"; };
+		09946D6F13428C740052C43F /* XTDSPComplexRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPComplexRingBuffer.h; sourceTree = "<group>"; };
+		09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPComplexRingBuffer.m; sourceTree = "<group>"; };
 		09C2E3BB112372E100FBD312 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		09C2E3BD112372E100FBD312 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		09CE54AF122A6CBC00C3A8F2 /* XTAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTAudioComponent.h; sourceTree = "<group>"; };
@@ -411,6 +372,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0979F60F134081DD00F67E20 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,13 +399,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0979F60B1340630400F67E20 /* OpenCL.framework in Frameworks */,
 				0957652B12A82BFA0099B615 /* XTUtils.framework in Frameworks */,
 				0957652912A82BEB0099B615 /* Cocoa.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				09C2E3BC112372E100FBD312 /* CoreFoundation.framework in Frameworks */,
 				09422FA7112BA102004937FC /* AudioToolbox.framework in Frameworks */,
 				097A254C112FE831000E8478 /* Sparkle.framework in Frameworks */,
-				097A269C1130855F000E8478 /* fftw3f.framework in Frameworks */,
 				09E357011131C46E0049D5A7 /* BWToolkitFramework.framework in Frameworks */,
 				09662DB611328A1600DE74C5 /* BGHUDAppKit.framework in Frameworks */,
 				0931DAD21135384C00FA7231 /* OpenGL.framework in Frameworks */,
@@ -540,94 +502,44 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		09C2E2471123605900FBD312 /* DttSP */ = {
+		0979F5C91340610900F67E20 /* 6ZDSP */ = {
 			isa = PBXGroup;
 			children = (
-				09C2E24F1123608F00FBD312 /* am_demod.h */,
-				09C2E2501123608F00FBD312 /* banal.h */,
-				09C2E2511123608F00FBD312 /* bufvec.h */,
-				09C2E2521123608F00FBD312 /* common.h */,
-				09C2E2531123608F00FBD312 /* dttsp-complex.h */,
-				09C2E2541123608F00FBD312 /* correctIQ.h */,
-				09C2E2551123608F00FBD312 /* cwtones.h */,
-				09C2E2561123608F00FBD312 /* cxops.h */,
-				09C2E2571123608F00FBD312 /* datatypes.h */,
-				09C2E2581123608F00FBD312 /* dcblock.h */,
-				09C2E2591123608F00FBD312 /* defs.h */,
-				09C2E25A1123608F00FBD312 /* dttspagc.h */,
-				09C2E25B1123608F00FBD312 /* fastrig.h */,
-				09C2E25C1123608F00FBD312 /* fftw.h */,
-				09C2E25D1123608F00FBD312 /* fftw3_fix.h */,
-				09C2E25E1123608F00FBD312 /* fftw3.h */,
-				09C2E25F1123608F00FBD312 /* filter.h */,
-				09C2E2601123608F00FBD312 /* fm_demod.h */,
-				09C2E2611123608F00FBD312 /* fromsys.h */,
-				09C2E2621123608F00FBD312 /* graphiceq.h */,
-				09C2E2631123608F00FBD312 /* hilbert.h */,
-				09C2E2641123608F00FBD312 /* iosdr.h */,
-				09C2E2651123608F00FBD312 /* isoband.h */,
-				09C2E2661123608F00FBD312 /* keyer.h */,
-				09C2E2671123608F00FBD312 /* lmadf.h */,
-				09C2E2681123608F00FBD312 /* local.h */,
-				09C2E2691123608F00FBD312 /* malloc16.h */,
-				09C2E26A1123608F00FBD312 /* meter.h */,
-				09C2E26B1123608F00FBD312 /* noiseblanker.h */,
-				09C2E26C1123608F00FBD312 /* oscillator.h */,
-				09C2E26D1123608F00FBD312 /* ovsv.h */,
-				09C2E26E1123608F00FBD312 /* resample.h */,
-				09C2E26F1123608F00FBD312 /* resampleF.h */,
-				09C2E2701123608F00FBD312 /* ringb.h */,
-				09C2E2711123608F00FBD312 /* sdrexport.h */,
-				09C2E2721123608F00FBD312 /* spectrum.h */,
-				09C2E2731123608F00FBD312 /* speechproc.h */,
-				09C2E2741123608F00FBD312 /* splitfields.h */,
-				09C2E2751123608F00FBD312 /* spottone.h */,
-				09C2E2761123608F00FBD312 /* update.h */,
-				09C2E2771123608F00FBD312 /* window.h */,
-				09C2E2781123608F00FBD312 /* wscompand.h */,
-				09C2E2791123608F00FBD312 /* am_demod.c */,
-				09C2E27A1123608F00FBD312 /* banal.c */,
-				09C2E27B1123608F00FBD312 /* bufvec.c */,
-				09C2E27C1123608F00FBD312 /* correctIQ.c */,
-				09C2E27D1123608F00FBD312 /* cwtones.c */,
-				09C2E27E1123608F00FBD312 /* cxops.c */,
-				09C2E27F1123608F00FBD312 /* dcblock.c */,
-				09C2E2801123608F00FBD312 /* dttspagc.c */,
-				09C2E2811123608F00FBD312 /* fastrig.c */,
-				09C2E2821123608F00FBD312 /* filter.c */,
-				09C2E2831123608F00FBD312 /* fm_demod.c */,
-				09C2E2841123608F00FBD312 /* graphiceq.c */,
-				09C2E2851123608F00FBD312 /* hilbert.c */,
-				09C2E2861123608F00FBD312 /* isoband.c */,
-				09C2E28A1123608F00FBD312 /* lmadf.c */,
-				09C2E28B1123608F00FBD312 /* malloc16.c */,
-				09C2E28C1123608F00FBD312 /* meter.c */,
-				09C2E28E1123608F00FBD312 /* noiseblanker.c */,
-				09C2E28F1123608F00FBD312 /* oscillator.c */,
-				09C2E2901123608F00FBD312 /* ovsv.c */,
-				09C2E2911123608F00FBD312 /* resample.c */,
-				09C2E2921123608F00FBD312 /* resampleF.c */,
-				09C2E2931123608F00FBD312 /* ringb.c */,
-				09C2E2941123608F00FBD312 /* sdr.c */,
-				09C2E2951123608F00FBD312 /* sdrexport.c */,
-				09C2E2961123608F00FBD312 /* spectrum.c */,
-				09C2E2971123608F00FBD312 /* speechproc.c */,
-				09C2E2981123608F00FBD312 /* splitfields.c */,
-				09C2E2991123608F00FBD312 /* spottone.c */,
-				09C2E29A1123608F00FBD312 /* update.c */,
-				09C2E29B1123608F00FBD312 /* window.c */,
-				09C2E29C1123608F00FBD312 /* winmain.c */,
-				09C2E29D1123608F00FBD312 /* wscompand.c */,
+				0979F5CC1340610900F67E20 /* XTBlackmanHarrisWindow.h */,
+				0979F5CD1340610900F67E20 /* XTBlackmanHarrisWindow.m */,
+				0979F5CE1340610900F67E20 /* XTDSPAMDemodulator.h */,
+				0979F5CF1340610900F67E20 /* XTDSPAMDemodulator.m */,
+				0979F5D01340610900F67E20 /* XTDSPAutomaticGainControl.h */,
+				0979F5D11340610900F67E20 /* XTDSPAutomaticGainControl.m */,
+				0979F5D21340610900F67E20 /* XTDSPBandpassFilter.h */,
+				0979F5D31340610900F67E20 /* XTDSPBandpassFilter.m */,
+				0979F5D41340610900F67E20 /* XTDSPBlock.h */,
+				0979F5D51340610900F67E20 /* XTDSPBlock.m */,
+				0979F5D61340610900F67E20 /* XTDSPDemodulator.h */,
+				0979F5D71340610900F67E20 /* XTDSPDemodulator.m */,
+				0979F5D81340610900F67E20 /* XTDSPFilter.h */,
+				0979F5D91340610900F67E20 /* XTDSPFilter.m */,
+				0979F5DA1340610900F67E20 /* XTDSPFixedGain.h */,
+				0979F5DB1340610900F67E20 /* XTDSPFixedGain.m */,
+				0979F5DC1340610900F67E20 /* XTDSPHighpassFilter.h */,
+				0979F5DD1340610900F67E20 /* XTDSPHighpassFilter.m */,
+				0979F5DE1340610900F67E20 /* XTDSPLowpassFilter.h */,
+				0979F5DF1340610900F67E20 /* XTDSPLowpassFilter.m */,
+				09946D6F13428C740052C43F /* XTDSPComplexRingBuffer.h */,
+				09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */,
+				0979F5E01340610900F67E20 /* XTDSPModule.h */,
+				0979F5E11340610900F67E20 /* XTDSPModule.m */,
+				0979F5E21340610900F67E20 /* XTDSPSpectrumTap.h */,
+				0979F5E31340610900F67E20 /* XTDSPSpectrumTap.m */,
+				0979F5E41340610900F67E20 /* XTRealData.h */,
+				0979F5E51340610900F67E20 /* XTRealData.m */,
+				0979F5E61340610900F67E20 /* XTSoftwareDefinedRadio.h */,
+				0979F5E71340610900F67E20 /* XTSoftwareDefinedRadio.m */,
+				0979F5E81340610900F67E20 /* XTSplitComplexData.h */,
+				0979F5E91340610900F67E20 /* XTSplitComplexData.m */,
+				09705575134CAE44002D8C0A /* AGCPanel.xib */,
 			);
-			path = DttSP;
-			sourceTree = "<group>";
-		};
-		09C2E36611236D7E00FBD312 /* Base Ozy Interface */ = {
-			isa = PBXGroup;
-			children = (
-				09C2E37C11236F0B00FBD312 /* dttsp.h */,
-			);
-			name = "Base Ozy Interface";
+			path = 6ZDSP;
 			sourceTree = "<group>";
 		};
 		09D321EB131AEFE200E0D88B /* Ozy Driver */ = {
@@ -648,7 +560,6 @@
 			children = (
 				09662DB511328A1600DE74C5 /* BGHUDAppKit.framework */,
 				09E357001131C46E0049D5A7 /* BWToolkitFramework.framework */,
-				097A269B1130855F000E8478 /* fftw3f.framework */,
 				097A254B112FE831000E8478 /* Sparkle.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				09C2E3BB112372E100FBD312 /* CoreFoundation.framework */,
@@ -683,6 +594,9 @@
 		29B97314FDCFA39411CA2CEA /* MacHPSDR */ = {
 			isa = PBXGroup;
 			children = (
+				0979F60E134081DC00F67E20 /* Accelerate.framework */,
+				0979F60A1340630300F67E20 /* OpenCL.framework */,
+				0979F5C91340610900F67E20 /* 6ZDSP */,
 				09D321EB131AEFE200E0D88B /* Ozy Driver */,
 				095764FE12A82ACB0099B615 /* Utilities */,
 				0957641E12A7F4890099B615 /* Metis Driver */,
@@ -700,8 +614,6 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				09C2E36611236D7E00FBD312 /* Base Ozy Interface */,
-				09C2E2471123605900FBD312 /* DttSP */,
 				256AC3F00F4B6AF500CF3369 /* Heterodyne_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -711,6 +623,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				09705578134CAFE9002D8C0A /* Dark LED.png */,
+				0970557A134CAFF2002D8C0A /* Red LED.png */,
 				09027C2511366F0300DC2921 /* Displays.icns */,
 				09F4608311474F1D003EEA61 /* basket.icns */,
 				09027C2611366F0300DC2921 /* SoftwareUpdate.icns */,
@@ -753,6 +667,21 @@
 				0957655B12A831D40099B615 /* XTDTTSP.h in Headers */,
 				0978BE3713219D0600B8976C /* SystemAudio.h in Headers */,
 				094EDDB613310842007C4367 /* XTSMeterView.h in Headers */,
+				0979F5EC1340610900F67E20 /* XTBlackmanHarrisWindow.h in Headers */,
+				0979F5EE1340610900F67E20 /* XTDSPAMDemodulator.h in Headers */,
+				0979F5F01340610900F67E20 /* XTDSPAutomaticGainControl.h in Headers */,
+				0979F5F21340610900F67E20 /* XTDSPBandpassFilter.h in Headers */,
+				0979F5F41340610900F67E20 /* XTDSPBlock.h in Headers */,
+				0979F5F61340610900F67E20 /* XTDSPDemodulator.h in Headers */,
+				0979F5F81340610900F67E20 /* XTDSPFilter.h in Headers */,
+				0979F5FA1340610900F67E20 /* XTDSPFixedGain.h in Headers */,
+				0979F5FC1340610900F67E20 /* XTDSPHighpassFilter.h in Headers */,
+				0979F5FE1340610900F67E20 /* XTDSPLowpassFilter.h in Headers */,
+				0979F6001340610900F67E20 /* XTDSPModule.h in Headers */,
+				0979F6021340610900F67E20 /* XTDSPSpectrumTap.h in Headers */,
+				0979F6041340610900F67E20 /* XTRealData.h in Headers */,
+				0979F6061340610900F67E20 /* XTSoftwareDefinedRadio.h in Headers */,
+				0979F6081340610900F67E20 /* XTSplitComplexData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,6 +691,7 @@
 			files = (
 				0957651B12A82B8C0099B615 /* OzyInputBuffers.h in Headers */,
 				0957651C12A82B8C0099B615 /* OzyRingBuffer.h in Headers */,
+				09946D7113428C750052C43F /* XTDSPComplexRingBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -957,6 +887,9 @@
 				09027C2811366F0300DC2921 /* SoftwareUpdate.icns in Resources */,
 				0928113D113A055F007E1911 /* US Bandplan.plist in Resources */,
 				09F4608411474F1D003EEA61 /* basket.icns in Resources */,
+				09705577134CAE50002D8C0A /* AGCPanel.xib in Resources */,
+				09705579134CAFE9002D8C0A /* Dark LED.png in Resources */,
+				0970557B134CAFF2002D8C0A /* Red LED.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +927,8 @@
 				0957651D12A82B9A0099B615 /* OzyInputBuffers.m in Sources */,
 				0957651E12A82B9A0099B615 /* OzyRingBuffer.m in Sources */,
 				096D1A8F1325CA3D0026F0F2 /* utils-probes.d in Sources */,
+				0979F60C134081A200F67E20 /* XTDSPBlock.m in Sources */,
+				0979F60D134081BF00F67E20 /* XTRealData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,39 +959,6 @@
 				09D321511318747D00E0D88B /* XTImageTextCell.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				256AC3DA0F4B6AC300CF3369 /* MacHPSDRAppDelegate.m in Sources */,
-				09C2E29E1123608F00FBD312 /* am_demod.c in Sources */,
-				09C2E29F1123608F00FBD312 /* banal.c in Sources */,
-				09C2E2A01123608F00FBD312 /* bufvec.c in Sources */,
-				09C2E2A11123608F00FBD312 /* correctIQ.c in Sources */,
-				09C2E2A21123608F00FBD312 /* cwtones.c in Sources */,
-				09C2E2A31123608F00FBD312 /* cxops.c in Sources */,
-				09C2E2A41123608F00FBD312 /* dcblock.c in Sources */,
-				09C2E2A51123608F00FBD312 /* dttspagc.c in Sources */,
-				09C2E2A61123608F00FBD312 /* fastrig.c in Sources */,
-				09C2E2A71123608F00FBD312 /* filter.c in Sources */,
-				09C2E2A81123608F00FBD312 /* fm_demod.c in Sources */,
-				09C2E2A91123608F00FBD312 /* graphiceq.c in Sources */,
-				09C2E2AA1123608F00FBD312 /* hilbert.c in Sources */,
-				09C2E2AB1123608F00FBD312 /* isoband.c in Sources */,
-				09C2E2AF1123608F00FBD312 /* lmadf.c in Sources */,
-				09C2E2B01123608F00FBD312 /* malloc16.c in Sources */,
-				09C2E2B11123608F00FBD312 /* meter.c in Sources */,
-				09C2E2B31123608F00FBD312 /* noiseblanker.c in Sources */,
-				09C2E2B41123608F00FBD312 /* oscillator.c in Sources */,
-				09C2E2B51123608F00FBD312 /* ovsv.c in Sources */,
-				09C2E2B61123608F00FBD312 /* resample.c in Sources */,
-				09C2E2B71123608F00FBD312 /* resampleF.c in Sources */,
-				09C2E2B81123608F00FBD312 /* ringb.c in Sources */,
-				09C2E2B91123608F00FBD312 /* sdr.c in Sources */,
-				09C2E2BA1123608F00FBD312 /* sdrexport.c in Sources */,
-				09C2E2BB1123608F00FBD312 /* spectrum.c in Sources */,
-				09C2E2BC1123608F00FBD312 /* speechproc.c in Sources */,
-				09C2E2BD1123608F00FBD312 /* splitfields.c in Sources */,
-				09C2E2BE1123608F00FBD312 /* spottone.c in Sources */,
-				09C2E2BF1123608F00FBD312 /* update.c in Sources */,
-				09C2E2C01123608F00FBD312 /* window.c in Sources */,
-				09C2E2C11123608F00FBD312 /* winmain.c in Sources */,
-				09C2E2C21123608F00FBD312 /* wscompand.c in Sources */,
 				09FAB2561128BB8B000119AB /* TransceiverController.m in Sources */,
 				0942372D112D4174004937FC /* XTPanAdapterView.m in Sources */,
 				09423732112D41FB004937FC /* XTWaterfallView.m in Sources */,
@@ -1070,6 +972,20 @@
 				0957655C12A831D40099B615 /* XTDTTSP.m in Sources */,
 				0978BCD31320C43200B8976C /* SystemAudio.m in Sources */,
 				094EDDB713310842007C4367 /* XTSMeterView.m in Sources */,
+				0979F5ED1340610900F67E20 /* XTBlackmanHarrisWindow.m in Sources */,
+				0979F5EF1340610900F67E20 /* XTDSPAMDemodulator.m in Sources */,
+				0979F5F11340610900F67E20 /* XTDSPAutomaticGainControl.m in Sources */,
+				0979F5F31340610900F67E20 /* XTDSPBandpassFilter.m in Sources */,
+				0979F5F71340610900F67E20 /* XTDSPDemodulator.m in Sources */,
+				0979F5F91340610900F67E20 /* XTDSPFilter.m in Sources */,
+				0979F5FB1340610900F67E20 /* XTDSPFixedGain.m in Sources */,
+				0979F5FD1340610900F67E20 /* XTDSPHighpassFilter.m in Sources */,
+				0979F5FF1340610900F67E20 /* XTDSPLowpassFilter.m in Sources */,
+				0979F6011340610900F67E20 /* XTDSPModule.m in Sources */,
+				0979F6031340610900F67E20 /* XTDSPSpectrumTap.m in Sources */,
+				0979F6071340610900F67E20 /* XTSoftwareDefinedRadio.m in Sources */,
+				0979F6091340610900F67E20 /* XTSplitComplexData.m in Sources */,
+				09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,7 +1051,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -1166,7 +1082,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;

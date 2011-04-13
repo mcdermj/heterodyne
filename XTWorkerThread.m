@@ -22,24 +22,56 @@
 
 #import "XTWorkerThread.h"
 
+#include <mach/mach_time.h>
+#include <mach/thread_policy.h>
+
+kern_return_t   thread_policy_set(
+                                  thread_t                                        thread,
+                                  thread_policy_flavor_t          flavor,
+                                  thread_policy_t                         policy_info,
+                                  mach_msg_type_number_t          count);
 
 @implementation XTWorkerThread
 
 @synthesize runLoop;
 @synthesize running;
+@synthesize realtime;
 
 -(id)init {
-	self = [super init];
-	
-	if(self) {
-		running = TRUE;
-	}
-	
-	return self;
+    return [self initWithRealtime:NO];
+}
+
+-(id)initWithRealtime:(BOOL)newRealtime {
+    self = [super init];
+    
+    if(self) {
+        running = YES;
+        realtime = newRealtime;
+    }
+    
+    return self;
 }
 
 -(void)main {
+    struct thread_time_constraint_policy ttcpolicy;
+	mach_timebase_info_data_t tTBI;
+	double mult;
+
 	runLoop = [NSRunLoop currentRunLoop];
+    
+    if(realtime) {
+        mach_timebase_info(&tTBI);
+        mult = ((double)tTBI.denom / (double)tTBI.numer) * 1000000;
+        
+        ttcpolicy.period = 12 * mult;
+        ttcpolicy.computation = 2 * mult;
+        ttcpolicy.constraint = 24 * mult;
+        ttcpolicy.preemptible = 0;
+        
+        if((thread_policy_set(mach_thread_self(), THREAD_TIME_CONSTRAINT_POLICY, (thread_policy_t) &ttcpolicy, THREAD_TIME_CONSTRAINT_POLICY_COUNT)) != KERN_SUCCESS) {
+            NSLog(@"[%@ %s]:  Failed to set realtime priority\n", [self class], (char *) _cmd);
+        } 
+    }
 	
 	//  You need a dummy port added to the run loop so that the thread doesn't freak out
 	[[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
@@ -48,7 +80,5 @@
 		[[NSRunLoop	currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 	}
 }
-	
-	
 
 @end

@@ -28,6 +28,7 @@
 #import "OzyRingBuffer.h"
 
 #include <netinet/in.h>
+#include <mach/thread_policy.h>
 
 #define BANDSCOPE_BUFFER_SIZE 8192
 
@@ -94,7 +95,16 @@ typedef struct _metisStartStop {
 	char padding[60];
 } __attribute__((packed)) MetisStartStop;
 
+//  This probably isn't the exact right way to do this, but the OS header has this commented out for some reason.
+kern_return_t   thread_policy_set(
+                                  thread_t                                        thread,
+                                  thread_policy_flavor_t          flavor,
+                                  thread_policy_t                         policy_info,
+                                  mach_msg_type_number_t          count);
+
+
 @class XTDTTSP;
+@class XTDSPBlock;
 
 @interface NNHMetisDriver: NSObject <XTHeterodyneHardwareDriver> {
 	NSMutableData *sampleData;
@@ -115,11 +125,9 @@ typedef struct _metisStartStop {
 	int ozyVersion;
 	
 	int forwardPower;
+    
+    XTDSPBlock *processingBlock;
 	
-	float leftInputBuffer[DTTSP_BUFFER_SIZE];
-	float rightInputBuffer[DTTSP_BUFFER_SIZE];
-	float leftOutputBuffer[DTTSP_BUFFER_SIZE];
-	float rightOutputBuffer[DTTSP_BUFFER_SIZE];
 	float leftMicBuffer[DTTSP_BUFFER_SIZE];
 	float rightMicBuffer[DTTSP_BUFFER_SIZE];
 	float leftTxBuffer[DTTSP_BUFFER_SIZE];

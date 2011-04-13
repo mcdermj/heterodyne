@@ -23,8 +23,7 @@
 #import "NNHMetisDriver.h"
 
 #import "XTDTTSP.h"
-
-#import "dttsp.h"
+#import "XTDSPBlock.h"
 
 #include <arpa/inet.h>
 #include <mach/mach_time.h>
@@ -161,7 +160,8 @@
 		metisWriteSequence = 0;
 		
 		sdr = newSdr;
-		
+        
+        processingBlock = [XTDSPBlock dspBlockWithBlockSize:1024]; 
 	}
 	
 	return self;
@@ -173,6 +173,9 @@
 	
 	OzyPacket *currentOzyPacket;
 	OzySamplesIn *inSamples;
+    
+    float *realSamples = [processingBlock realElements];
+    float *imaginarySamples = [processingBlock imaginaryElements];
 		
 	MetisPacket *packet = (MetisPacket *) [buffer bytes];
 	
@@ -229,17 +232,21 @@
 		
 		for(int j = 0; j < 63; ++j) {
 			inSamples = &(currentOzyPacket->samples[j]);
-			leftInputBuffer[samples] = (float)((signed char) inSamples->i[0] << 16 |
+			realSamples[samples] = (float)((signed char) inSamples->i[0] << 16 |
 											   (unsigned char) inSamples->i[1] << 8 |
 											   (unsigned char) inSamples->i[2]) / 8388607.0f;
-			rightInputBuffer[samples] = (float)((signed char) inSamples->q[0] << 16 |
+			imaginarySamples[samples] = (float)((signed char) inSamples->q[0] << 16 |
 												(unsigned char) inSamples->q[1] << 8 |
 												(unsigned char) inSamples->q[2]) / 8388607.0f;
 			leftMicBuffer[samples] = rightMicBuffer[samples] = (float)(CFSwapInt16BigToHost(inSamples->mic)) / 32767.0f * micGain;
+            if(realSamples[samples] > 1.0f || imaginarySamples[samples] > 1.0f) {
+                NSLog(@"Samples exceed max: %f %f\n", realSamples[samples], imaginarySamples[samples]);
+            }
 			++samples;
 			
 			if(samples == DTTSP_BUFFER_SIZE) {
-				[sdr audioCallbackForThread: 0 realIn:leftInputBuffer imagIn:rightInputBuffer realOut:leftOutputBuffer imagOut:rightOutputBuffer size:DTTSP_BUFFER_SIZE];
+                [sdr processBlock:processingBlock];
+				//[sdr audioCallbackForThread: 0 realIn:leftInputBuffer imagIn:rightInputBuffer realOut:leftOutputBuffer imagOut:rightOutputBuffer size:DTTSP_BUFFER_SIZE];
 				
 				if(ptt == YES) {
 					// memset(rightMicBuffer, 0, DTTSP_BUFFER_SIZE);
@@ -247,8 +254,8 @@
 				}
 				
 				for(k = 0; k < DTTSP_BUFFER_SIZE; k += outputSampleIncrement) {
-					outBuffer[c].leftRx = CFSwapInt16HostToBig((int16_t)(leftOutputBuffer[k] * 32767.0f));
-					outBuffer[c].rightRx = CFSwapInt16HostToBig((int16_t)(rightOutputBuffer[k] * 32767.0f));
+					outBuffer[c].leftRx = CFSwapInt16HostToBig((int16_t)(realSamples[k] * 32767.0f));
+					outBuffer[c].rightRx = CFSwapInt16HostToBig((int16_t)(imaginarySamples[k] * 32767.0f));
 					
 					if(ptt == YES) {
 						outBuffer[c].leftTx = CFSwapInt16HostToBig((int16_t) (leftTxBuffer[k] * 32767.0f * txGain));
@@ -267,6 +274,7 @@
 				}
 								
 				samples = 0;
+                [processingBlock clearBlock];
 				
 			}
 		}

@@ -26,10 +26,14 @@
 	
 	NSRunLoop *runLoop;
 	BOOL running;
+    BOOL realtime;
 
 }
 
 @property (readonly) NSRunLoop *runLoop;
 @property BOOL running;
+@property (readonly) BOOL realtime;
+
+-(id)initWithRealtime:(BOOL)newRealtime;
 
 @end

@@ -25,13 +25,13 @@
 #import "XTHeterodyneHardwareDriver.h"
 #import "SystemAudio.h"
 #import "OzyRingBuffer.h"
-
-#include "dttsp.h"
-
+#import "XTSoftwareDefinedRadio.h"
+#import "XTDSPBlock.h"
 
 @implementation XTDTTSP
 
 @synthesize sampleRate;
+@synthesize mux;
 
 -(void)loadParams {
 	BOOL newSystemAudioState = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemAudio"];
@@ -54,25 +54,16 @@
 -(id)init {
 	self = [super init];
 	
-	if(self) {
-		Setup_SDR();
-		Release_Update();
-		SetTRX(0, FALSE); // thread 0 is for receive
-		SetTRX(1,TRUE);  // thread 1 is for transmit
-		SetThreadProcessingMode(0,2);
-		SetThreadProcessingMode(1,2);
-		SetSubRXSt(0, 0, TRUE);
-		
-		reset_for_buflen(0, 1024);
-		reset_for_buflen(1, 1024);
-		
+	if(self) {		
 		systemAudioState = NO;
 		
 		sampleBufferData = [NSMutableData dataWithLength:sizeof(float) * 2048];
 		sampleBuffer = (DSPComplex *) [sampleBufferData mutableBytes];
 		
 		sampleRate = 192000;
-		
+        
+        mainReciver = [[XTSoftwareDefinedRadio alloc] initWithSampleRate:(float) sampleRate];
+        processingBlock = [[XTDSPBlock alloc] initWithBlockSize:1024];
 
 	}
 	
@@ -102,9 +93,17 @@
 }
 
 -(void)audioCallbackForThread: (int)thread realIn:(float *)realIn imagIn:(float *)imagIn realOut:(float *)realOut imagOut:(float *)imagOut size:(int)size {
-	Audio_Callback(realIn, imagIn, realOut, imagOut, size, thread);
 	
 	if(thread != 0) return;
+    
+    [processingBlock clearBlock];
+    memcpy([processingBlock realElements], realIn, sizeof(float) * 1024);
+    memcpy([processingBlock imaginaryElements], imagIn, sizeof(float) * 1024);
+    
+    [mainReciver processComplexSamples:processingBlock];
+    
+    memcpy(realOut, [processingBlock realElements], sizeof(float) * 1024);
+    memcpy(imagOut, [processingBlock imaginaryElements], sizeof(float) * 1024);
 	
 	systemSamples.realp = realOut;
 	systemSamples.imagp = imagOut;
@@ -117,16 +116,30 @@
 	
 }
 
+-(void)processBlock:(XTDSPBlock *)block {
+    [mainReciver processComplexSamples:block];
+    
+    vDSP_ztoc([block signal], 1, sampleBuffer, 2, 1024);
+    if(audioThread.running == YES) {
+		[audioBuffer put:sampleBufferData];
+	}
+}
+
 -(void) resetDSP {
 }
 
 -(void)newSampleRate:(NSNotification *)notification {
 	NSObject <XTHeterodyneHardwareDriver> *interface = [notification object];
 	
-	[self setSampleRate:[interface sampleRate]];	
+	[self setSampleRate:[interface sampleRate]];
+	[mainReciver setSampleRate:(float)[interface sampleRate]];
 	
 	//  We should actually change the DTTSP sample rate here rather than in TranceiverController
 	//  This has to wait until wet get the DTTSP parameters on this object rather than over there
+}
+
+-(void)tapSpectrumWithRealData:(XTRealData *)data {
+    [mainReciver tapSpectrumWithRealData:data];
 }
 
 @end
