@@ -22,7 +22,7 @@
 
 #import "NNHOzyDriver.h"
 
-#import "XTDTTSP.h"
+#import "XTSoftwareDefinedRadio.h"
 #import "OzyInputBuffers.h"
 #import "OzyRingBuffer.h"
 
@@ -122,7 +122,7 @@
 	}
 }
 
--(id)initWithSDR:(XTDTTSP *)newSdr {
+-(id)initWithSDR:(XTSoftwareDefinedRadio *)newSdr {
 	self = [super init];
 	if(self) {
 		sdr = newSdr;

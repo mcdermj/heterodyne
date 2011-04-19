@@ -22,14 +22,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class XTDTTSP;
+@class XTSoftwareDefinedRadio;
 
 @protocol XTHeterodyneHardwareDriver
 
 @property (readonly) NSView *configWindow;
-//  This should be read only and the interface should control sample rate
 @property int sampleRate;
-@property XTDTTSP *sdr;
+@property XTSoftwareDefinedRadio *sdr;
 
 +(NSString *)name;
 +(float)version;
@@ -37,7 +36,7 @@
 +(NSImage *)icon;
 +(NSString *)IDString;
 
--(id)initWithSDR:(XTDTTSP *)sdr;
+-(id)initWithSDR:(XTSoftwareDefinedRadio *)sdr;
 
 -(BOOL)start;
 -(BOOL)stop;

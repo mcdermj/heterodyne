@@ -24,120 +24,112 @@
 
 #import <Accelerate/Accelerate.h>
 
-#include <OpenCl/cl_ext.h>
-
-#import "XTDSPAMDemodulator.h"
-#import "XTDSPModule.h"
-#import "XTDSPFixedGain.h"
+#import "XTReceiver.h"
 #import "XTDSPSpectrumTap.h"
-#import "XTDSPBandpassFilter.h"
-#import "XTDSPAutomaticGainControl.h"
-#import "XTWorkerThread.h"
+#import "XTDSPBlock.h"
+#import "OzyRingBuffer.h"
+#import "SystemAudio.h"
 
 @implementation XTSoftwareDefinedRadio
 
 @synthesize sampleRate;
 
--(id)init {
-	self = [super init];
-	if(self) {		
-		dspModules = [[NSMutableArray alloc] init];	
-		
-		spectrumTap = [[XTDSPSpectrumTap alloc] initWithSampleRate: sampleRate andSize: 4096];	
-		[dspModules addObject:spectrumTap];
-		ifFilter = [[XTDSPBandpassFilter alloc] initWithSize:1023
-												  sampleRate:sampleRate 
-												   lowCutoff:-6000.0 
-											   andHighCutoff:6000.0];
-		[dspModules addObject:ifFilter];
-		
-		agc = [[XTDSPAutomaticGainControl alloc] initWithSampleRate:sampleRate];
-		[dspModules addObject:agc];
-		
-		[dspModules addObject:[[XTDSPAMDemodulator alloc] init]];
-		
-		
-		//[dspModules addObject:[[XTDSPFixedGain alloc] initWithGain:0.05]];
-		
-		workerThread = [[XTWorkerThread alloc] initWithRealtime:YES];
-		
-		//[self initOpenCL]; 	
+-(void)loadParams {
+	BOOL newSystemAudioState = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemAudio"];
+	
+	if(newSystemAudioState == systemAudioState) return;
+	
+	if(newSystemAudioState == YES) {
+		audioBuffer = [[OzyRingBuffer alloc] initWithEntries:sizeof(float) * 2048 * 16 andName: @"audio"];
+		audioThread = [[SystemAudio alloc] initWithBuffer:audioBuffer andSampleRate: sampleRate];
+		[audioThread start];
 	}
-	return self;	
-}
-
--(void)awakeFromNib {
 	
-	// [dspModules addObject:[[XTDSPFixedGain alloc] initWithGain:100.0]];
+	if(newSystemAudioState == NO) {
+		[audioThread stop];
+	}
 	
-	NSLog(@"Module stack has %ld entries\n", [dspModules count]);
-	
-	[workerThread start];
-	
+	systemAudioState = newSystemAudioState;
 }
 
 -(id)initWithSampleRate: (float)initialSampleRate {
 	self = [super init];
 	if(self) {
 		sampleRate = initialSampleRate;
+        
+        systemAudioState = NO;
+		
+		sampleBufferData = [NSMutableData dataWithLength:sizeof(float) * 2048];
+		sampleBuffer = (DSPComplex *) [sampleBufferData mutableBytes];
 				
-		dspModules = [[NSMutableArray alloc] init];
+		receivers = [NSMutableArray arrayWithCapacity:1];
+        [receivers addObject:[[XTReceiver alloc] initWithSampleRate:sampleRate]];
 		
 		spectrumTap = [[XTDSPSpectrumTap alloc] initWithSampleRate: sampleRate andSize: 4096];
-		if(spectrumTap == NULL || spectrumTap == nil) {
-			NSLog(@"SpectrumTap didn't allocate\n");
-		}
-		
-		[dspModules addObject:spectrumTap];
-		[dspModules addObject:[[XTDSPBandpassFilter alloc] initWithSize:1024
-															 sampleRate:sampleRate 
-															  lowCutoff:0.0f 
-														  andHighCutoff:2700.0f]];
-        [dspModules addObject:[[XTDSPAutomaticGainControl alloc] initWithSampleRate:sampleRate]];
-
-		// [dspModules addObject:[[XTDSPAMDemodulator alloc] init]];
-		//[dspModules addObject:[[XTDSPFixedGain alloc] initWithGain:0.25f]];
-		
-		NSLog(@"Module stack has %ld entries\n", [dspModules count]);
-		
-		workerThread = [[XTWorkerThread alloc] initWithRealtime:YES];
-		[workerThread start];
-		
-		//[self initOpenCL]; 
+        
+        receiverCondition = [[NSCondition alloc] init];
 	}
 	return self;
 }
 
+-(void)start {
+	[self loadParams];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector: @selector(loadParams) 
+												 name: NSUserDefaultsDidChangeNotification 
+											   object: nil];	
+}
+
+-(void)stop {
+	systemAudioState = NO;
+	[audioThread stop];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath: NSUserDefaultsDidChangeNotification];
+}
+
+-(void)completionCallback {
+    [receiverCondition lock];
+    --pendingReceivers;
+    [receiverCondition signal];
+    [receiverCondition unlock];
+}
+
 -(void)processComplexSamples: (XTDSPBlock *)complexData {
-	for(XTDSPModule *module in dspModules) {
-		BOOL wait = [dspModules lastObject] == module ? YES : NO;
-		
-		[module performSelector: @selector(performWithComplexSignal:) 
-					   onThread: workerThread 
-					 withObject: complexData
-				  waitUntilDone: wait];
-	}	
+    [spectrumTap performWithComplexSignal:complexData];
+    
+    [receiverCondition lock];
+    
+    pendingReceivers = [receivers count];
+    
+    for(XTReceiver *receiver in receivers) 
+        [receiver processComplexSamples:complexData withCompletionSelector:@selector(completionCallback) onObject:self];
+
+    while(pendingReceivers > 0)
+        [receiverCondition wait];
+    
+    [receiverCondition unlock];
+    
+    //  Copy signal into the audio buffer
+    if(audioThread.running == YES) {
+        //  XXX Check for overflow of sample buffer!
+        vDSP_ztoc([complexData signal], 1, sampleBuffer, 2, [complexData blockSize]);
+		[audioBuffer put:sampleBufferData];
+	}
 }
 
 -(void)tapSpectrumWithRealData: (XTRealData *)spectrumData {
 	[spectrumTap tapBufferWithRealData:spectrumData];
 }
 
--(void)setHighCut: (float)highCutoff {
-	[ifFilter setHighCut:highCutoff];
-}
-
--(void)setLowCut: (float)lowCutoff {
-	[ifFilter setLowCut:lowCutoff];
-}
-
 -(void)setSampleRate:(float)newSampleRate {
 	sampleRate = newSampleRate;
-	for(XTDSPModule *module in dspModules) {
-		[module setSampleRate:newSampleRate];
+	for(XTReceiver *receiver in receivers) {
+		[receiver setSampleRate:newSampleRate];
 	}
 }
 
+/*
 -(void)initOpenCL {
 	int openClError;
 	cl_device_id openClDevices[10];
@@ -188,6 +180,6 @@
 		NSLog(@"Couldn't create an OpenCL Context: %d\n", openClError);
 		return;
 	}
-}
+} */
 
 @end

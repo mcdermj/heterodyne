@@ -22,7 +22,7 @@
 
 #import "NNHMetisDriver.h"
 
-#import "XTDTTSP.h"
+#import "XTSoftwareDefinedRadio.h"
 #import "XTDSPBlock.h"
 
 #include <arpa/inet.h>
@@ -93,7 +93,7 @@
 	}
 }
 
--(id)initWithSDR:(XTDTTSP *)newSdr
+-(id)initWithSDR:(XTSoftwareDefinedRadio *)newSdr
 {
 	self = [super init];
 	
@@ -268,12 +268,11 @@
 			++samples;
 			
 			if(samples == DTTSP_BUFFER_SIZE) {
-                [sdr processBlock:processingBlock];
-				//[sdr audioCallbackForThread: 0 realIn:leftInputBuffer imagIn:rightInputBuffer realOut:leftOutputBuffer imagOut:rightOutputBuffer size:DTTSP_BUFFER_SIZE];
+                [sdr processComplexSamples:processingBlock];
 				
 				if(ptt == YES) {
 					// memset(rightMicBuffer, 0, DTTSP_BUFFER_SIZE);
-					[sdr audioCallbackForThread: 1 realIn:leftMicBuffer imagIn:rightMicBuffer realOut:leftTxBuffer imagOut:rightTxBuffer size:DTTSP_BUFFER_SIZE];
+					// [sdr audioCallbackForThread: 1 realIn:leftMicBuffer imagIn:rightMicBuffer realOut:leftTxBuffer imagOut:rightTxBuffer size:DTTSP_BUFFER_SIZE];
 				}
 				
 				for(k = 0; k < DTTSP_BUFFER_SIZE; k += outputSampleIncrement) {

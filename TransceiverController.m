@@ -26,7 +26,7 @@
 #import "XTSMeterView.h"
 #import "XTPanadapterDataMUX.h"
 
-#import "XTDTTSP.h"
+#import "XTSoftwareDefinedRadio.h"
 
 @implementation TransceiverController
 
@@ -90,7 +90,8 @@
 		Class principalClass;
 		NSMutableArray *tempDrivers = [NSMutableArray array];
 		
-		sdr = [[XTDTTSP alloc] init];
+        // XXX Correct sample rate here?
+		sdr = [[XTSoftwareDefinedRadio alloc] initWithSampleRate:192000];
         
 		filterCalibrationOffset = 3.0f * (11.0f - log10f(1024.0f));
 		preampOffset = -20.0;
@@ -111,7 +112,6 @@
 		}
 		drivers = [NSArray arrayWithArray:tempDrivers];
 		
-		//  Needs to get from defaults
 		NSString *savedDriver = [[NSUserDefaults standardUserDefaults] objectForKey:@"activeHardwareDriver"];
 		if(savedDriver == nil) {
 			NSLog(@"[%@ %s]:  No driver in defaults, selecting first driver discovered\n", [self class], (char *) _cmd);

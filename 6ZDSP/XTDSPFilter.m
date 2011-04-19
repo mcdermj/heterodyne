@@ -57,6 +57,7 @@
 }
 
 -(void)performWithComplexSignal: (XTDSPBlock *)signal {
+    // NSLog(@"[%@ %s] Peforming filter\n", [self class], (char *) _cmd);
 	[signal performFFT:kFFTDirection_Forward];
 	
 	//  We must get a lock on the kernel so that if it's being changed due

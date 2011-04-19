@@ -243,12 +243,12 @@
     float decayTime = 1000.0f;
     int decaySamples = (int)((decayTime / 1000.0f) * sampleRate);
     float decayFactor = 1.0f - expf(-5.0f / (float) decaySamples);
+    
+    float attackTime = 1.0f;
+    int attackSamples = (int)((attackTime / 1000.0f) * sampleRate);
+    float attackFactor = 1.0f - expf(5.0f / (float) attackSamples);
 
-    for(int i = 0; i < [signal blockSize]; ++i) {
-/*        float scaleFactor = fminf([fastDetector calculateGain], fminf(slope * [slowDetector calculateGain], maxGain));
-        [signal realElements][i] = realElements[index] * scaleFactor;
-        [signal imaginaryElements][i] = imaginaryElements[index] * scaleFactor; */
-        
+    for(int i = 0; i < [signal blockSize]; ++i) {        
         float gain;
         
         mag = hypotf([signal realElements][i], [signal imaginaryElements][i]);
@@ -259,8 +259,6 @@
                 [self performSelectorOnMainThread:@selector(setLED:) withObject:[NSNumber numberWithBool:YES] waitUntilDone:NO];
                 active = YES;
             }
-            // XXX Send notification for indicator here
-            // NSLog(@"AGC Active, applying gain of %f for level %f(%f), values %f %f\n", gain, valueToDb(mag), mag, [signal realElements][i], [signal imaginaryElements][i]);
         } else {
             if(active) {
                 [self performSelectorOnMainThread:@selector(setLED:) withObject:[NSNumber numberWithBool:NO] waitUntilDone:NO];
@@ -272,7 +270,7 @@
         
         if(gain < currentGain) {
             // Attack
-            currentGain = gain;
+            currentGain = currentGain - ((gain - currentGain) * attackFactor);
             hang = 0;
         } else {
             // Decay

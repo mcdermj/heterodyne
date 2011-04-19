@@ -87,13 +87,14 @@ kern_return_t   thread_policy_set(
 
 #define DTTSP_BUFFER_SIZE 1024
 
-@class XDTTSP;
+@class XTSoftwareDefinedRadio;
 @class OzyInputBuffers;
 @class OzyRingBuffer;
+@class XTSoftwareDefinedRadio;
 
 @interface NNHOzyDriver : NSObject <XTHeterodyneHardwareDriver> {
 	
-	XTDTTSP *sdr;
+	XTSoftwareDefinedRadio *sdr;
 	
 	int outputSampleIncrement;
 	int headerSequence;
@@ -201,7 +202,7 @@ kern_return_t   thread_policy_set(
 @property (readonly) NSString *fx2Version;
 
 
--(id)initWithSDR:(XTDTTSP *)sdr;
+-(id)initWithSDR:(XTSoftwareDefinedRadio *)sdr;
 
 @end
 

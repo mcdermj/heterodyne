@@ -43,7 +43,7 @@
 #define AGC_MED 3
 #define AGC_FAST 4
 
-@class XTDTTSP;
+@class XTSoftwareDefinedRadio;
 @class XTWorkerThread;
 @class XTSMeterView;
 @class XTPanadapterDataMUX;
@@ -107,7 +107,7 @@
 	NSMutableDictionary *bandPlan;
 	
 	XTWorkerThread *updateThread;
-	XTDTTSP *sdr;
+	XTSoftwareDefinedRadio *sdr;
 	id<XTHeterodyneHardwareDriver> interface;
 	
 	IBOutlet NSWindow *prefsPane;

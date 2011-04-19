@@ -22,28 +22,30 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <OpenCL/OpenCL.h>
+#import <Accelerate/Accelerate.h>
 
 @class XTDSPBlock;
-@class XTWorkerThread;
 @class XTDSPSpectrumTap;
-@class XTDSPBandpassFilter;
-@class XTDSPAutomaticGainControl;
 @class XTRealData;
+@class SystemAudio;
+@class OzyRingBuffer;
 
 @interface XTSoftwareDefinedRadio : NSObject {
 	
-	NSMutableArray *dspModules;
-	
-	XTWorkerThread *workerThread;
+	NSMutableArray *receivers;
+    NSCondition *receiverCondition;
+    int pendingReceivers;
 	
 	float sampleRate;
 	
 	XTDSPSpectrumTap *spectrumTap;
-	XTDSPBandpassFilter *ifFilter;
-	XTDSPAutomaticGainControl *agc;
-	
-	cl_context openClContext;
+    
+    BOOL systemAudioState;
+    SystemAudio *audioThread;
+    OzyRingBuffer *audioBuffer;
+    
+    NSMutableData *sampleBufferData;
+	DSPComplex *sampleBuffer;
 }
 
 @property float sampleRate;
@@ -51,10 +53,7 @@
 -(id)initWithSampleRate: (float)initialSampleRate;
 -(void)processComplexSamples: (XTDSPBlock *)complexData;
 -(void)tapSpectrumWithRealData:(XTRealData *)spectrumData;
-
--(void)setHighCut:(float)highCutoff;
--(void)setLowCut:(float)lowCutoff;
-
--(void)initOpenCL;
+-(void)start;
+-(void)stop;
 
 @end

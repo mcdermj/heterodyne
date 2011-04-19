@@ -125,7 +125,7 @@ typedef struct _metisProgramReply {
     char padding[51];
 } __attribute__((packed)) MetisProgramReply;
 
-@class XTDTTSP;
+@class XTSoftwareDefinedRadio;
 @class XTDSPBlock;
 
 @interface NNHMetisDriver: NSObject <XTHeterodyneHardwareDriver> {
@@ -200,7 +200,7 @@ typedef struct _metisProgramReply {
 	
 	BOOL running;
 	
-	XTDTTSP *sdr;
+	XTSoftwareDefinedRadio *sdr;
 	
 	IBOutlet NSView *configWindow;
     
@@ -215,7 +215,7 @@ typedef struct _metisProgramReply {
     char latestFirmware;
 }
 
--(id)initWithSDR:(XTDTTSP *)newSdr;
+-(id)initWithSDR:(XTSoftwareDefinedRadio *)newSdr;
 
 -(IBAction)doUpgradeMetis:(id)sender;
 

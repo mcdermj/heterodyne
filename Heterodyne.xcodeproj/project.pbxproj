@@ -51,8 +51,6 @@
 		0957652B12A82BFA0099B615 /* XTUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957651512A82B6A0099B615 /* XTUtils.framework */; };
 		0957652C12A82C080099B615 /* XTUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957651512A82B6A0099B615 /* XTUtils.framework */; };
 		0957655412A82DF30099B615 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09280EF41138D6AC007E1911 /* Accelerate.framework */; };
-		0957655B12A831D40099B615 /* XTDTTSP.h in Headers */ = {isa = PBXBuildFile; fileRef = 0957655912A831D40099B615 /* XTDTTSP.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0957655C12A831D40099B615 /* XTDTTSP.m in Sources */ = {isa = PBXBuildFile; fileRef = 0957655A12A831D40099B615 /* XTDTTSP.m */; };
 		0957659812A838340099B615 /* XTAudioUnitGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 095452461227AAAA000E6380 /* XTAudioUnitGraph.h */; };
 		0957659912A838340099B615 /* XTAudioUnitGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 095452471227AAAA000E6380 /* XTAudioUnitGraph.m */; };
 		0957659A12A838340099B615 /* XTAudioUnitNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0954525B1227B43D000E6380 /* XTAudioUnitNode.h */; };
@@ -115,6 +113,8 @@
 		097A255C112FE97C000E8478 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 097A255B112FE97C000E8478 /* dsa_pub.pem */; };
 		09946D7113428C750052C43F /* XTDSPComplexRingBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 09946D6F13428C740052C43F /* XTDSPComplexRingBuffer.h */; };
 		09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */; };
+		09C25572135E1F4F006DFE7B /* XTReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C25570135E1F4E006DFE7B /* XTReceiver.h */; };
+		09C25573135E1F50006DFE7B /* XTReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C25571135E1F4F006DFE7B /* XTReceiver.m */; };
 		09C2E3BC112372E100FBD312 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C2E3BB112372E100FBD312 /* CoreFoundation.framework */; };
 		09D320441317084C00E0D88B /* XTAudioUnits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
 		09D320671317087800E0D88B /* XTAudioUnits.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
@@ -262,8 +262,6 @@
 		0957642412A7F5D10099B615 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0957642C12A8067C0099B615 /* XTHeterodyneHardwareDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTHeterodyneHardwareDriver.h; sourceTree = "<group>"; };
 		0957651512A82B6A0099B615 /* XTUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XTUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0957655912A831D40099B615 /* XTDTTSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDTTSP.h; sourceTree = "<group>"; };
-		0957655A12A831D40099B615 /* XTDTTSP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDTTSP.m; sourceTree = "<group>"; };
 		0957658E12A838080099B615 /* XTAudioUnits.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XTAudioUnits.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0957658F12A838080099B615 /* XTAudioUnits-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XTAudioUnits-Info.plist"; sourceTree = "<group>"; };
 		09662DB511328A1600DE74C5 /* BGHUDAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BGHUDAppKit.framework; sourceTree = "<group>"; };
@@ -311,6 +309,8 @@
 		097A255B112FE97C000E8478 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		09946D6F13428C740052C43F /* XTDSPComplexRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPComplexRingBuffer.h; sourceTree = "<group>"; };
 		09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPComplexRingBuffer.m; sourceTree = "<group>"; };
+		09C25570135E1F4E006DFE7B /* XTReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTReceiver.h; sourceTree = "<group>"; };
+		09C25571135E1F4F006DFE7B /* XTReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTReceiver.m; sourceTree = "<group>"; };
 		09C2E3BB112372E100FBD312 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		09C2E3BD112372E100FBD312 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		09CE54AF122A6CBC00C3A8F2 /* XTAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTAudioComponent.h; sourceTree = "<group>"; };
@@ -454,8 +454,6 @@
 				094EDDB51331083F007C4367 /* XTSMeterView.m */,
 				09F0AD551185C07900E7F6F4 /* XTMainWindow.m */,
 				0957642C12A8067C0099B615 /* XTHeterodyneHardwareDriver.h */,
-				0957655912A831D40099B615 /* XTDTTSP.h */,
-				0957655A12A831D40099B615 /* XTDTTSP.m */,
 				09D3210913185A6400E0D88B /* XTImageTextCell.h */,
 				09D3210A13185A6400E0D88B /* XTImageTextCell.m */,
 			);
@@ -522,6 +520,8 @@
 				0979F5D41340610900F67E20 /* XTDSPBlock.h */,
 				0979F5D51340610900F67E20 /* XTDSPBlock.m */,
 				0979F5D61340610900F67E20 /* XTDSPDemodulator.h */,
+				09C25570135E1F4E006DFE7B /* XTReceiver.h */,
+				09C25571135E1F4F006DFE7B /* XTReceiver.m */,
 				0979F5D71340610900F67E20 /* XTDSPDemodulator.m */,
 				0979F5D81340610900F67E20 /* XTDSPFilter.h */,
 				0979F5D91340610900F67E20 /* XTDSPFilter.m */,
@@ -670,7 +670,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0957643D12A809770099B615 /* XTHeterodyneHardwareDriver.h in Headers */,
-				0957655B12A831D40099B615 /* XTDTTSP.h in Headers */,
 				0978BE3713219D0600B8976C /* SystemAudio.h in Headers */,
 				094EDDB613310842007C4367 /* XTSMeterView.h in Headers */,
 				0979F5EC1340610900F67E20 /* XTBlackmanHarrisWindow.h in Headers */,
@@ -688,6 +687,7 @@
 				0979F6041340610900F67E20 /* XTRealData.h in Headers */,
 				0979F6061340610900F67E20 /* XTSoftwareDefinedRadio.h in Headers */,
 				0979F6081340610900F67E20 /* XTSplitComplexData.h in Headers */,
+				09C25572135E1F4F006DFE7B /* XTReceiver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,7 +977,6 @@
 				09F467CC1149FA47003EEA61 /* XTWaterfallLayer.m in Sources */,
 				09F46878114A18FB003EEA61 /* XTPanadapterLayer.m in Sources */,
 				09F0AD561185C07900E7F6F4 /* XTMainWindow.m in Sources */,
-				0957655C12A831D40099B615 /* XTDTTSP.m in Sources */,
 				0978BCD31320C43200B8976C /* SystemAudio.m in Sources */,
 				094EDDB713310842007C4367 /* XTSMeterView.m in Sources */,
 				0979F5ED1340610900F67E20 /* XTBlackmanHarrisWindow.m in Sources */,
@@ -994,6 +993,7 @@
 				0979F6071340610900F67E20 /* XTSoftwareDefinedRadio.m in Sources */,
 				0979F6091340610900F67E20 /* XTSplitComplexData.m in Sources */,
 				09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */,
+				09C25573135E1F50006DFE7B /* XTReceiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1328,6 +1328,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Heterodyne_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
