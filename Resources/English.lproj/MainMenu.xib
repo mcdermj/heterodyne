@@ -11,10 +11,10 @@
 			<string key="com.binarymethod.BGHUDAppKitPlugin">1</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="29"/>
-			<integer value="1352"/>
 			<integer value="1127"/>
+			<integer value="29"/>
 			<integer value="1753"/>
+			<integer value="1352"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -489,7 +489,7 @@
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
 			</object>
 			<object class="NSCustomObject" id="976324537">
-				<string key="NSClassName">MacHPSDRAppDelegate</string>
+				<string key="NSClassName">HeterodyneAppDelegate</string>
 			</object>
 			<object class="NSCustomObject" id="755631768">
 				<string key="NSClassName">NSFontManager</string>
@@ -5416,62 +5416,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBDocumentRelativeSource</string>
 						<string key="minorKey">../../AboutBoxView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MacHPSDRAppDelegate</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="doAbout:">id</string>
-						<string key="showMainReceiver:">id</string>
-						<string key="showSubReceiver:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="doAbout:">
-							<string key="name">doAbout:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showMainReceiver:">
-							<string key="name">showMainReceiver:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showSubReceiver:">
-							<string key="name">showSubReceiver:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="aboutPane">NSPanel</string>
-						<string key="mainReceiver">NSPanel</string>
-						<string key="subReceiver">NSPanel</string>
-						<string key="transceiver">TransceiverController</string>
-						<string key="window">NSWindow</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="aboutPane">
-							<string key="name">aboutPane</string>
-							<string key="candidateClassName">NSPanel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="mainReceiver">
-							<string key="name">mainReceiver</string>
-							<string key="candidateClassName">NSPanel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="subReceiver">
-							<string key="name">subReceiver</string>
-							<string key="candidateClassName">NSPanel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="transceiver">
-							<string key="name">transceiver</string>
-							<string key="candidateClassName">TransceiverController</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="window">
-							<string key="name">window</string>
-							<string key="candidateClassName">NSWindow</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBDocumentRelativeSource</string>
-						<string key="minorKey">../../MacHPSDRAppDelegate.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

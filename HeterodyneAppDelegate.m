@@ -20,10 +20,12 @@
 
 // $Id$
 
-#import "MacHPSDRAppDelegate.h"
+#import "HeterodyneAppDelegate.h"
 #import "XTHeterodyneHardwareDriver.h"
+#import "TransceiverController.h"
+#import "XTMainWindow.h"
 
-@implementation MacHPSDRAppDelegate
+@implementation HeterodyneAppDelegate
 
 @synthesize window;
 

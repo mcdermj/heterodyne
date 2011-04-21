@@ -75,7 +75,7 @@
 -(void)start {
 	[self loadParams];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self 
+	[[NSNotificationCenter defaultCenter] addObserver: self 
 											 selector: @selector(loadParams) 
 												 name: NSUserDefaultsDidChangeNotification 
 											   object: nil];	

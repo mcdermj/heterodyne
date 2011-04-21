@@ -26,8 +26,6 @@
 
 @interface XTDSPModule : NSObject {
 	float sampleRate;
-	
-	int foo;
 }
 
 @property float sampleRate;

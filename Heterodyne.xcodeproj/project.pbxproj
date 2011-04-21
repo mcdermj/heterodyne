@@ -115,6 +115,10 @@
 		09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */; };
 		09C25572135E1F4F006DFE7B /* XTReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C25570135E1F4E006DFE7B /* XTReceiver.h */; };
 		09C25573135E1F50006DFE7B /* XTReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C25571135E1F4F006DFE7B /* XTReceiver.m */; };
+		09C25578135F9FBD006DFE7B /* XTDSPComplexOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C25574135F9F04006DFE7B /* XTDSPComplexOscillator.h */; };
+		09C25579135F9FBD006DFE7B /* XTDSPComplexOscillator.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C25575135F9F08006DFE7B /* XTDSPComplexOscillator.m */; };
+		09C2557E135FA8BB006DFE7B /* XTDSPComplexMixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 09C2557A135FA8B0006DFE7B /* XTDSPComplexMixer.h */; };
+		09C2557F135FA8BB006DFE7B /* XTDSPComplexMixer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C2557B135FA8B1006DFE7B /* XTDSPComplexMixer.m */; };
 		09C2E3BC112372E100FBD312 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C2E3BB112372E100FBD312 /* CoreFoundation.framework */; };
 		09D320441317084C00E0D88B /* XTAudioUnits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
 		09D320671317087800E0D88B /* XTAudioUnits.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 0957658E12A838080099B615 /* XTAudioUnits.framework */; };
@@ -141,7 +145,7 @@
 		09F46878114A18FB003EEA61 /* XTPanadapterLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F46877114A18FB003EEA61 /* XTPanadapterLayer.m */; };
 		09FAB2561128BB8B000119AB /* TransceiverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FAB2551128BB8B000119AB /* TransceiverController.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		256AC3DA0F4B6AC300CF3369 /* MacHPSDRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MacHPSDRAppDelegate.m */; };
+		256AC3DA0F4B6AC300CF3369 /* HeterodyneAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* HeterodyneAppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -311,6 +315,10 @@
 		09946D7013428C740052C43F /* XTDSPComplexRingBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPComplexRingBuffer.m; sourceTree = "<group>"; };
 		09C25570135E1F4E006DFE7B /* XTReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTReceiver.h; sourceTree = "<group>"; };
 		09C25571135E1F4F006DFE7B /* XTReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTReceiver.m; sourceTree = "<group>"; };
+		09C25574135F9F04006DFE7B /* XTDSPComplexOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPComplexOscillator.h; sourceTree = "<group>"; };
+		09C25575135F9F08006DFE7B /* XTDSPComplexOscillator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPComplexOscillator.m; sourceTree = "<group>"; };
+		09C2557A135FA8B0006DFE7B /* XTDSPComplexMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTDSPComplexMixer.h; sourceTree = "<group>"; };
+		09C2557B135FA8B1006DFE7B /* XTDSPComplexMixer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTDSPComplexMixer.m; sourceTree = "<group>"; };
 		09C2E3BB112372E100FBD312 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		09C2E3BD112372E100FBD312 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		09CE54AF122A6CBC00C3A8F2 /* XTAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTAudioComponent.h; sourceTree = "<group>"; };
@@ -350,8 +358,8 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		256AC3D80F4B6AC300CF3369 /* MacHPSDRAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacHPSDRAppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* MacHPSDRAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacHPSDRAppDelegate.m; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* HeterodyneAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeterodyneAppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* HeterodyneAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeterodyneAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* Heterodyne_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heterodyne_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -429,8 +437,8 @@
 			children = (
 				097A24BD112FD524000E8478 /* AboutBoxView.h */,
 				097A24BE112FD524000E8478 /* AboutBoxView.m */,
-				256AC3D80F4B6AC300CF3369 /* MacHPSDRAppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* MacHPSDRAppDelegate.m */,
+				256AC3D80F4B6AC300CF3369 /* HeterodyneAppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* HeterodyneAppDelegate.m */,
 				09FAB2541128BB8B000119AB /* TransceiverController.h */,
 				09FAB2551128BB8B000119AB /* TransceiverController.m */,
 				09422F74112B96AE004937FC /* SystemAudio.h */,
@@ -522,7 +530,11 @@
 				0979F5D61340610900F67E20 /* XTDSPDemodulator.h */,
 				09C25570135E1F4E006DFE7B /* XTReceiver.h */,
 				09C25571135E1F4F006DFE7B /* XTReceiver.m */,
+				09C25574135F9F04006DFE7B /* XTDSPComplexOscillator.h */,
+				09C25575135F9F08006DFE7B /* XTDSPComplexOscillator.m */,
 				0979F5D71340610900F67E20 /* XTDSPDemodulator.m */,
+				09C2557A135FA8B0006DFE7B /* XTDSPComplexMixer.h */,
+				09C2557B135FA8B1006DFE7B /* XTDSPComplexMixer.m */,
 				0979F5D81340610900F67E20 /* XTDSPFilter.h */,
 				0979F5D91340610900F67E20 /* XTDSPFilter.m */,
 				0979F5DA1340610900F67E20 /* XTDSPFixedGain.h */,
@@ -688,6 +700,8 @@
 				0979F6061340610900F67E20 /* XTSoftwareDefinedRadio.h in Headers */,
 				0979F6081340610900F67E20 /* XTSplitComplexData.h in Headers */,
 				09C25572135E1F4F006DFE7B /* XTReceiver.h in Headers */,
+				09C25578135F9FBD006DFE7B /* XTDSPComplexOscillator.h in Headers */,
+				09C2557E135FA8BB006DFE7B /* XTDSPComplexMixer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,7 +980,7 @@
 			files = (
 				09D321511318747D00E0D88B /* XTImageTextCell.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* MacHPSDRAppDelegate.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* HeterodyneAppDelegate.m in Sources */,
 				09FAB2561128BB8B000119AB /* TransceiverController.m in Sources */,
 				0942372D112D4174004937FC /* XTPanAdapterView.m in Sources */,
 				09423732112D41FB004937FC /* XTWaterfallView.m in Sources */,
@@ -994,6 +1008,8 @@
 				0979F6091340610900F67E20 /* XTSplitComplexData.m in Sources */,
 				09946D7313443EED0052C43F /* XTDSPComplexRingBuffer.m in Sources */,
 				09C25573135E1F50006DFE7B /* XTReceiver.m in Sources */,
+				09C25579135F9FBD006DFE7B /* XTDSPComplexOscillator.m in Sources */,
+				09C2557F135FA8BB006DFE7B /* XTDSPComplexMixer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

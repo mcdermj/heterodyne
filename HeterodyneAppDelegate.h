@@ -22,11 +22,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "TransceiverController.h"
-#import "AboutBoxView.h"
-#import "XTMainWindow.h"
+@class TransceiverController;
+@class XTMainWindow;
 
-@interface MacHPSDRAppDelegate : NSObject <NSApplicationDelegate> {
+@interface HeterodyneAppDelegate : NSObject <NSApplicationDelegate> {
     XTMainWindow *window;
 	
 	IBOutlet TransceiverController *transceiver;
