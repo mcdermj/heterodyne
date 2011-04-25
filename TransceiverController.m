@@ -25,7 +25,7 @@
 #import "XTImageTextCell.h"
 #import "XTSMeterView.h"
 #import "XTPanadapterDataMUX.h"
-
+#import "XTReceiver.h"
 #import "XTSoftwareDefinedRadio.h"
 
 @implementation TransceiverController
@@ -460,7 +460,7 @@
 	[interface setFrequency:theFrequency forReceiver:0];
 	[self didChangeValueForKey:@"frequency"];
 	
-	diffFrequency = frequency - subFrequency;
+	diffFrequency = subFrequency - frequency;
 	if(abs(diffFrequency) > sampleRate / 2) {
 		[self willChangeValueForKey:@"subFrequency"];
 		if(subFrequency > frequency) {
@@ -469,8 +469,9 @@
 			subFrequency = frequency - (sampleRate / 2);
 		}
 		[self didChangeValueForKey:@"subFrequency"];
-		diffFrequency = frequency - subFrequency;
-	}
+        diffFrequency = subFrequency - frequency;
+    }
+    [[[sdr receivers] objectAtIndex:1] setFrequency:(float) diffFrequency];
 }
 
 -(void)setAGC:(int) theAGCSetting {
@@ -513,7 +514,7 @@
 -(void)setSubFrequency:(int) theFrequency {
 	int diffFrequency;
 	
-	diffFrequency = frequency - theFrequency;
+	diffFrequency = theFrequency - frequency;
 	
 	if(abs(diffFrequency) > sampleRate / 2) {
 		NSLog(@"Subreciever Frequency %d out of passband for main frequency %d\n", theFrequency, frequency);
@@ -522,12 +523,14 @@
 	
 	[self willChangeValueForKey:@"subFrequency"];
 	subFrequency = theFrequency;
+    [[[sdr receivers] objectAtIndex:1] setFrequency:(float) diffFrequency];
 	[self didChangeValueForKey:@"subFrequency"];
 }
 
 -(void)setSubEnabled:(BOOL) isEnabled {
 	[self willChangeValueForKey:@"subEnabled"];
 	subEnabled = isEnabled;
+    [self setSubFrequency:subFrequency];
 	[self didChangeValueForKey:@"subEnabled"];
 	if(isEnabled == NO) {
 		self.subMeterReading = -70.0;
@@ -556,58 +559,70 @@
 }
 
 -(void)setFilterHigh:(double) theFilterHighValue {
-	[self willChangeValueForKey:@"filterHigh"];
-	if(filterHigh == theFilterHighValue) return;
+    if(filterHigh == theFilterHighValue) return;
+	
+    [self willChangeValueForKey:@"filterHigh"];
 	
 	filterHigh = theFilterHighValue;
 	if(filterSymmetry == TRUE) {
 		[self willChangeValueForKey:@"filterLow"];
 		filterLow = filterHigh;
+        [[[sdr receivers] objectAtIndex:0] setLowCut:filterLow];
 		[self didChangeValueForKey:@"filterLow"];
 	}
+    
+    [[[sdr receivers] objectAtIndex:0] setHighCut:filterHigh];
 
 	[self didChangeValueForKey:@"filterHigh"];
 }
 
 -(void)setFilterLow:(double) _filterLow {
-	[self willChangeValueForKey:@"filterLow"];
 	if(filterLow == _filterLow) return;
+    
+	[self willChangeValueForKey:@"filterLow"];
 	
 	filterLow = _filterLow;
 	if(filterSymmetry == TRUE) {
 		[self willChangeValueForKey:@"filterHigh"];
 		filterHigh = -filterLow;
+        [[[sdr receivers] objectAtIndex:0] setHighCut:filterHigh];
 		[self didChangeValueForKey:@"filterHigh"];
 	}
+    
+    [[[sdr receivers] objectAtIndex:0] setLowCut:filterLow];
 
 	[self didChangeValueForKey:@"filterLow"];
 }
 
 -(void)setSubFilterHigh:(double) theFilterHighValue {
 	[self willChangeValueForKey:@"subFilterHigh"];
-	if(subFilterHigh == theFilterHighValue) return;
+	// if(subFilterHigh == theFilterHighValue) return;
 	
 	subFilterHigh = theFilterHighValue;
 	if(filterSymmetry == TRUE) {
 		[self willChangeValueForKey:@"subFilterLow"];
 		subFilterLow = -subFilterHigh;
+        [[[sdr receivers] objectAtIndex:1] setLowCut:subFilterLow];
 		[self didChangeValueForKey:@"subFilterLow"];
 	}
 	
+    [[[sdr receivers] objectAtIndex:1] setHighCut:subFilterHigh];
 	[self didChangeValueForKey:@"subFilterHigh"];
 }
 
 -(void)setSubFilterLow:(double) theFilterValue {
 	[self willChangeValueForKey:@"subFilterLow"];
-	if(subFilterLow == theFilterValue) return;
+	// if(subFilterLow == theFilterValue) return;
 	
 	subFilterLow = theFilterValue;
 	if(filterSymmetry == TRUE) {
 		[self willChangeValueForKey:@"subFilterHigh"];
 		subFilterHigh = -subFilterLow;
+        [[[sdr receivers] objectAtIndex:1] setHighCut:subFilterHigh];
 		[self didChangeValueForKey:@"subFilterHigh"];
 	}
 	
+    [[[sdr receivers] objectAtIndex:1] setLowCut:subFilterLow];
 	[self didChangeValueForKey:@"subFilterLow"];
 }
 

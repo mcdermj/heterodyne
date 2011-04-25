@@ -71,4 +71,19 @@
 	signal.imagp = [imaginary elements];
 }
 
+-(void)copyTo:(XTDSPBlock *)destBlock {
+    [destBlock clearBlock];
+    
+    vDSP_zvmov(&signal, 1, [destBlock signal], 1, blockSize);
+}
+
+-(id)copyWithZone:(NSZone *)zone {
+    XTDSPBlock *copy = [[[self class] allocWithZone: zone] initWithBlockSize:blockSize];
+    
+    [copy clearBlock];
+    vDSP_zvmov(&signal, 1, [copy signal], 1, blockSize);
+    
+    return copy;
+}
+
 @end

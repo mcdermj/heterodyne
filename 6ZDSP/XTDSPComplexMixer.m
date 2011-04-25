@@ -36,6 +36,7 @@
     if([oscillatorBlock blockSize] != [signal blockSize]) 
         oscillatorBlock = [XTDSPBlock dspBlockWithBlockSize:[signal blockSize]];
     
+    [oscillatorBlock clearBlock];
     [oscillator performWithComplexSignal:oscillatorBlock];
     
     vDSP_zvmul([signal signal], 1, [oscillatorBlock signal], 1, [signal signal], 1, [signal blockSize], 1);

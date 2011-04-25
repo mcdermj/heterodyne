@@ -33,6 +33,7 @@
 @implementation XTSoftwareDefinedRadio
 
 @synthesize sampleRate;
+@synthesize receivers;
 
 -(void)loadParams {
 	BOOL newSystemAudioState = [[NSUserDefaults standardUserDefaults] boolForKey:@"systemAudio"];
@@ -62,7 +63,8 @@
 		sampleBufferData = [NSMutableData dataWithLength:sizeof(float) * 2048];
 		sampleBuffer = (DSPComplex *) [sampleBufferData mutableBytes];
 				
-		receivers = [NSMutableArray arrayWithCapacity:1];
+		receivers = [NSMutableArray arrayWithCapacity:2];
+        [receivers addObject:[[XTReceiver alloc] initWithSampleRate:sampleRate]];
         [receivers addObject:[[XTReceiver alloc] initWithSampleRate:sampleRate]];
 		
 		spectrumTap = [[XTDSPSpectrumTap alloc] initWithSampleRate: sampleRate andSize: 4096];
@@ -109,6 +111,13 @@
         [receiverCondition wait];
     
     [receiverCondition unlock];
+    
+    [complexData clearBlock];
+    
+    //  Mix the receiver signals together for audio out.
+    for(XTReceiver *receiver in receivers)
+        vDSP_zvadd([[receiver results] signal], 1, [complexData signal], 1, [complexData signal], 1, [complexData blockSize]);
+    //[[(XTReceiver *) [receivers objectAtIndex:1] results] copyTo:complexData];
     
     //  Copy signal into the audio buffer
     if(audioThread.running == YES) {

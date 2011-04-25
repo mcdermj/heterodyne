@@ -49,6 +49,7 @@
 }
 
 @property float sampleRate;
+@property (readonly) NSArray *receivers;
 
 -(id)initWithSampleRate: (float)initialSampleRate;
 -(void)processComplexSamples: (XTDSPBlock *)complexData;

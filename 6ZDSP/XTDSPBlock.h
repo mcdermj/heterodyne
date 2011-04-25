@@ -47,5 +47,6 @@
 -(float *)imaginaryElements;
 -(void)performFFT: (FFTDirection) direction;
 -(void)clearBlock;
+-(void)copyTo:(XTDSPBlock *)destBlock;
 
 @end

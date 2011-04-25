@@ -13,10 +13,14 @@
 #import "XTDSPModule.h"
 #import "XTHeterodyneHardwareDriver.h"
 #import "XTDSPAutomaticGainControl.h"
+#import "XTDSPDemodulator.h"
+#import "XTDSPComplexMixer.h"
+#import "XTDSPBlock.h"
 
 @implementation XTReceiver
 
 @synthesize sampleRate;
+@synthesize results;
 
 - (id)initWithSampleRate: (float)initialSampleRate
 {
@@ -27,6 +31,8 @@
         workerThread = [[XTWorkerThread alloc] initWithRealtime:YES];
         [workerThread start];
         
+        results = [XTDSPBlock dspBlockWithBlockSize:1024];
+        
         dspModules = [NSMutableArray arrayWithCapacity:2];
         
         [dspModules addObject:[[XTDSPBandpassFilter alloc] initWithSize:1024
@@ -34,7 +40,7 @@
                                                               lowCutoff:0.0f
                                                           andHighCutoff:2700.0f]];
         
-        [dspModules addObject:[[XTDSPAutomaticGainControl alloc] initWithSampleRate:sampleRate]];
+        [dspModules addObject:[[XTDSPAutomaticGainControl alloc] initWithSampleRate:sampleRate]];        
     }
     return self;
 }
@@ -43,6 +49,22 @@
     for(XTDSPModule *module in dspModules)
         if([module class] == [XTDSPBandpassFilter class])
             return (XTDSPBandpassFilter *) module;
+    
+    return nil;
+}
+
+-(XTDSPDemodulator *)demodulator {
+    for(XTDSPModule *module in dspModules)
+        if([module class] == [XTDSPDemodulator class])
+            return (XTDSPDemodulator *) module;
+    
+    return nil;
+}
+
+-(XTDSPComplexMixer *)mixer {
+    for(XTDSPModule *module in dspModules)
+        if([module class] == [XTDSPComplexMixer class])
+            return (XTDSPComplexMixer *) module;
     
     return nil;
 }
@@ -63,20 +85,42 @@
     return [[self filter] lowCut];
 }
 
+-(void)setFrequency:(float)frequency {
+    if(frequency == 0.0) {
+        [dspModules removeObject:[self mixer]];
+        return;
+    }
+    
+    if([self mixer] == nil) {
+        [dspModules insertObject:[[XTDSPComplexMixer alloc] initWithSampleRate:sampleRate] atIndex:0];
+    }
+    
+    [[self mixer] setLoFrequency:frequency];
+}
+
+-(float)frequency {
+    if([self mixer] == nil) return 0.0;
+    
+    return [[self mixer] loFrequency];
+}
+
 -(void)setSampleRate:(float)newSampleRate {
 	sampleRate = newSampleRate;
     
 	for(XTDSPModule *module in dspModules) 
 		[module setSampleRate:newSampleRate];
-	
 }
 
 -(void)processComplexSamples: (XTDSPBlock *)complexData withCompletionSelector:(SEL) completion onObject:(id)callbackObject {
+    if([results blockSize] != [complexData blockSize])
+        results = [XTDSPBlock dspBlockWithBlockSize:[complexData blockSize]];
+    
+    [complexData copyTo:results];
     
 	for(XTDSPModule *module in dspModules)
 		[module performSelector: @selector(performWithComplexSignal:) 
 					   onThread: workerThread 
-					 withObject: complexData
+					 withObject: results
 				  waitUntilDone: NO];
 	
     [callbackObject performSelector:completion

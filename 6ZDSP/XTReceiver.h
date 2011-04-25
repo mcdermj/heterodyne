@@ -16,13 +16,17 @@
     
     NSMutableArray *dspModules;
     XTWorkerThread *workerThread;
+    XTDSPBlock *results;
     
     float sampleRate;
+    
 }
 
 @property float sampleRate;
+@property float frequency;
 @property float highCut;
 @property float lowCut;
+@property (readonly) XTDSPBlock *results;
 
 -(void)processComplexSamples:(XTDSPBlock *)complexData withCompletionSelector:(SEL)completion onObject:(id)callbackObject;
 -(id)initWithSampleRate:(float)sampleRate;
