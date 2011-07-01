@@ -74,6 +74,8 @@
         
         high = 19999.0;
         low = 0.0;
+        
+        autoScale = YES;
 	}
 	
 	return self;
@@ -86,6 +88,18 @@
 			displayTime:(const CVTimeStamp *)timeStamp {
 		
 	if(dataMUX == NULL) return;
+    
+    if(autoScale) {
+        memcpy(sortBuffer, [[dataMUX smoothBufferData] bytes], sizeof(sortBuffer));
+        vDSP_vsort(sortBuffer, SPECTRUM_BUFFER_SIZE, 1);
+        negLowWat = -sortBuffer[1024];
+        
+        float denominator = sortBuffer[SPECTRUM_BUFFER_SIZE - 1] - sortBuffer[SPECTRUM_BUFFER_SIZE / 4];
+        scale = denominator == 0 ? 0 : 20000.0f / denominator;
+        
+        //scale = 20000.0f / ((sortBuffer[SPECTRUM_BUFFER_SIZE - 1] == 0 ? 1 : sortBuffer[SPECTRUM_BUFFER_SIZE - 1]) - sortBuffer[SPECTRUM_BUFFER_SIZE / 4]);
+        //scale = isnan(scale) || isinf(scale) ? 0 : scale;
+    }
 	    
     vDSP_vsadd((float *) [[dataMUX smoothBufferData] bytes], 1, &negLowWat, intensityBuffer, 1, SPECTRUM_BUFFER_SIZE);
     vDSP_vsmul(intensityBuffer, 1, &scale, intensityBuffer, 1, SPECTRUM_BUFFER_SIZE);

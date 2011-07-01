@@ -38,6 +38,8 @@
 	float highWaterLevel;
 	float lowWaterLevel;
 	float scale;
+    
+    float sortBuffer[SPECTRUM_BUFFER_SIZE];
 	
 	UInt32 colorGradientArray[20000];
 	UInt32 line[4096];
@@ -47,6 +49,7 @@
 	int currentLine;
 	
 	BOOL flowsUp;
+    BOOL autoScale;
 }
 
 @property XTPanadapterDataMUX *dataMUX;
