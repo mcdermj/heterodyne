@@ -75,7 +75,7 @@
         high = 19999.0;
         low = 0.0;
         
-        autoScale = YES;
+        autoScale = [[NSUserDefaults standardUserDefaults] boolForKey:@"autoWaterfall"];
 	}
 	
 	return self;
@@ -95,10 +95,7 @@
         negLowWat = -sortBuffer[1024];
         
         float denominator = sortBuffer[SPECTRUM_BUFFER_SIZE - 1] - sortBuffer[SPECTRUM_BUFFER_SIZE / 4];
-        scale = denominator == 0 ? 0 : 20000.0f / denominator;
-        
-        //scale = 20000.0f / ((sortBuffer[SPECTRUM_BUFFER_SIZE - 1] == 0 ? 1 : sortBuffer[SPECTRUM_BUFFER_SIZE - 1]) - sortBuffer[SPECTRUM_BUFFER_SIZE / 4]);
-        //scale = isnan(scale) || isinf(scale) ? 0 : scale;
+        scale = denominator == 0 ? 0 : 20000.0f / denominator;        
     }
 	    
     vDSP_vsadd((float *) [[dataMUX smoothBufferData] bytes], 1, &negLowWat, intensityBuffer, 1, SPECTRUM_BUFFER_SIZE);
@@ -193,6 +190,8 @@
         negLowWat = -lowWaterLevel;
 		highWaterLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"highWaterLevel"];
         scale = 20000.0f / (highWaterLevel - lowWaterLevel);
+        
+        autoScale = [[NSUserDefaults standardUserDefaults] boolForKey:@"autoWaterfall"];
 	}
 }
 
