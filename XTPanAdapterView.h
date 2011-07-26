@@ -23,11 +23,11 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
 
-#import "TransceiverController.h"
-#import "XTPanadapterDataMUX.h"
-#import "XTWorkerThread.h"
-#import "XTPanadapterLayer.h"
-#import "XTWaterfallView.h"
+@class XTMainWindowController;
+@class XTWorkerThread;
+@class XTPanadapterLayer;
+@class XTPanadapterDataMUX;
+@class XTWaterfallView;
 
 @interface XTPanAdapterView : NSView {
 	
@@ -35,10 +35,8 @@
 	
 	float subPosition;
 	float hzPerUnit;
-	
-	float zoomFactor;
-	
-	CAScrollLayer *rootLayer;
+		
+	CALayer *rootLayer;
 	CALayer *tickLayer;
 	CALayer *frequencyLayer;
 	XTPanadapterLayer *waveLayer;
@@ -57,20 +55,14 @@
 		
 	float lowPanLevel, highPanLevel;
 	
-	IBOutlet TransceiverController *transceiverController;
 	IBOutlet XTPanadapterDataMUX *dataMux;
-	IBOutlet NSControl *zoomControl;
-	IBOutlet XTWaterfallView *waterView;
 }
 
 @property float lowPanLevel;
 @property float highPanLevel;
-@property float zoomFactor;
+@property IBOutlet XTMainWindowController *windowController;
 
 -(void)doNotification: (NSNotification *) notification;
-
--(IBAction)zoomIn: (id) sender;
--(IBAction)zoomOut: (id) sender;
 
 -(void) observeValueForKeyPath: (NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context: (void *) context;
 @end

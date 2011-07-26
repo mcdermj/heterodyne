@@ -22,27 +22,34 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "TransceiverController.h"
 #import "AboutBoxView.h"
-#import "XTMainWindow.h"
+
+@class XTMainWindowController;
+@class XTMainReceiverController;
+@class TransceiverController;
+@class XTMainWindow;
 
 @interface MacHPSDRAppDelegate : NSObject <NSApplicationDelegate> {
     XTMainWindow *window;
 	
-	IBOutlet TransceiverController *transceiver;
 	IBOutlet NSPanel *aboutPane;
 	
 	IBOutlet NSPanel *mainReceiver;
 	IBOutlet NSPanel *subReceiver;
+    NSWindowController *bandscopeWindow;
+    XTMainWindowController *mainWindowController;
+    XTMainReceiverController *mainReceiverController;
+    
+    TransceiverController *transceiver;
 	
 	NSArray *drivers;
 }
 
-@property (assign) IBOutlet NSWindow *window;
-
 -(IBAction)doAbout:(id)sender;
 -(IBAction)showMainReceiver:(id)sender;
 -(IBAction)showSubReceiver:(id)sender;
+-(IBAction)showBandscope:(id)sender;
+-(IBAction)swapMainWindow:(id)sender;
 -(void)doNotification:(NSNotification *) notification;
 
 @end

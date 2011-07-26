@@ -51,11 +51,11 @@
 	return self;
 }
 
--(NSData *)getInputBuffer {
-	NSData *returnBuffer;
+-(NSMutableData *)getInputBuffer {
+	NSMutableData *returnBuffer;
 	
 	if([bufferList count] == 0) {
-		NSLog(@"No input buffers remain\n");
+		NSLog(@"[%@ %s] No input buffers remain\n", [self class], (char *) _cmd);
         BUFFERS_BLOCKBUFFER_GET([bufferList count], [freeList count]);
 		return NULL;
 	}
@@ -70,7 +70,7 @@
 	return returnBuffer;
 }
 
--(void)putInputBuffer:(NSData *)inputBuffer {
+-(void)putInputBuffer:(NSMutableData *)inputBuffer {
 	@synchronized(bufferList) {
 		[bufferList insertObject:inputBuffer atIndex:0];
 	}
@@ -80,19 +80,23 @@
 	NSMutableData *freeBuffer;
 	
 	if([freeList count] == 0) {
-		NSLog(@"No free buffers remain\n");
-		return NULL;
-	}
-	
-	@synchronized(freeList) {
-		freeBuffer = [freeList lastObject];
-		[freeList removeLastObject];
-	}
+//		NSLog(@"[%@ %s] No free buffers remain\n", [self class], (char *) _cmd);
+        @synchronized(bufferList) {
+            freeBuffer = [bufferList lastObject];
+            [bufferList removeLastObject];
+        }
+//		return NULL;
+	} else {
+        @synchronized(freeList) {
+            freeBuffer = [freeList lastObject];
+            [freeList removeLastObject];
+        }
+    }
 				
 	return freeBuffer;
 }
 
--(void)freeBuffer:(NSData *)freeBuffer {
+-(void)freeBuffer:(NSMutableData *)freeBuffer {
 	@synchronized(freeList) {
 		[freeList insertObject:freeBuffer atIndex:0];
 	}

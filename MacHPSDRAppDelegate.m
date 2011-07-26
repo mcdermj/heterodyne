@@ -22,12 +22,14 @@
 
 #import "MacHPSDRAppDelegate.h"
 #import "XTHeterodyneHardwareDriver.h"
+#import "XTMainWindowController.h"
+#import "XTMainReceiverController.h"
+#import "XTWaterfallView.h"
+#import "XTPanAdapterView.h"
 
 #import "dttsp.h"
 
 @implementation MacHPSDRAppDelegate
-
-@synthesize window;
 
 +(void)initialize {
 	NSString *defaultsFilename = [[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"];
@@ -37,20 +39,28 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {		
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(doNotification:) name: NSUserDefaultsDidChangeNotification object: nil];
-	
+    
+    transceiver = [[TransceiverController alloc] init];
+    
+    //  Load up the main window NIB
+    mainWindowController = [[XTMainWindowController alloc] initWithTransceiver:transceiver];
+    [[mainWindowController window] makeMainWindow];
+	[mainWindowController showWindow:nil];
+    
+    mainReceiverController = [[XTMainReceiverController alloc] init];
+    [mainReceiverController showWindow:self];
+    
 	[transceiver start];
 	[mainReceiver setFrameAutosaveName:@"mainReceiverPosition"];
 	[mainReceiver setLevel:NSNormalWindowLevel];
 	[subReceiver setFrameAutosaveName:@"subReceiverPosition"];
 	[subReceiver setLevel:NSNormalWindowLevel];
 	[mainReceiver makeKeyAndOrderFront:nil];
-	[window makeMainWindow];
 }
 
 -(void)applicationWillTerminate:(NSNotification *)aNotification {
 	[transceiver saveParams];
 	[transceiver stop];
-	[[NSUserDefaults standardUserDefaults] setInteger:[window selectedTab] forKey:@"selectedTab"];
 }
 
 
@@ -72,6 +82,36 @@
 
 -(IBAction)showSubReceiver:(id) sender {
 	[subReceiver makeKeyAndOrderFront:nil];
+}
+
+-(IBAction)showBandscope:(id)sender {
+    bandscopeWindow = [[NSWindowController alloc] initWithWindowNibName:@"Bandscope Window"];
+
+    [bandscopeWindow showWindow:nil];
+}
+
+-(IBAction)swapMainWindow:(id)sender {
+    XTWaterfallView *waterfall = [mainWindowController waterfall];
+    XTPanAdapterView *panadapter = [mainWindowController panadapter];
+    NSView *scrollView = [waterfall superview];
+    
+    [waterfall removeFromSuperview];
+    [panadapter removeFromSuperview];
+    
+    if([sender state] == NSOnState) {
+        //  Was swapped, go to regular -- panadapter on top
+        [scrollView addSubview:panadapter];
+        [scrollView addSubview:waterfall];
+        [waterfall setFlowsUp:NO];
+        [sender setState:NSOffState];
+        [sender setTitle:@"Waterfall On Top"];
+    } else {
+        [scrollView addSubview:waterfall];
+        [scrollView addSubview:panadapter];
+        [waterfall setFlowsUp:YES];
+        [sender setState:NSOnState];
+        [sender setTitle:@"Waterfall On Bottom"];
+    }
 }
 
 @end

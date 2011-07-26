@@ -1140,7 +1140,7 @@
 	mach_timebase_info_data_t tTBI;
 	double mult;
 	
-	NSData *ozyBuffer;
+	NSMutableData *ozyBuffer;
 	OzyPacket *ozyPackets;
 	OzySamplesIn *inSamples;
 	
@@ -1262,7 +1262,7 @@
 			}
 		}
 			
-		[ep6Buffers freeBuffer:ozyBuffer];
+		[ep6Buffers freeBuffer: ozyBuffer];
 	}	
 }
 

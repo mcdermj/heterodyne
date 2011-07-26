@@ -88,3 +88,4 @@ extern void SetNR (unsigned int thread, unsigned subrx, BOOLEAN setit);
 extern void SetANF (unsigned int thread, unsigned subrx, BOOLEAN setit);
 extern void SetNB (unsigned int thread, unsigned subrx, BOOLEAN setit);
 extern void SetBIN (unsigned int thread, unsigned subrx, BOOLEAN setit);
+extern void SetTXOsc(unsigned int thread, double freq);

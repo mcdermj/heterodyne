@@ -25,6 +25,7 @@
 #import "TransceiverController.h"
 #import "XTWaterfallLayer.h"
 #import "XTWorkerThread.h"
+#import "XTMainWindowController.h"
 
 #import <mach/mach.h>
 #import <mach/mach_time.h>
@@ -35,53 +36,22 @@
 @implementation XTWaterfallView
 
 @synthesize flowsUp;
-@synthesize zoomFactor;
+@synthesize dataMux;
+@synthesize windowController;
 
 -(id)initWithFrame:(NSRect)frameRect {
 	[super initWithFrame:frameRect];
 	
 	if(self) {
-		zoomFactor = 1.0;
 		flowsUp = NO;
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(boundsHaveChanged) 
-													 name:NSViewFrameDidChangeNotification 
-												   object:nil];
-		
-		rootLayer = [CAScrollLayer layer];
-		rootLayer.name = @"rootLayer";
-		rootLayer.bounds = NSRectToCGRect(self.bounds);
-		rootLayer.layoutManager = [CAConstraintLayoutManager layoutManager];
-		rootLayer.scrollMode = kCAScrollHorizontally;		
-		
+		        
 		waterfallLayer = [XTWaterfallLayer layer];
 		[waterfallLayer setFlowsUp:flowsUp];
-		waterfallLayer.name = @"waterfallLayer";
-		
-		waterfallLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds), 0.0);
-		
-		CAConstraint *yCentered = 
-		[CAConstraint constraintWithAttribute:kCAConstraintMidY 
-								   relativeTo:@"superlayer" 
-									attribute:kCAConstraintMidY];
-		CAConstraint *xCentered =
-		[CAConstraint constraintWithAttribute:kCAConstraintMidX 
-								   relativeTo:@"superlayer" 
-									attribute:kCAConstraintMidX];
-		
-		CAConstraint *ySameSize =
-		[CAConstraint constraintWithAttribute:kCAConstraintHeight 
-								   relativeTo:@"superlayer" 
-									attribute:kCAConstraintHeight];
+		[waterfallLayer setName:@"waterfallLayer"];
+        [waterfallLayer setBounds:NSRectToCGRect([self bounds])];
+        //[waterfallLayer setNeedsDisplayOnBoundsChange:YES];
 				
-		[waterfallLayer addConstraint:yCentered];
-		[waterfallLayer addConstraint:xCentered];
-		[waterfallLayer addConstraint:ySameSize];
-		[waterfallLayer setNeedsDisplayOnBoundsChange:YES];
-		[rootLayer addSublayer:waterfallLayer];		
-		
-		[self setLayer: rootLayer];
+		[self setLayer: waterfallLayer];
 		[self setWantsLayer:YES];
 	}
 	
@@ -106,11 +76,12 @@
 
 -(void)dataReady {
 	[waterfallLayer performSelector:@selector(setNeedsDisplay)
-						   onThread:[transceiverController updateThread]
+						   onThread:[[windowController transceiver] updateThread]
 						 withObject:nil
 					  waitUntilDone:NO];
 }
 
+// XXX This really should be tied to XTSampleRateChanged
 
 -(void)doDefaultsNotification: (NSNotification *) notification {
 	NSString *notificationName = [notification name];
@@ -125,38 +96,25 @@
 		[[NSCursor closedHandCursor] push];
 		dragging = YES;
 	}
-	transceiverController.frequency -= [theEvent deltaX] * hzPerUnit;
+	[windowController transceiver].frequency -= [theEvent deltaX] * hzPerUnit;
 }
 
 -(void)mouseUp: (NSEvent *)theEvent {
 	if([theEvent clickCount] == 0) {
 		// Dragging
-		transceiverController.frequency += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].frequency += [theEvent deltaX] * hzPerUnit;
 		dragging = NO;
 		[NSCursor pop];
 		
 	} else {
 		// Click or Double-Click
 		NSPoint clickPoint = [self convertPoint:[theEvent locationInWindow] fromView: nil];
-		transceiverController.frequency += (clickPoint.x - NSMidX(self.bounds)) * hzPerUnit;
+		[windowController transceiver].frequency += (clickPoint.x - NSMidX(self.bounds)) * hzPerUnit;
 	}
 }
 
 -(void)scrollWheel:(NSEvent *)theEvent {
-	transceiverController.frequency += [theEvent deltaY] * hzPerUnit;
-}
-
--(void)boundsHaveChanged {
-	waterfallLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds) * zoomFactor, 0.0);
-}
-
--(void)setZoomFactor:(float)newZoomFactor {
-	if(newZoomFactor < 1.0) return;
-	zoomFactor = newZoomFactor;
-	
-		
-	waterfallLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds) * zoomFactor, 0.0);
-	[rootLayer scrollToRect:CGRectMake(CGRectGetWidth(rootLayer.bounds) / 4.0, 0, CGRectGetWidth(rootLayer.bounds) / 2.0, CGRectGetHeight(rootLayer.bounds))];
+	[windowController transceiver].frequency += [theEvent deltaY] * hzPerUnit;
 }
 
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {

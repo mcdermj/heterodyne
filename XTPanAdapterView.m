@@ -22,19 +22,22 @@
 
 #import "XTPanAdapterView.h"
 
+#import "XTPanadapterLayer.h"
+#import "XTWorkerThread.h"
+#import "XTMainWindowController.h"
+#import "TransceiverController.h"
+
 #import <Accelerate/Accelerate.h>
 
 @implementation XTPanAdapterView
 
 @synthesize lowPanLevel;
 @synthesize highPanLevel;
-@synthesize zoomFactor;
+@synthesize windowController;
 
 -(id)initWithFrame:(NSRect)frameRect {
 	self = [super initWithFrame:frameRect];
-	if(self) {		
-		zoomFactor = 1.0;
-		
+	if(self) {				
 		path = [[NSBezierPath alloc] init];
 		[path setLineWidth:0.5];
 										
@@ -42,26 +45,18 @@
 												 selector: @selector(doNotification:) 
 													 name: NSUserDefaultsDidChangeNotification 
 												   object: nil];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(boundsHaveChanged) 
-													 name:NSViewFrameDidChangeNotification 
-												   object:nil];
-				
+						
 		startedLeft = startedRight = dragging = NO;
 		
-		rootLayer = [CAScrollLayer layer];
+        
+		rootLayer = [CALayer layer];
 		rootLayer.name = @"rootLayer";
 		rootLayer.bounds = NSRectToCGRect(self.bounds);
 		rootLayer.layoutManager = [CAConstraintLayoutManager layoutManager];
-		rootLayer.scrollMode = kCAScrollHorizontally;
 		
 		tickLayer = [CALayer layer];
 		tickLayer.name = @"tickLayer";
-		
-		//  Save for zoom work
-		tickLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds), 0.0);
-		
+				
 		frequencyLayer = [CALayer layer];
 		frequencyLayer.name = @"frequencyLayer";
 		
@@ -87,15 +82,15 @@
 								   relativeTo:@"tickLayer" 
 									attribute:kCAConstraintWidth];
 		
-		/* CAConstraint *xSameSize =
+		CAConstraint *xSameSize =
 		[CAConstraint constraintWithAttribute:kCAConstraintWidth 
 								   relativeTo:@"superlayer" 
-									attribute:kCAConstraintWidth]; */
+									attribute:kCAConstraintWidth];
 		
 		[tickLayer addConstraint:yCentered];
 		[tickLayer addConstraint:xCentered];
 		[tickLayer addConstraint:ySameSize];
-		//[tickLayer addConstraint:xSameSize];
+		[tickLayer addConstraint:xSameSize];
 		[tickLayer setNeedsDisplayOnBoundsChange:YES];
 		[tickLayer setDelegate: self];
 		[rootLayer addSublayer:tickLayer];
@@ -130,36 +125,36 @@
 	lowPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"lowPanLevel"];
 	highPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"highPanLevel"];
 		
-	filterRect = NSMakeRect(NSMidX(self.bounds) + (transceiverController.filterLow / hzPerUnit), 0, (transceiverController.filterHigh / hzPerUnit) - (transceiverController.filterLow / hzPerUnit), NSHeight(self.bounds));	
-	subFilterRect = NSMakeRect(subPosition + (transceiverController.subFilterLow / hzPerUnit), 0, (transceiverController.subFilterHigh / hzPerUnit) - (transceiverController.subFilterLow / hzPerUnit), NSHeight(self.bounds));
+	filterRect = NSMakeRect(NSMidX(self.bounds) + ([windowController transceiver].filterLow / hzPerUnit), 0, ([windowController transceiver].filterHigh / hzPerUnit) - ([windowController transceiver].filterLow / hzPerUnit), NSHeight(self.bounds));	
+	subFilterRect = NSMakeRect(subPosition + ([windowController transceiver].subFilterLow / hzPerUnit), 0, ([windowController transceiver].subFilterHigh / hzPerUnit) - ([windowController transceiver].subFilterLow / hzPerUnit), NSHeight(self.bounds));
 
 	[self.window invalidateCursorRectsForView:self];
 	
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"filterLow" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];	
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"filterHigh" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"frequency" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"subFrequency" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"subFilterLow" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];	
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"subFilterHigh" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
-	[transceiverController addObserver:self 
+	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"subEnabled" 
 							   options:NSKeyValueObservingOptionNew 
 							   context:NULL];
@@ -169,17 +164,7 @@
 												 name:@"XTPanAdapterDataReady" 
 											   object: dataMux];
 	
-	[waveLayer setDataMUX:dataMux];
-	
-	[zoomControl bind:@"value" 
-			 toObject:self 
-		  withKeyPath:@"zoomFactor" 
-			  options:nil];
-	
-	[waterView bind:@"zoomFactor"
-		   toObject:self
-		withKeyPath:@"zoomFactor"
-			options:nil];
+	[waveLayer setDataMUX:dataMux];	
 }
 
 -(void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
@@ -199,8 +184,8 @@
 		float mark, position;
 		float startFrequency, endFrequency;
 		
-		hzPerUnit = (float) transceiverController.sampleRate / CGRectGetWidth(layer.bounds);
-		startFrequency = ((float) transceiverController.frequency) - (CGRectGetMidX(layer.bounds) * hzPerUnit);
+		hzPerUnit = (float) [windowController transceiver].sampleRate / CGRectGetWidth(layer.bounds);
+		startFrequency = ((float) [windowController transceiver].frequency) - (CGRectGetMidX(layer.bounds) * hzPerUnit);
 		endFrequency = startFrequency + (CGRectGetWidth(layer.bounds) * hzPerUnit);
 		
 		
@@ -247,11 +232,12 @@
 		
 		
 	} else if(layer.name == @"frequencyLayer") {
-		float startFrequency, endFrequency;
+		float startFrequency;
+        //, endFrequency;
 		
-		hzPerUnit = (float) transceiverController.sampleRate / CGRectGetWidth(layer.bounds);
-		startFrequency = ((float) transceiverController.frequency) - (CGRectGetMidX(layer.bounds) * hzPerUnit);
-		endFrequency = startFrequency + (CGRectGetWidth(layer.bounds) * hzPerUnit);
+		hzPerUnit = (float) [windowController transceiver].sampleRate / CGRectGetWidth(layer.bounds);
+		startFrequency = ((float) [windowController transceiver].frequency) - (CGRectGetMidX(layer.bounds) * hzPerUnit);
+		// endFrequency = startFrequency + (CGRectGetWidth(layer.bounds) * hzPerUnit);
 
 		NSBezierPath *centerLine = [[NSBezierPath alloc] init];
 		[centerLine setLineWidth:0.5];
@@ -260,8 +246,8 @@
 		[[NSColor redColor] set];
 		[centerLine stroke];
 
-		if(transceiverController.subEnabled == TRUE) {
-			subPosition = (transceiverController.subFrequency - startFrequency) / hzPerUnit;
+		if([windowController transceiver].subEnabled == TRUE) {
+			subPosition = ([windowController transceiver].subFrequency - startFrequency) / hzPerUnit;
 			
 			NSBezierPath *subLine = [[NSBezierPath alloc] init];
 			[subLine setLineWidth:0.5];
@@ -270,9 +256,9 @@
 			[[NSColor blueColor] set];
 			[subLine stroke];
 			
-			subFilterRect = NSMakeRect(subPosition + (transceiverController.subFilterLow / hzPerUnit), 
+			subFilterRect = NSMakeRect(subPosition + ([windowController transceiver].subFilterLow / hzPerUnit), 
 									   0, 
-									   (transceiverController.subFilterHigh / hzPerUnit) - (transceiverController.subFilterLow / hzPerUnit), 
+									   ([windowController transceiver].subFilterHigh / hzPerUnit) - ([windowController transceiver].subFilterLow / hzPerUnit), 
 									   CGRectGetHeight(layer.bounds));
 			
 			NSBezierPath *subFilter = [[NSBezierPath alloc] init];
@@ -282,8 +268,8 @@
 			
 		}
 											 
-		NSDictionary *bandPlan = [transceiverController bandPlan];
-		NSRange panadapterRange = NSMakeRange(startFrequency, transceiverController.sampleRate);
+		NSDictionary *bandPlan = [[windowController transceiver] bandPlan];
+		NSRange panadapterRange = NSMakeRange(startFrequency, [windowController transceiver].sampleRate);
 		for(id band in bandPlan) {
 			int start = [[[bandPlan objectForKey:band] objectForKey:@"start"] intValue];
 			int length = [[[bandPlan objectForKey:band] objectForKey:@"end"] intValue] - start;
@@ -305,9 +291,9 @@
 			}
 		}		
 		
-		filterRect = NSMakeRect(CGRectGetMidX(layer.bounds) + (transceiverController.filterLow / hzPerUnit), 
+		filterRect = NSMakeRect(CGRectGetMidX(layer.bounds) + ([[windowController transceiver] filterLow] / hzPerUnit), 
 								0, 
-								(transceiverController.filterHigh / hzPerUnit) - (transceiverController.filterLow / hzPerUnit), 
+								([[windowController transceiver] filterHigh] / hzPerUnit) - ([[windowController transceiver] filterLow ] / hzPerUnit), 
 								CGRectGetHeight(layer.bounds));
 		NSBezierPath *filter = [[NSBezierPath alloc] init];
 		[filter appendBezierPathWithRect:filterRect];
@@ -383,7 +369,7 @@
 		startedLeft = YES;
 	} else if(NSPointInRect(clickPoint, rightFilterBoundaryRect)) {
 		startedRight = YES;
-	} else if(transceiverController.subEnabled == YES) {
+	} else if([windowController transceiver].subEnabled == YES) {
 		if(NSPointInRect(clickPoint, leftSubFilterBoundaryRect)) {
 			startedSubLeft = YES;
 		} else if(NSPointInRect(clickPoint, rightSubFilterBoundaryRect)) {
@@ -398,24 +384,24 @@
 	if([theEvent modifierFlags] & NSAlternateKeyMask) return;
 	
 	if(startedLeft == YES) {
-		transceiverController.filterHigh += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].filterHigh += [theEvent deltaX] * hzPerUnit;
 	} else if(startedRight == YES) {
-		transceiverController.filterLow += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].filterLow += [theEvent deltaX] * hzPerUnit;
 	} else if(startedSubLeft == YES) {
-		transceiverController.subFilterHigh += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].subFilterHigh += [theEvent deltaX] * hzPerUnit;
 	} else if(startedSubRight == YES) {
-		transceiverController.subFilterLow += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].subFilterLow += [theEvent deltaX] * hzPerUnit;
 	} else if(startedSub == YES) {
 		if([[NSCursor currentCursor] isNotEqualTo:[NSCursor closedHandCursor]]) {
 			[[NSCursor closedHandCursor] push];
 		}		
-		transceiverController.subFrequency += [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].subFrequency += [theEvent deltaX] * hzPerUnit;
 	} else {
 		dragging = YES;
 		if([[NSCursor currentCursor] isNotEqualTo:[NSCursor closedHandCursor]]) {
 			[[NSCursor closedHandCursor] push];
 		}
-		transceiverController.frequency -= [theEvent deltaX] * hzPerUnit;
+		[windowController transceiver].frequency -= [theEvent deltaX] * hzPerUnit;
 	} 
 }
 
@@ -423,48 +409,48 @@
 	if([theEvent clickCount] == 0) {
 		// Dragging
 		if(startedLeft == YES) {
-			transceiverController.filterHigh += [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].filterHigh += [theEvent deltaX] * hzPerUnit;
 		} else if (startedRight == YES) {
-			transceiverController.filterLow += [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].filterLow += [theEvent deltaX] * hzPerUnit;
 		} else if(startedSubLeft == YES) {
-			transceiverController.subFilterHigh += [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].subFilterHigh += [theEvent deltaX] * hzPerUnit;
 		} else if(startedSubRight == YES) {
-			transceiverController.subFilterLow += [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].subFilterLow += [theEvent deltaX] * hzPerUnit;
 		} else if(startedSub == YES) {
-			transceiverController.subFrequency += [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].subFrequency += [theEvent deltaX] * hzPerUnit;
 			[NSCursor pop];			
 		} else {
-			transceiverController.frequency -= [theEvent deltaX] * hzPerUnit;
+			[windowController transceiver].frequency -= [theEvent deltaX] * hzPerUnit;
 			[NSCursor pop];
 		}
 	} else {
 		// Click or Double-Click
 		NSPoint clickPoint = [self convertPoint:[theEvent locationInWindow] fromView: nil];
 		if([theEvent modifierFlags] & NSAlternateKeyMask) {
-			if(transceiverController.subEnabled == TRUE) {
-				transceiverController.subFrequency += (clickPoint.x - subPosition) * hzPerUnit;
+			if([windowController transceiver].subEnabled == TRUE) {
+				[windowController transceiver].subFrequency += (clickPoint.x - subPosition) * hzPerUnit;
 			}
 		} else {
-			transceiverController.frequency += (clickPoint.x - NSMidX(self.bounds)) * hzPerUnit;
+			[windowController transceiver].frequency += (clickPoint.x - NSMidX(self.bounds)) * hzPerUnit;
 		}
 	}
 	startedLeft = startedRight = startedSubLeft = startedSubRight = startedSub = dragging = NO;
 }
 
 -(void)rightMouseUp:(NSEvent *)theEvent {
-	if(transceiverController.subEnabled == TRUE && [theEvent clickCount] > 0) {
+	if([windowController transceiver].subEnabled == TRUE && [theEvent clickCount] > 0) {
 		NSPoint clickPoint = [self convertPoint:[theEvent locationInWindow] fromView: nil];
-		transceiverController.subFrequency += (clickPoint.x - subPosition) * hzPerUnit;
+		[windowController transceiver].subFrequency += (clickPoint.x - subPosition) * hzPerUnit;
 	}
 }
 
 -(void)scrollWheel:(NSEvent *)theEvent {
 	if([theEvent modifierFlags] & NSAlternateKeyMask) {
-		if(transceiverController.subEnabled == TRUE) {
-			transceiverController.subFrequency += [theEvent deltaY] * hzPerUnit;
+		if([windowController transceiver].subEnabled == TRUE) {
+			[windowController transceiver].subFrequency += [theEvent deltaY] * hzPerUnit;
 		}
 	} else {
-		transceiverController.frequency += [theEvent deltaY] * hzPerUnit;
+		[windowController transceiver].frequency += [theEvent deltaY] * hzPerUnit;
 	}
 }
 
@@ -513,7 +499,7 @@
 					 cursor:[NSCursor resizeLeftRightCursor]];
 		[self addCursorRect:leftFilterBoundaryRect 
 					 cursor:[NSCursor resizeLeftRightCursor]];
-		if(transceiverController.subEnabled == YES) {
+		if([windowController transceiver].subEnabled == YES) {
 			subFilterHotRect = NSMakeRect(NSMinX(subFilterRect) + 3, 
 												 NSMinY(subFilterRect),
 												 NSWidth(subFilterRect) - 6, 
@@ -533,26 +519,6 @@
 
 -(id)actionForLayer:(CALayer *)theLayer forKey:(NSString *) aKey {	
 	return [NSNull null];
-}
-
--(void)boundsHaveChanged {
-	tickLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds) * zoomFactor, 0.0);
-}
-
--(void)setZoomFactor:(float)newZoomFactor {
-	if(newZoomFactor < 1.0) return;
-	zoomFactor = newZoomFactor;
-	
-	tickLayer.bounds = CGRectMake(0.0, 0.0, NSWidth(self.bounds) * zoomFactor, 0.0);
-	[rootLayer scrollToRect:CGRectMake(CGRectGetWidth(rootLayer.bounds) / 4.0, 0, CGRectGetWidth(rootLayer.bounds) / 2.0, CGRectGetHeight(rootLayer.bounds))];
-}
-
--(IBAction)zoomIn: (id) sender {
-	self.zoomFactor *= 2.0;
-}
-
--(IBAction)zoomOut: (id) sender {
-	self.zoomFactor /= 2.0;
 }
 
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {

@@ -26,28 +26,25 @@
 @class XTPanAdapterView;
 @class TransceiverController;
 @class XTWaterfallLayer;
+@class XTMainWindowController;
 
 #define SPECTRUM_BUFFER_SIZE 4096
 #define WATERFALL_SIZE 4096
 
 @interface XTWaterfallView : NSView {
-			
-	IBOutlet XTPanadapterDataMUX *dataMux;
-	IBOutlet TransceiverController *transceiverController;
-			
 	BOOL dragging;
 	
 	float hzPerUnit;
-	float zoomFactor;
 		
 	BOOL flowsUp;
 	
 	XTWaterfallLayer *waterfallLayer;
-	CAScrollLayer *rootLayer;
 }
 
 @property BOOL flowsUp;
-@property float zoomFactor;
+
+@property IBOutlet XTPanadapterDataMUX *dataMux;
+@property IBOutlet XTMainWindowController *windowController;
 
 -(void)doDefaultsNotification:(NSNotification *)notification;
 

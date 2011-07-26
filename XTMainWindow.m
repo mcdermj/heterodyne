@@ -61,12 +61,6 @@
 } 
 
 -(void)awakeFromNib {
-	[self setFrameAutosaveName:@"mainWindowFrame"];
-	[waterPanSplitView setAutosaveName:@"waterPanPosition"];
-	[waterPanSplitView adjustSubviews];
-	[panWaterSplitView setAutosaveName:@"panWaterPosition"];
-	[panWaterSplitView adjustSubviews];
-	[self setSelectedTab:[[NSUserDefaults standardUserDefaults] integerForKey:@"selectedTab"]];
 }
 
 -(int)selectedTab {

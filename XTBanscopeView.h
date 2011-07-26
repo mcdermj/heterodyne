@@ -51,16 +51,15 @@
 	float highBandscopeLevel, lowBandscopeLevel;
 	float mainPosition, subPosition;
 	
-	float *blackmanHarris;
+	NSData *blackmanHarris;
 	float samples[4098];
 	float averageSmoothing;
 	
-	COMPLEX_SPLIT fftIn;
-	float *fftOut; // 4096
-	float *results;
-	float *average;
-	float *smoothed;
-	float *y; // 2048
+	DSPSplitComplex fftIn;
+	float results[2048];
+	float average[2048];
+	float smoothed[2048];
+	float y[2048];
 	float smoothValue, negativeLowBandscopeLevel;
 	
 	FFTSetup fftSetup;
@@ -75,13 +74,8 @@
 @property float highBandscopeLevel;
 @property float lowBandscopeLevel;
 
--(void)dataReady;
 -(void)doBoundsChanged:(NSNotification *)theNotification;
 -(void)doDefaultsNotification:(NSNotification *)notification;
--(void)calculatePath:(NSData *)bandscopeData;
 -(void)calculateTickMarks;
-
--(float *)blackmanHarrisFilter: (int)n;
-
 
 @end

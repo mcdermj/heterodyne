@@ -37,10 +37,10 @@
 @property (readonly) semaphore_t ozyInputBufferSemaphore;
 
 -(id)initWithSize:(int)requestedSize quantity:(int)requestedQuantity;
--(NSData *)getInputBuffer;
--(void)putInputBuffer:(NSData *)inputBuffer;
+-(NSMutableData *)getInputBuffer;
+-(void)putInputBuffer:(NSMutableData *)inputBuffer;
 -(NSMutableData *)getFreeBuffer;
--(void)freeBuffer:(NSData *)freeBuffer;
+-(void)freeBuffer:(NSMutableData *)freeBuffer;
 -(int)usedBuffers;
 
 @end

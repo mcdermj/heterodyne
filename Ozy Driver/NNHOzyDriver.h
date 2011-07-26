@@ -28,6 +28,9 @@
 
 #import "XTHeterodyneHardwareDriver.h"
 
+kern_return_t   thread_policy_set(thread_t thread, thread_policy_flavor_t flavor, thread_policy_t policy_info, mach_msg_type_number_t count);
+
+
 #define VRQ_SDR1K_CTL 0x0d;
 #define SDR1KCTRL_READ_VERSION 0x7;
 #define	VRT_VENDOR_IN 0xC0;

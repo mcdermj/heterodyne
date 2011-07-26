@@ -25,11 +25,37 @@
 #import "TransceiverController.h"
 #import "XTWorkerThread.h"
 #import "XTHeterodyneHardwareDriver.h"
+#import "OzyInputBuffers.h"
 
 @implementation XTBanscopeView
 
 @synthesize highBandscopeLevel;
 @synthesize lowBandscopeLevel;
+
+// XXX This should use XTBlackmanHarrisFilter in 2.0
+
++(NSData *)blackmanHarrisFilter: (int) size {
+    float a0 = 0.35875F;
+    float a1 = 0.48829F;
+    float a2 = 0.14128F;
+    float a3 = 0.01168F;
+    
+    float twopi = M_PI * 2.0F;
+    float fourpi = M_PI * 4.0F;
+    float sixpi = M_PI * 6.0F;
+    
+    NSMutableData *filterData = [NSMutableData dataWithLength:size * sizeof(float)];
+    float *filter = [filterData mutableBytes];
+    
+    for(int i = 0;i < size; i++) {
+        filter[i] = a0
+        - a1 * cosf(twopi * (float) (i) / (float) (size - 1))
+        + a2 * cosf(fourpi * (float) (i) / (float) (size - 1))
+        - a3 * cosf(sixpi * (float) (i) / (float) (size - 1));
+    }
+    
+    return [NSData dataWithData:filterData];
+}
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -55,18 +81,13 @@
 		highBandscopeLevel = 20.0;
 		
 		// Set up the FFT
-		blackmanHarris = [self blackmanHarrisFilter: 4096];
+		blackmanHarris = [XTBanscopeView blackmanHarrisFilter: 4096];
 		
 		fftSetup = vDSP_create_fftsetup(12, kFFTRadix2);
 		
 		// Set up some memory
 		fftIn.imagp = malloc(2048 * sizeof(float));
 		fftIn.realp = malloc(2048 * sizeof(float));
-		fftOut = malloc(4096 * sizeof(float));
-		results = malloc(2048 * sizeof(float));
-		average = malloc(2048 * sizeof(float));
-		smoothed = malloc(2048 * sizeof(float));
-		y = malloc(2048 * sizeof(float));
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 											   selector:@selector(doBoundsChanged:) 
@@ -84,12 +105,6 @@
 												   object:nil];
 		initAverage = YES;
 		
-		rootLayer = [CALayer layer];
-		[rootLayer contentsAreFlipped];
-		[self setLayer: rootLayer];
-		[self setWantsLayer:YES];
-		[rootLayer setDelegate: self];
-		rootLayer.frame = NSRectToCGRect(self.frame);			
     }
     return self;
 }
@@ -105,9 +120,15 @@
 	
 	[self.window makeFirstResponder:self];
 	
+    rootLayer = [CALayer layer];
+    [rootLayer contentsAreFlipped];
+    [self setLayer: rootLayer];
+    [self setWantsLayer:YES];
+    [rootLayer setDelegate: self];
+    rootLayer.frame = NSRectToCGRect(self.frame);			
 	[rootLayer setNeedsDisplay];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataReady) name:@"XTBandscopeDataReady" object: interface];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataReady:) name:@"XTBandscopeDataReady" object: nil];
 }
 
 -(void)calculateTickMarks {
@@ -216,18 +237,22 @@
 	
 }
 
--(void)calculatePath: (NSData *)bandscopeData {	
-	int i, j;
+-(void)calculatePath: (id<XTHeterodyneHardwareDriver>) driver {	
+	int i;
 	float x = 0;
 				
 	[path removeAllPoints];
-		
-	const char *buffer = [bandscopeData bytes];
+    
+    NSMutableData *bandscopeData = [[driver bandscopeBuffers] getInputBuffer];
+    
+    float *buffer = [bandscopeData mutableBytes];
+    
+    vDSP_vmul(buffer, 1, [blackmanHarris bytes], 1, buffer, 1, 4096);
+    memset(fftIn.realp, 0, 2048 * sizeof(float));
+    memset(fftIn.imagp, 0, 2048 * sizeof(float));
 	
-	for(i = 0, j = 0; i < 2048; i++) {
-		fftIn.realp[i] = (((float) ((buffer[2 * j] << 8) + buffer[(2 * j) + 1]) / 32768.0f)) * blackmanHarris[j++];
-		fftIn.imagp[i] = (((float) ((buffer[2 * j] << 8) + buffer[(2 * j) + 1]) / 32768.0f)) * blackmanHarris[j++];
-	}
+    // Split into real and complex
+    vDSP_ctoz((DSPComplex *) buffer, 2, &fftIn, 1, 2048);
 	
 	// Perform the FFT
 	vDSP_fft_zrip(fftSetup, &fftIn, 1, 12, kFFTDirection_Forward);
@@ -239,8 +264,8 @@
 	
 	//  Get the squared magnetudes
 	vDSP_zvmags(&fftIn, 1, results, 1, 2048);
-		
-	scaling = 1.0;
+    
+	scaling = 2.0;
 	// Convert to dB
 	vDSP_vdbcon(results, 1, &scaling, results, 1, 2048, 0);
 	
@@ -275,7 +300,7 @@
 		
 	[rootLayer setNeedsDisplay];
 	
-	[[interface ep4Buffers] freeBuffer:bandscopeData];
+	[[driver bandscopeBuffers] freeBuffer:bandscopeData];
 	
 }
 
@@ -304,9 +329,8 @@
 	}
 }
 
--(void) dataReady {
-	NSData *bandscopeData = [[interface ep4Buffers] getInputBuffer];
-	[self performSelector:@selector(calculatePath:) onThread:[controller updateThread] withObject:bandscopeData waitUntilDone:NO];
+-(void) dataReady:(NSNotification *) notification {
+	[self performSelector:@selector(calculatePath:) onThread:[controller updateThread] withObject: [notification object] waitUntilDone:NO];
 }
 
 -(void)doDefaultsNotification: (NSNotification *) notification {
@@ -320,7 +344,9 @@
 	}
 }
 
--(float *) blackmanHarrisFilter: (int) n {
+
+/*
+-(float *) blackmanHarrisFilter: (int) size {
     float* filter;
     float a0=0.35875F,
 	a1=0.48829F,
@@ -342,6 +368,7 @@
 	
     return filter;
 }
+ */
 
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
     return [NSApp isActive];

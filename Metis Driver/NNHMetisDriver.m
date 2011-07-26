@@ -32,7 +32,7 @@
 
 @implementation NNHMetisDriver
 
-@synthesize ep4Buffers;
+@synthesize bandscopeBuffers;
 @synthesize dither;
 @synthesize random;
 @synthesize tenMHzSource;
@@ -130,7 +130,8 @@
 		
 		operationQueue = [[NSOperationQueue alloc] init];
 		
-		ep4Buffers = [[OzyInputBuffers alloc] initWithSize:BANDSCOPE_BUFFER_SIZE quantity: 16];
+		bandscopeBuffers = [[OzyInputBuffers alloc] initWithSize:BANDSCOPE_BUFFER_SIZE quantity: 16];
+        currentBandscopeBuffer = nil;
 		outputBuffer = [[OzyRingBuffer alloc] initWithEntries:(8 * sizeof(MetisPacket)) andName:@"Metis Output Buffer"];
 				
 		[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(loadParams) name: NSUserDefaultsDidChangeNotification object: nil];
@@ -737,7 +738,7 @@
 
 	startPacket.magic = htons(0xEFFE);
 	startPacket.opcode = 0x04;
-	startPacket.startStop = 0x01;
+	startPacket.startStop = 0x03;
 	memset(&(startPacket.padding), 0, sizeof(startPacket.padding));
 	
 	bytesWritten = sendto(metisSocket,
@@ -807,7 +808,29 @@
 	}
 
 	return YES;
-}	
+}
+
+-(void)processBandscopeBuffer: (NSData *)buffer {
+    MetisBandscopeData *packet = (MetisBandscopeData *) [buffer bytes];
+    unsigned int sequence = ntohl(packet->header.sequence) & 0x0007;
+    
+    if(currentBandscopeBuffer == nil) {
+        currentBandscopeBuffer = [bandscopeBuffers getFreeBuffer];
+        [currentBandscopeBuffer resetBytesInRange:NSMakeRange(0, [currentBandscopeBuffer length])];
+    }
+    
+    float *currentBandscopeValues = (float *) [currentBandscopeBuffer mutableBytes];
+    
+    for(int i = 0; i < 512; ++i) {
+        currentBandscopeValues[i + (sequence * 512)] = ((float) ((short) CFSwapInt16BigToHost(packet->samples[i]))) / 32768.0f;
+    }
+    
+    if(sequence == 7) {
+        [bandscopeBuffers putInputBuffer:currentBandscopeBuffer];
+        currentBandscopeBuffer = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"XTBandscopeDataReady" object:self];
+    }
+}
 
 -(void)socketServiceLoop {
 	struct thread_time_constraint_policy ttcpolicy;
@@ -875,6 +898,11 @@
 				case 6:
 					[self processInputBuffer:metisData];
 					break;
+                case 4:
+                    [self processBandscopeBuffer:metisData];
+                    break;
+                default:
+                    NSLog(@"[%@ %s] Invalid endpoint received\n", [self class], (char *) _cmd);
 			}
 		} else {
 			NSLog(@"[%@ %s] Invalid packet received: %@\n", [self class], (char *) _cmd, metisData);

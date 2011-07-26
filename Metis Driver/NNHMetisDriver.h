@@ -29,7 +29,9 @@
 
 #include <netinet/in.h>
 
-#define BANDSCOPE_BUFFER_SIZE 8192
+kern_return_t   thread_policy_set(thread_t thread, thread_policy_flavor_t flavor, thread_policy_t policy_info, mach_msg_type_number_t count);
+
+#define BANDSCOPE_BUFFER_SIZE 4096 * sizeof(float)
 
 #define SYNC 0x7F
 
@@ -117,6 +119,11 @@ typedef struct _metisProgramReply {
     char padding[51];
 } __attribute__((packed)) MetisProgramReply;
 
+typedef struct _metisBandscopeData {
+    MetisDataHeader header;
+    short samples[512];
+} __attribute__((packed)) MetisBandscopeData;
+
 @class XTDTTSP;
 
 @interface NNHMetisDriver: NSObject <XTHeterodyneHardwareDriver> {
@@ -126,7 +133,8 @@ typedef struct _metisProgramReply {
 	int transmitterFrequency;
 	int receiverFrequency[8];	
 	
-	OzyInputBuffers *ep4Buffers;
+	OzyInputBuffers *bandscopeBuffers;
+    NSMutableData *currentBandscopeBuffer;
 	OzyRingBuffer *outputBuffer;
 	
 	NSOperationQueue *operationQueue;
@@ -212,7 +220,7 @@ typedef struct _metisProgramReply {
 
 -(IBAction)doUpgradeMetis:(id)sender;
 
-@property (readonly) OzyInputBuffers *ep4Buffers;
+@property (readonly) OzyInputBuffers *bandscopeBuffers;
 @property (readonly) int mercuryVersion;
 @property (readonly) int ozyVersion;
 @property (readonly) int penelopeVersion;

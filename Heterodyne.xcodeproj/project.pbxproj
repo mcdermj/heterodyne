@@ -29,6 +29,21 @@
 		092DE5981137247E00B98CFA /* XTBanscopeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 092DE5971137247E00B98CFA /* XTBanscopeView.m */; };
 		0931DAD21135384C00FA7231 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0931DAD11135384C00FA7231 /* OpenGL.framework */; };
 		0931DD401135FC9600FA7231 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0931DD3F1135FC9600FA7231 /* QuartzCore.framework */; };
+		0940633213DEE2FF004AA2A9 /* SFBInspectorPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632413DEE2FF004AA2A9 /* SFBInspectorPane.h */; };
+		0940633313DEE2FF004AA2A9 /* SFBInspectorPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632513DEE2FF004AA2A9 /* SFBInspectorPane.m */; };
+		0940633413DEE2FF004AA2A9 /* SFBInspectorPaneBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632613DEE2FF004AA2A9 /* SFBInspectorPaneBody.h */; };
+		0940633513DEE2FF004AA2A9 /* SFBInspectorPaneBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632713DEE2FF004AA2A9 /* SFBInspectorPaneBody.m */; };
+		0940633613DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632813DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h */; };
+		0940633713DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632913DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m */; };
+		0940633813DEE2FF004AA2A9 /* SFBInspectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632A13DEE2FF004AA2A9 /* SFBInspectorView.h */; };
+		0940633913DEE2FF004AA2A9 /* SFBInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632B13DEE2FF004AA2A9 /* SFBInspectorView.m */; };
+		0940633A13DEE2FF004AA2A9 /* SFBViewSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632C13DEE2FF004AA2A9 /* SFBViewSelector.h */; };
+		0940633B13DEE2FF004AA2A9 /* SFBViewSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632D13DEE2FF004AA2A9 /* SFBViewSelector.m */; };
+		0940633C13DEE2FF004AA2A9 /* SFBViewSelectorBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940632E13DEE2FF004AA2A9 /* SFBViewSelectorBar.h */; };
+		0940633D13DEE2FF004AA2A9 /* SFBViewSelectorBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940632F13DEE2FF004AA2A9 /* SFBViewSelectorBar.m */; };
+		0940633E13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0940633013DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h */; };
+		0940633F13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0940633113DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m */; };
+		0940634913DEE681004AA2A9 /* ReceiverInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0940634813DEE681004AA2A9 /* ReceiverInspector.xib */; };
 		09422FA7112BA102004937FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09422FA6112BA102004937FC /* AudioToolbox.framework */; };
 		094233C7112C8665004937FC /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094233C6112C8665004937FC /* Preferences.xib */; };
 		0942351B112C983E004937FC /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0942351A112C983E004937FC /* Defaults.plist */; };
@@ -81,6 +96,11 @@
 		097A255C112FE97C000E8478 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 097A255B112FE97C000E8478 /* dsa_pub.pem */; };
 		097A269C1130855F000E8478 /* fftw3f.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
 		097A26A8113085D3000E8478 /* fftw3f.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
+		097E46BC13DC3B2D0020D37D /* XTMainReceiverController.h in Headers */ = {isa = PBXBuildFile; fileRef = 097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */; };
+		097E46BD13DC3B2D0020D37D /* XTMainReceiverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */; };
+		0994DB7613DBF7260000C882 /* XTMainWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0994DB7413DBF7250000C882 /* XTMainWindowController.h */; };
+		0994DB7713DBF7260000C882 /* XTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0994DB7513DBF7260000C882 /* XTMainWindowController.m */; };
+		0994DB7A13DC035F0000C882 /* Bandscope Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0994DB7813DC00490000C882 /* Bandscope Window.xib */; };
 		09C2E29E1123608F00FBD312 /* am_demod.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E2791123608F00FBD312 /* am_demod.c */; };
 		09C2E29F1123608F00FBD312 /* banal.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27A1123608F00FBD312 /* banal.c */; };
 		09C2E2A01123608F00FBD312 /* bufvec.c in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E27B1123608F00FBD312 /* bufvec.c */; };
@@ -133,6 +153,7 @@
 		09E357011131C46E0049D5A7 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E357001131C46E0049D5A7 /* BWToolkitFramework.framework */; };
 		09E357381131C4DF0049D5A7 /* XTPanadapterDataMUX.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E357371131C4DF0049D5A7 /* XTPanadapterDataMUX.m */; };
 		09E6792511E0E1DE00DFD3B7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E6792411E0E1DE00DFD3B7 /* AudioUnit.framework */; };
+		09E6DE0C13DBDE2000585DF8 /* Main Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09E6DE0A13DBDD5100585DF8 /* Main Window.xib */; };
 		09F0AD561185C07900E7F6F4 /* XTMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F0AD551185C07900E7F6F4 /* XTMainWindow.m */; };
 		09F4608411474F1D003EEA61 /* basket.icns in Resources */ = {isa = PBXBuildFile; fileRef = 09F4608311474F1D003EEA61 /* basket.icns */; };
 		09F467CC1149FA47003EEA61 /* XTWaterfallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F467CB1149FA47003EEA61 /* XTWaterfallLayer.m */; };
@@ -232,6 +253,21 @@
 		092DE5971137247E00B98CFA /* XTBanscopeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTBanscopeView.m; sourceTree = "<group>"; };
 		0931DAD11135384C00FA7231 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		0931DD3F1135FC9600FA7231 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0940632413DEE2FF004AA2A9 /* SFBInspectorPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBInspectorPane.h; sourceTree = "<group>"; };
+		0940632513DEE2FF004AA2A9 /* SFBInspectorPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBInspectorPane.m; sourceTree = "<group>"; };
+		0940632613DEE2FF004AA2A9 /* SFBInspectorPaneBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBInspectorPaneBody.h; sourceTree = "<group>"; };
+		0940632713DEE2FF004AA2A9 /* SFBInspectorPaneBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBInspectorPaneBody.m; sourceTree = "<group>"; };
+		0940632813DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBInspectorPaneHeader.h; sourceTree = "<group>"; };
+		0940632913DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBInspectorPaneHeader.m; sourceTree = "<group>"; };
+		0940632A13DEE2FF004AA2A9 /* SFBInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBInspectorView.h; sourceTree = "<group>"; };
+		0940632B13DEE2FF004AA2A9 /* SFBInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBInspectorView.m; sourceTree = "<group>"; };
+		0940632C13DEE2FF004AA2A9 /* SFBViewSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBViewSelector.h; sourceTree = "<group>"; };
+		0940632D13DEE2FF004AA2A9 /* SFBViewSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBViewSelector.m; sourceTree = "<group>"; };
+		0940632E13DEE2FF004AA2A9 /* SFBViewSelectorBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBViewSelectorBar.h; sourceTree = "<group>"; };
+		0940632F13DEE2FF004AA2A9 /* SFBViewSelectorBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBViewSelectorBar.m; sourceTree = "<group>"; };
+		0940633013DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBViewSelectorBarItem.h; sourceTree = "<group>"; };
+		0940633113DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBViewSelectorBarItem.m; sourceTree = "<group>"; };
+		0940634813DEE681004AA2A9 /* ReceiverInspector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverInspector.xib; sourceTree = "<group>"; };
 		09422F74112B96AE004937FC /* SystemAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemAudio.h; sourceTree = "<group>"; };
 		09422F75112B96AE004937FC /* SystemAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemAudio.m; sourceTree = "<group>"; };
 		09422FA6112BA102004937FC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -275,6 +311,11 @@
 		097A254B112FE831000E8478 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		097A255B112FE97C000E8478 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		097A269B1130855F000E8478 /* fftw3f.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = fftw3f.framework; sourceTree = "<group>"; };
+		097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTMainReceiverController.h; sourceTree = "<group>"; };
+		097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTMainReceiverController.m; sourceTree = "<group>"; };
+		0994DB7413DBF7250000C882 /* XTMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTMainWindowController.h; sourceTree = "<group>"; };
+		0994DB7513DBF7260000C882 /* XTMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTMainWindowController.m; sourceTree = "<group>"; };
+		0994DB7813DC00490000C882 /* Bandscope Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Bandscope Window.xib"; sourceTree = "<group>"; };
 		09C2E24F1123608F00FBD312 /* am_demod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = am_demod.h; sourceTree = "<group>"; };
 		09C2E2501123608F00FBD312 /* banal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = banal.h; sourceTree = "<group>"; };
 		09C2E2511123608F00FBD312 /* bufvec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bufvec.h; sourceTree = "<group>"; };
@@ -373,6 +414,7 @@
 		09E357361131C4DF0049D5A7 /* XTPanadapterDataMUX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTPanadapterDataMUX.h; sourceTree = "<group>"; };
 		09E357371131C4DF0049D5A7 /* XTPanadapterDataMUX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTPanadapterDataMUX.m; sourceTree = "<group>"; };
 		09E6792411E0E1DE00DFD3B7 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		09E6DE0A13DBDD5100585DF8 /* Main Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Main Window.xib"; sourceTree = "<group>"; };
 		09F0AD541185C07900E7F6F4 /* XTMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTMainWindow.h; sourceTree = "<group>"; };
 		09F0AD551185C07900E7F6F4 /* XTMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTMainWindow.m; sourceTree = "<group>"; };
 		09F4608311474F1D003EEA61 /* basket.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = basket.icns; sourceTree = "<group>"; };
@@ -496,8 +538,33 @@
 				0957655A12A831D40099B615 /* XTDTTSP.m */,
 				09D3210913185A6400E0D88B /* XTImageTextCell.h */,
 				09D3210A13185A6400E0D88B /* XTImageTextCell.m */,
+				0994DB7413DBF7250000C882 /* XTMainWindowController.h */,
+				0994DB7513DBF7260000C882 /* XTMainWindowController.m */,
+				097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */,
+				097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		0940632313DEE2DD004AA2A9 /* SFBInspectors */ = {
+			isa = PBXGroup;
+			children = (
+				0940632413DEE2FF004AA2A9 /* SFBInspectorPane.h */,
+				0940632513DEE2FF004AA2A9 /* SFBInspectorPane.m */,
+				0940632613DEE2FF004AA2A9 /* SFBInspectorPaneBody.h */,
+				0940632713DEE2FF004AA2A9 /* SFBInspectorPaneBody.m */,
+				0940632813DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h */,
+				0940632913DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m */,
+				0940632A13DEE2FF004AA2A9 /* SFBInspectorView.h */,
+				0940632B13DEE2FF004AA2A9 /* SFBInspectorView.m */,
+				0940632C13DEE2FF004AA2A9 /* SFBViewSelector.h */,
+				0940632D13DEE2FF004AA2A9 /* SFBViewSelector.m */,
+				0940632E13DEE2FF004AA2A9 /* SFBViewSelectorBar.h */,
+				0940632F13DEE2FF004AA2A9 /* SFBViewSelectorBar.m */,
+				0940633013DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h */,
+				0940633113DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m */,
+			);
+			path = SFBInspectors;
 			sourceTree = "<group>";
 		};
 		095452381227A592000E6380 /* Audio Unit */ = {
@@ -689,6 +756,7 @@
 		29B97314FDCFA39411CA2CEA /* MacHPSDR */ = {
 			isa = PBXGroup;
 			children = (
+				0940632313DEE2DD004AA2A9 /* SFBInspectors */,
 				09D321EB131AEFE200E0D88B /* Ozy Driver */,
 				095764FE12A82ACB0099B615 /* Utilities */,
 				0957641E12A7F4890099B615 /* Metis Driver */,
@@ -721,6 +789,7 @@
 				09F4608311474F1D003EEA61 /* basket.icns */,
 				09027C2611366F0300DC2921 /* SoftwareUpdate.icns */,
 				097A255B112FE97C000E8478 /* dsa_pub.pem */,
+				0940634813DEE681004AA2A9 /* ReceiverInspector.xib */,
 				097A253D112FE704000E8478 /* Heterodyne.icns */,
 				09D7B6A6112F40B300B7E47D /* Ozy_Janus.rbf */,
 				09D7B6A7112F40B300B7E47D /* ozyfw-sdr1k.hex */,
@@ -730,6 +799,8 @@
 				094233C6112C8665004937FC /* Preferences.xib */,
 				0942351A112C983E004937FC /* Defaults.plist */,
 				0928113C113A055F007E1911 /* US Bandplan.plist */,
+				09E6DE0A13DBDD5100585DF8 /* Main Window.xib */,
+				0994DB7813DC00490000C882 /* Bandscope Window.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -759,6 +830,14 @@
 				0957655B12A831D40099B615 /* XTDTTSP.h in Headers */,
 				0978BE3713219D0600B8976C /* SystemAudio.h in Headers */,
 				094EDDB613310842007C4367 /* XTSMeterView.h in Headers */,
+				097E46BC13DC3B2D0020D37D /* XTMainReceiverController.h in Headers */,
+				0940633213DEE2FF004AA2A9 /* SFBInspectorPane.h in Headers */,
+				0940633413DEE2FF004AA2A9 /* SFBInspectorPaneBody.h in Headers */,
+				0940633613DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h in Headers */,
+				0940633813DEE2FF004AA2A9 /* SFBInspectorView.h in Headers */,
+				0940633A13DEE2FF004AA2A9 /* SFBViewSelector.h in Headers */,
+				0940633C13DEE2FF004AA2A9 /* SFBViewSelectorBar.h in Headers */,
+				0940633E13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,6 +847,7 @@
 			files = (
 				0957651B12A82B8C0099B615 /* OzyInputBuffers.h in Headers */,
 				0957651C12A82B8C0099B615 /* OzyRingBuffer.h in Headers */,
+				0994DB7613DBF7260000C882 /* XTMainWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +969,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0410;
 				ORGANIZATIONNAME = net.nh6z;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Heterodyne" */;
@@ -965,6 +1046,9 @@
 				09027C2811366F0300DC2921 /* SoftwareUpdate.icns in Resources */,
 				0928113D113A055F007E1911 /* US Bandplan.plist in Resources */,
 				09F4608411474F1D003EEA61 /* basket.icns in Resources */,
+				09E6DE0C13DBDE2000585DF8 /* Main Window.xib in Resources */,
+				0994DB7A13DC035F0000C882 /* Bandscope Window.xib in Resources */,
+				0940634913DEE681004AA2A9 /* ReceiverInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,6 +1086,7 @@
 				0957651D12A82B9A0099B615 /* OzyInputBuffers.m in Sources */,
 				0957651E12A82B9A0099B615 /* OzyRingBuffer.m in Sources */,
 				096D1A8F1325CA3D0026F0F2 /* utils-probes.d in Sources */,
+				0994DB7713DBF7260000C882 /* XTMainWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,6 +1163,14 @@
 				0957655C12A831D40099B615 /* XTDTTSP.m in Sources */,
 				0978BCD31320C43200B8976C /* SystemAudio.m in Sources */,
 				094EDDB713310842007C4367 /* XTSMeterView.m in Sources */,
+				097E46BD13DC3B2D0020D37D /* XTMainReceiverController.m in Sources */,
+				0940633313DEE2FF004AA2A9 /* SFBInspectorPane.m in Sources */,
+				0940633513DEE2FF004AA2A9 /* SFBInspectorPaneBody.m in Sources */,
+				0940633713DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m in Sources */,
+				0940633913DEE2FF004AA2A9 /* SFBInspectorView.m in Sources */,
+				0940633B13DEE2FF004AA2A9 /* SFBViewSelector.m in Sources */,
+				0940633D13DEE2FF004AA2A9 /* SFBViewSelectorBar.m in Sources */,
+				0940633F13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1141,12 +1234,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1160,7 +1251,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MetisDriver;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -1172,11 +1262,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1189,7 +1277,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = MetisDriver;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -1205,7 +1292,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1218,7 +1306,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XTUtils;
 			};
 			name = Debug;
@@ -1232,7 +1319,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1244,7 +1332,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XTUtils;
 				ZERO_LINK = NO;
 			};
@@ -1259,7 +1346,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1272,7 +1360,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XTAudioUnits;
 			};
 			name = Debug;
@@ -1286,7 +1373,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1298,7 +1386,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = XTAudioUnits;
 				ZERO_LINK = NO;
 			};
@@ -1319,7 +1406,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Distribution;
 				ZERO_LINK = NO;
 			};
@@ -1331,7 +1417,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1345,7 +1432,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = OzyDriver;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -1357,7 +1443,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -1370,7 +1457,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = OzyDriver;
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
@@ -1380,7 +1466,8 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1388,37 +1475,53 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Heterodyne_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					Utilities,
+					DttSP,
+				);
 				INFOPLIST_FILE = "Resources/Heterodyne-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_NAME = Heterodyne;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 			};
 			name = Debug;
 		};
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../Developer\"",
 					"\"$(SRCROOT)\"",
 				);
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_ENABLE_SSE41_EXTENSIONS = NO;
+				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Heterodyne_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					Utilities,
+					DttSP,
+				);
 				INFOPLIST_FILE = "Resources/Heterodyne-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				PRODUCT_NAME = Heterodyne;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 			};
 			name = Release;
 		};
@@ -1483,7 +1586,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRELINK_LIBS = "";
 				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
@@ -1551,7 +1653,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
 			};

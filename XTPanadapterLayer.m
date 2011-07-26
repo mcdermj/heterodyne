@@ -46,38 +46,6 @@
 	return self;
 }
 
-/*
--(CGLPixelFormatObj)copyCGLPixelFormatForDisplayMask:(uint32_t)mask {
-	CGLPixelFormatAttribute attributes[] =
-	{
-		kCGLPFADisplayMask, mask,
-		kCGLPFAAccelerated,
-		kCGLPFAColorSize, 24,
-		kCGLPFAAlphaSize, 8,
-		kCGLPFADepthSize, 16,
-		kCGLPFANoRecovery,
-		kCGLPFAMultisample,
-		kCGLPFASupersample,
-		kCGLPFASampleAlpha,
-		kCGLPFASamples, 2,
-		kCGLPFASampleBuffers, 1,
-		0
-	};
-	
-	CGLPixelFormatObj pixelFormatObj = NULL;
-	GLint numPixelFormats = 0;
-	CGLChoosePixelFormat(attributes, &pixelFormatObj, &numPixelFormats);
-	if(pixelFormatObj == NULL) {
-		NSLog(@"[XTPanadapterLayer copyCGLPixelFormatForDisplayMask]: Couldn't get a pixel format\n");
-	}
-	return pixelFormatObj;
-}
-
--(void)releaseCGLPixelFormat:(CGLPixelFormatObj)pixelFormat {
-	CGLDestroyPixelFormat(pixelFormat);
-} */
-
-
 -(void)drawInCGLContext:(CGLContextObj)ctx 
 			pixelFormat:(CGLPixelFormatObj)pf 
 		   forLayerTime:(CFTimeInterval)t 

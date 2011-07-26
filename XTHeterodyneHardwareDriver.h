@@ -23,6 +23,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class XTDTTSP;
+@class OzyInputBuffers;
 
 @protocol XTHeterodyneHardwareDriver
 
@@ -44,5 +45,9 @@
 
 -(void)setFrequency: (int)_frequency forReceiver: (int)_receiver;
 -(int)getFrequency: (int)_receiver;
+
+@optional
+@property (readonly) OzyInputBuffers *bandscopeBuffers;
+@property BOOL preamp;
 
 @end
