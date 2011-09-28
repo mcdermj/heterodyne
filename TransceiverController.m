@@ -24,6 +24,7 @@
 #import "XTWorkerThread.h"
 #import "XTImageTextCell.h"
 #import "XTSMeterView.h"
+#import "XTReceiver.h"
 
 #import "XTDTTSP.h"
 
@@ -270,10 +271,6 @@
 	subPan = [[NSUserDefaults standardUserDefaults] floatForKey:@"subPan"];
 	[self didChangeValueForKey:@"subPan"];
 	
-	[self willChangeValueForKey:@"systemAudioGain"];
-	self.systemAudioGain = [[NSUserDefaults standardUserDefaults] floatForKey:@"systemAudioGain"];
-	[self didChangeValueForKey:@"systemAudioGain"];
-	
 	[self willChangeValueForKey:@"subEnabled"];
 	subEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"subEnabled"];
 	[self didChangeValueForKey:@"subEnabled"];
@@ -324,15 +321,9 @@
 											 selector:@selector(newSampleRate)
 												 name:@"XTSampleRateChanged"
 											   object: interface];
-	[interface setFrequency:frequency forReceiver:0];
+    [[XTReceiver mainReceiver] setFrequency:(float) frequency];
 	[self initDSP];
 		
-	meterTimer = [NSTimer scheduledTimerWithTimeInterval:0.06 
-												  target: self 
-												selector: @selector(updateMeter:) 
-												userInfo: nil 
-												 repeats: YES];
-	
 	[NSThread detachNewThreadSelector:@selector(start) toTarget:interface withObject:nil];
 	
 }
@@ -426,22 +417,7 @@
 }
 
 -(void)refreshParams {
-	self.systemAudioGain = [[NSUserDefaults standardUserDefaults] floatForKey:@"systemAudioGain"];
     receiverCalibration = [[NSUserDefaults standardUserDefaults] floatForKey:@"receiveCalibrationOffset"];
-}
-
--(void)setPan:(float) aPanValue {
-	[self willChangeValueForKey:@"pan"];
-	pan = aPanValue;
-	SetRXPan(0, 0, pan);
-	[self didChangeValueForKey:@"pan"];
-}
-
--(void)setSubPan:(float) aPanValue {
-	[self willChangeValueForKey:@"pan"];
-	subPan = aPanValue;
-	SetRXPan(0, 1, subPan);
-	[self didChangeValueForKey:@"pan"];
 }
 
 -(void)setPreamp:(BOOL) preampState {
@@ -454,10 +430,13 @@
 -(void)setFrequency:(int) theFrequency {
 	int diffFrequency;
 	
+    /*
 	[self willChangeValueForKey:@"frequency"];
 	frequency = theFrequency;	
 	[interface setFrequency:theFrequency forReceiver:0];
-	[self didChangeValueForKey:@"frequency"];
+	[self didChangeValueForKey:@"frequency"]; */
+    
+    [[XTReceiver mainReceiver] setFrequency: (float)theFrequency];
 	
 	diffFrequency = frequency - subFrequency;
 	if(abs(diffFrequency) > sampleRate / 2) {
@@ -472,6 +451,10 @@
 	}
 		
 	SetRXOsc(0, 1, (double) diffFrequency);
+}
+
+-(int)frequency {
+    return (int) [[XTReceiver mainReceiver] frequency];
 }
 
 -(void)setAGC:(int) theAGCSetting {
@@ -636,20 +619,6 @@
 	[self didChangeValueForKey:@"subFilterLow"];
 }
 
--(void)setVolume:(double)theVolume {
-	[self willChangeValueForKey:@"volume"];
-	volume = theVolume;
-	SetRXOutputGain(0, 0, volume);
-	[self didChangeValueForKey:@"volume"];
-}
-
--(void)setSubVolume: (double)theVolume {
-	[self willChangeValueForKey: @"subVolume"];
-	subVolume = theVolume;
-	SetRXOutputGain(0, 1, subVolume);
-	[self didChangeValueForKey:@"subVolume"];
-}
-
 -(void)initDSP {
 	SetSampleRate((double)sampleRate);
 	
@@ -671,109 +640,6 @@
 	SetTXOsc(1, 0.0);
 	SetMode(1, 0, mode);
 	SetTXFilter(1, filterLow, filterHigh);
-}
-
--(void)setSystemAudioGain: (float)_systemAudioGain {
-}
-
--(float)systemAudioGain {
-	return systemAudioGain * 100.0;
-}
-
--(void)setNoiseReduction:(BOOL) isNoiseReduction {
-	[self willChangeValueForKey:@"noiseReduction"];
-	noiseReduction = isNoiseReduction;
-	[self didChangeValueForKey:@"noiseReduction"];
-	if(noiseReduction == YES) {
-		SetNR(0, 0, 1);
-	} else {
-		SetNR(0, 0, 0);
-	}
-}
-
--(void)setAutoNotchFilter:(BOOL) isAutoNotchFilter {
-	[self willChangeValueForKey:@"autoNotchFilter"];
-	autoNotchFilter = isAutoNotchFilter;
-	[self didChangeValueForKey:@"autoNotchFilter"];
-	if(autoNotchFilter == YES) {
-		SetANF(0, 0, 1);
-	} else {
-		SetANF(0, 0, 0);
-	}
-}
-
--(void)setNoiseBlanker:(BOOL) isNoiseBlanker {
-	[self willChangeValueForKey:@"noiseBlanker"];
-	noiseBlanker = isNoiseBlanker;
-	[self didChangeValueForKey:@"noiseBlanker"];
-	if(noiseBlanker == YES) {
-		SetNB(0, 0, 1);
-	} else {
-		SetNB(0, 0, 0);
-	}
-}
-
--(void)setBinaural:(BOOL) isBinaural {
-	[self willChangeValueForKey:@"binaural"];
-	binaural = isBinaural;
-	[self didChangeValueForKey:@"binaural"];
-	if(binaural == YES) {
-		SetBIN(0, 0, 1);
-	} else {
-		SetBIN(0, 0, 0);
-	}
-}
-
--(void)setSubNoiseReduction:(BOOL) isNoiseReduction {
-	[self willChangeValueForKey:@"subNoiseReduction"];
-	subNoiseReduction = isNoiseReduction;
-	[self didChangeValueForKey:@"subNoiseReduction"];
-	if(subNoiseReduction == YES) {
-		SetNR(0, 1, 1);
-	} else {
-		SetNR(0, 1, 0);
-	}
-}
-
--(void)setSubAutoNotchFilter:(BOOL) isAutoNotchFilter {
-	[self willChangeValueForKey:@"subAutoNotchFilter"];
-	subAutoNotchFilter = isAutoNotchFilter;
-	[self didChangeValueForKey:@"subAutoNotchFilter"];
-	if(subAutoNotchFilter == YES) {
-		SetANF(0, 1, 1);
-	} else {
-		SetANF(0, 1, 0);
-	}
-}
-
--(void)setSubNoiseBlanker:(BOOL) isNoiseBlanker {
-	[self willChangeValueForKey:@"subNoiseBlanker"];
-	subNoiseBlanker = isNoiseBlanker;
-	[self didChangeValueForKey:@"subNoiseBlanker"];
-	if(subNoiseBlanker == YES) {
-		SetNB(0, 1, 1);
-	} else {
-		SetNB(0, 1, 0);
-	}
-}
-
--(void)setSubBinaural:(BOOL) isBinaural {
-	[self willChangeValueForKey:@"subBinaural"];
-	subBinaural = isBinaural;
-	[self didChangeValueForKey:@"subBinaural"];
-	if(subBinaural == YES) {
-		SetBIN(0, 1, 1);
-	} else {
-		SetBIN(0, 1, 0);
-	}
-}
-
--(void)updateMeter:(NSTimer *) _timer {
-	[self setMeterReading: (CalculateRXMeter(0, 0, 0) + preampOffset + filterCalibrationOffset) ];
-    [meter setSignal: (CalculateRXMeter(0, 0, 0) + preampOffset + filterCalibrationOffset + receiverCalibration)];
-	if(subEnabled == YES) {
-		[self setSubMeterReading: (CalculateRXMeter(0, 1, 0) + preampOffset + filterCalibrationOffset) ];
-	}
 }
 
 -(IBAction)changeFilter:(id) sender {

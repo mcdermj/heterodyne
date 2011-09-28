@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		09027C2711366F0300DC2921 /* Displays.icns in Resources */ = {isa = PBXBuildFile; fileRef = 09027C2511366F0300DC2921 /* Displays.icns */; };
 		09027C2811366F0300DC2921 /* SoftwareUpdate.icns in Resources */ = {isa = PBXBuildFile; fileRef = 09027C2611366F0300DC2921 /* SoftwareUpdate.icns */; };
+		091327641433267800594F15 /* XTReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 091327621433267800594F15 /* XTReceiver.h */; };
+		091327651433267800594F15 /* XTReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 091327631433267800594F15 /* XTReceiver.m */; };
 		091E950B12EC99A700DF211E /* NNHMetisDriver.xib in Resources */ = {isa = PBXBuildFile; fileRef = 091E950A12EC99A700DF211E /* NNHMetisDriver.xib */; };
 		09280EF51138D6AC007E1911 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09280EF41138D6AC007E1911 /* Accelerate.framework */; };
 		0928113D113A055F007E1911 /* US Bandplan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0928113C113A055F007E1911 /* US Bandplan.plist */; };
@@ -96,8 +98,8 @@
 		097A255C112FE97C000E8478 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 097A255B112FE97C000E8478 /* dsa_pub.pem */; };
 		097A269C1130855F000E8478 /* fftw3f.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
 		097A26A8113085D3000E8478 /* fftw3f.framework in Copy Framework Files */ = {isa = PBXBuildFile; fileRef = 097A269B1130855F000E8478 /* fftw3f.framework */; };
-		097E46BC13DC3B2D0020D37D /* XTMainReceiverController.h in Headers */ = {isa = PBXBuildFile; fileRef = 097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */; };
-		097E46BD13DC3B2D0020D37D /* XTMainReceiverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */; };
+		097E46BC13DC3B2D0020D37D /* XTReceiverController.h in Headers */ = {isa = PBXBuildFile; fileRef = 097E46BA13DC3B2B0020D37D /* XTReceiverController.h */; };
+		097E46BD13DC3B2D0020D37D /* XTReceiverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 097E46BB13DC3B2D0020D37D /* XTReceiverController.m */; };
 		0994DB7613DBF7260000C882 /* XTMainWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0994DB7413DBF7250000C882 /* XTMainWindowController.h */; };
 		0994DB7713DBF7260000C882 /* XTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0994DB7513DBF7260000C882 /* XTMainWindowController.m */; };
 		0994DB7A13DC035F0000C882 /* Bandscope Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0994DB7813DC00490000C882 /* Bandscope Window.xib */; };
@@ -246,6 +248,8 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		09027C2511366F0300DC2921 /* Displays.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Displays.icns; sourceTree = "<group>"; };
 		09027C2611366F0300DC2921 /* SoftwareUpdate.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SoftwareUpdate.icns; sourceTree = "<group>"; };
+		091327621433267800594F15 /* XTReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTReceiver.h; sourceTree = "<group>"; };
+		091327631433267800594F15 /* XTReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTReceiver.m; sourceTree = "<group>"; };
 		091E950A12EC99A700DF211E /* NNHMetisDriver.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NNHMetisDriver.xib; sourceTree = "<group>"; };
 		09280EF41138D6AC007E1911 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		0928113C113A055F007E1911 /* US Bandplan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "US Bandplan.plist"; sourceTree = "<group>"; };
@@ -311,8 +315,8 @@
 		097A254B112FE831000E8478 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		097A255B112FE97C000E8478 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		097A269B1130855F000E8478 /* fftw3f.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = fftw3f.framework; sourceTree = "<group>"; };
-		097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTMainReceiverController.h; sourceTree = "<group>"; };
-		097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTMainReceiverController.m; sourceTree = "<group>"; };
+		097E46BA13DC3B2B0020D37D /* XTReceiverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTReceiverController.h; sourceTree = "<group>"; };
+		097E46BB13DC3B2D0020D37D /* XTReceiverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTReceiverController.m; sourceTree = "<group>"; };
 		0994DB7413DBF7250000C882 /* XTMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTMainWindowController.h; sourceTree = "<group>"; };
 		0994DB7513DBF7260000C882 /* XTMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTMainWindowController.m; sourceTree = "<group>"; };
 		0994DB7813DC00490000C882 /* Bandscope Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Bandscope Window.xib"; sourceTree = "<group>"; };
@@ -525,6 +529,8 @@
 				09F467CB1149FA47003EEA61 /* XTWaterfallLayer.m */,
 				09423730112D41FB004937FC /* XTWaterfallView.h */,
 				09423731112D41FB004937FC /* XTWaterfallView.m */,
+				091327621433267800594F15 /* XTReceiver.h */,
+				091327631433267800594F15 /* XTReceiver.m */,
 				09E357361131C4DF0049D5A7 /* XTPanadapterDataMUX.h */,
 				09E357371131C4DF0049D5A7 /* XTPanadapterDataMUX.m */,
 				092DE5961137247E00B98CFA /* XTBanscopeView.h */,
@@ -540,8 +546,8 @@
 				09D3210A13185A6400E0D88B /* XTImageTextCell.m */,
 				0994DB7413DBF7250000C882 /* XTMainWindowController.h */,
 				0994DB7513DBF7260000C882 /* XTMainWindowController.m */,
-				097E46BA13DC3B2B0020D37D /* XTMainReceiverController.h */,
-				097E46BB13DC3B2D0020D37D /* XTMainReceiverController.m */,
+				097E46BA13DC3B2B0020D37D /* XTReceiverController.h */,
+				097E46BB13DC3B2D0020D37D /* XTReceiverController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -830,7 +836,7 @@
 				0957655B12A831D40099B615 /* XTDTTSP.h in Headers */,
 				0978BE3713219D0600B8976C /* SystemAudio.h in Headers */,
 				094EDDB613310842007C4367 /* XTSMeterView.h in Headers */,
-				097E46BC13DC3B2D0020D37D /* XTMainReceiverController.h in Headers */,
+				097E46BC13DC3B2D0020D37D /* XTReceiverController.h in Headers */,
 				0940633213DEE2FF004AA2A9 /* SFBInspectorPane.h in Headers */,
 				0940633413DEE2FF004AA2A9 /* SFBInspectorPaneBody.h in Headers */,
 				0940633613DEE2FF004AA2A9 /* SFBInspectorPaneHeader.h in Headers */,
@@ -838,6 +844,7 @@
 				0940633A13DEE2FF004AA2A9 /* SFBViewSelector.h in Headers */,
 				0940633C13DEE2FF004AA2A9 /* SFBViewSelectorBar.h in Headers */,
 				0940633E13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.h in Headers */,
+				091327641433267800594F15 /* XTReceiver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,7 +1170,7 @@
 				0957655C12A831D40099B615 /* XTDTTSP.m in Sources */,
 				0978BCD31320C43200B8976C /* SystemAudio.m in Sources */,
 				094EDDB713310842007C4367 /* XTSMeterView.m in Sources */,
-				097E46BD13DC3B2D0020D37D /* XTMainReceiverController.m in Sources */,
+				097E46BD13DC3B2D0020D37D /* XTReceiverController.m in Sources */,
 				0940633313DEE2FF004AA2A9 /* SFBInspectorPane.m in Sources */,
 				0940633513DEE2FF004AA2A9 /* SFBInspectorPaneBody.m in Sources */,
 				0940633713DEE2FF004AA2A9 /* SFBInspectorPaneHeader.m in Sources */,
@@ -1171,6 +1178,7 @@
 				0940633B13DEE2FF004AA2A9 /* SFBViewSelector.m in Sources */,
 				0940633D13DEE2FF004AA2A9 /* SFBViewSelectorBar.m in Sources */,
 				0940633F13DEE2FF004AA2A9 /* SFBViewSelectorBarItem.m in Sources */,
+				091327651433267800594F15 /* XTReceiver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

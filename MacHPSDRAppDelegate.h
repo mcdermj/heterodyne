@@ -25,7 +25,7 @@
 #import "AboutBoxView.h"
 
 @class XTMainWindowController;
-@class XTMainReceiverController;
+@class XTReceiverController;
 @class TransceiverController;
 @class XTMainWindow;
 
@@ -38,12 +38,14 @@
 	IBOutlet NSPanel *subReceiver;
     NSWindowController *bandscopeWindow;
     XTMainWindowController *mainWindowController;
-    XTMainReceiverController *mainReceiverController;
+    XTReceiverController *mainReceiverController;
     
     TransceiverController *transceiver;
 	
 	NSArray *drivers;
 }
+
+@property (readonly) TransceiverController *transceiver;
 
 -(IBAction)doAbout:(id)sender;
 -(IBAction)showMainReceiver:(id)sender;

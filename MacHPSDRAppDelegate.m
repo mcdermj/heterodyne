@@ -23,13 +23,16 @@
 #import "MacHPSDRAppDelegate.h"
 #import "XTHeterodyneHardwareDriver.h"
 #import "XTMainWindowController.h"
-#import "XTMainReceiverController.h"
+#import "XTReceiverController.h"
 #import "XTWaterfallView.h"
 #import "XTPanAdapterView.h"
+#import "XTReceiver.h"
 
 #import "dttsp.h"
 
 @implementation MacHPSDRAppDelegate
+
+@synthesize transceiver;
 
 +(void)initialize {
 	NSString *defaultsFilename = [[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"];
@@ -47,7 +50,7 @@
     [[mainWindowController window] makeMainWindow];
 	[mainWindowController showWindow:nil];
     
-    mainReceiverController = [[XTMainReceiverController alloc] init];
+    mainReceiverController = [[XTReceiverController alloc] initWithReceiver:[XTReceiver mainReceiver]];
     [mainReceiverController showWindow:self];
     
 	[transceiver start];
@@ -56,6 +59,7 @@
 	[subReceiver setFrameAutosaveName:@"subReceiverPosition"];
 	[subReceiver setLevel:NSNormalWindowLevel];
 	[mainReceiver makeKeyAndOrderFront:nil];
+    
 }
 
 -(void)applicationWillTerminate:(NSNotification *)aNotification {

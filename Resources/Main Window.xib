@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11A511</string>
+		<string key="IBDocument.SystemVersion">11B26</string>
 		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
 		<string key="IBDocument.AppKitVersion">1138</string>
 		<string key="IBDocument.HIToolboxVersion">566.00</string>
@@ -41,7 +41,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{1476, 157}, {855, 573}}</string>
 				<int key="NSWTFlags">611845120</int>
-				<string key="NSWindowTitle">Window</string>
+				<string key="NSWindowTitle">Heterodyne</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<object class="NSToolbar" key="NSViewClass" id="825384518">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
@@ -76,13 +76,11 @@
 							<int key="NSToolbarItemVisibilityPriority">0</int>
 						</object>
 					</object>
-					<array class="NSMutableArray" key="NSToolbarIBAllowedItems">
+					<array key="NSToolbarIBAllowedItems">
 						<reference ref="210823615"/>
 					</array>
-					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
-						<reference ref="210823615"/>
-					</array>
-					<array key="NSToolbarIBSelectableItems" id="0"/>
+					<array key="NSToolbarIBDefaultItems" id="0"/>
+					<reference key="NSToolbarIBSelectableItems" ref="0"/>
 				</object>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="220328426">
@@ -98,7 +96,6 @@
 									<int key="NSvFlags">256</int>
 									<string key="NSFrameSize">{855, 274}</string>
 									<reference key="NSSuperview" ref="35553372"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1025495560"/>
 									<string key="NSReuseIdentifierKey">_NS:547</string>
 									<string key="NSClassName">XTPanAdapterView</string>
@@ -108,7 +105,6 @@
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{0, 284}, {855, 289}}</string>
 									<reference key="NSSuperview" ref="35553372"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:549</string>
 									<string key="NSClassName">XTWaterfallView</string>
@@ -116,7 +112,6 @@
 							</array>
 							<string key="NSFrameSize">{855, 573}</string>
 							<reference key="NSSuperview" ref="220328426"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="992886061"/>
 							<string key="NSReuseIdentifierKey">_NS:545</string>
 							<int key="NSDividerStyle">3</int>
@@ -125,7 +120,6 @@
 					</array>
 					<string key="NSFrameSize">{855, 573}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="35553372"/>
 					<string key="NSReuseIdentifierKey">_NS:2818</string>
 				</object>

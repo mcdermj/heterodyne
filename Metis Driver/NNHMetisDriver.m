@@ -538,6 +538,7 @@
 
 -(void)setFrequency: (int)_frequency forReceiver: (int)_receiver {
 	receiverFrequency[_receiver] = _frequency;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"XTPassbandCenterChanged" object:self];
 }
 
 -(int)getFrequency: (int)_receiver {
