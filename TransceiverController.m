@@ -530,28 +530,6 @@
 	}
 }
 
--(void)setMode:(int) theMode {
-	[self willChangeValueForKey:@"mode"];
-	mode = theMode;
-
-	SetMode(0, 0, mode);
-	SetMode(1, 0, mode);
-	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetTXFilter(1, filterLow, filterHigh);
-	[self didChangeValueForKey:@"mode"];
-	[self recalcFilterPresets];
-}
-
--(void)setSubMode:(int) theMode {
-	[self willChangeValueForKey:@"subMode"];
-	subMode = theMode;
-	
-	SetMode(0, 1, subMode);
-	SetRXFilter(0, 1, subFilterLow, subFilterHigh);
-	[self didChangeValueForKey:@"subMode"];
-	[self recalcSubFilterPresets];
-}
-
 -(void)setSampleRate:(int) theSampleRate {
 	sampleRate = theSampleRate;
 	[self initDSP];
@@ -624,22 +602,35 @@
 	
 	SetSubRXSt(0, 0, TRUE);
 	SetRXOsc(0, 0, 0.0);
-	SetRXOutputGain(0, 0, volume);
+	
+    /* SetRXOutputGain(0, 0, volume);
 	SetMode(0, 0, mode);
 	SetRXFilter(0, 0, filterLow, filterHigh);
-	SetRXPan(0, 0, pan);
+	SetRXPan(0, 0, pan); */
+    [[XTReceiver mainReceiver] setMode:mode];
+    [[XTReceiver mainReceiver] setFilterLow:filterLow andHigh:filterHigh];
+    [[XTReceiver mainReceiver] setPan:pan];
+    [[XTReceiver mainReceiver] setGain:volume];
 	
 	SetRXOsc(0, 1, (double) subFrequency - frequency);
+    
+    /*
 	SetRXOutputGain(0, 1, subVolume);
 	SetMode(0, 1, subMode);
 	SetRXFilter(0, 1, filterLow, filterHigh);
-	SetRXPan(0, 1, subPan);
+	SetRXPan(0, 1, subPan); */
+    [[XTReceiver subReceiver] setGain:subVolume];
+    [[XTReceiver subReceiver] setMode:subMode];
+    [[XTReceiver subReceiver] setFilterLow:subFilterLow andHigh:subFilterHigh];
+    [[XTReceiver subReceiver] setPan:subPan];
 	
 	SetSubRXSt(0, 1, subEnabled);
 	
 	SetTXOsc(1, 0.0);
+    
+    /*
 	SetMode(1, 0, mode);
-	SetTXFilter(1, filterLow, filterHigh);
+	SetTXFilter(1, filterLow, filterHigh); */
 }
 
 -(IBAction)changeFilter:(id) sender {

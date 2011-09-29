@@ -29,12 +29,26 @@
 @class XTPanadapterDataMUX;
 @class XTWaterfallView;
 
+@interface XTPanadapterLayer : CAOpenGLLayer {
+	XTPanadapterDataMUX *dataMUX;
+	
+	float highLevel, lowLevel;
+    
+}
+
+@property XTPanadapterDataMUX *dataMUX;
+@property float highLevel;
+@property float lowLevel;
+
+@end
+
 @interface XTPanAdapterView : NSView {
 	
 	XTWorkerThread *updateThread;
 	
 	float subPosition;
 	float hzPerUnit;
+    float dbPerUnit;
 		
 	CALayer *rootLayer;
 	CALayer *tickLayer;
@@ -53,13 +67,13 @@
 	BOOL startedSubRight;
 	BOOL startedSub;
 		
-	float lowPanLevel, highPanLevel;
+	float lowLevel, highLevel;
 	
 	IBOutlet XTPanadapterDataMUX *dataMux;
 }
 
-@property float lowPanLevel;
-@property float highPanLevel;
+@property float lowLevel;
+@property float highLevel;
 @property IBOutlet XTMainWindowController *windowController;
 
 -(void)doNotification: (NSNotification *) notification;

@@ -159,7 +159,6 @@
 		09F0AD561185C07900E7F6F4 /* XTMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F0AD551185C07900E7F6F4 /* XTMainWindow.m */; };
 		09F4608411474F1D003EEA61 /* basket.icns in Resources */ = {isa = PBXBuildFile; fileRef = 09F4608311474F1D003EEA61 /* basket.icns */; };
 		09F467CC1149FA47003EEA61 /* XTWaterfallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F467CB1149FA47003EEA61 /* XTWaterfallLayer.m */; };
-		09F46878114A18FB003EEA61 /* XTPanadapterLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F46877114A18FB003EEA61 /* XTPanadapterLayer.m */; };
 		09FAB2561128BB8B000119AB /* TransceiverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FAB2551128BB8B000119AB /* TransceiverController.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* MacHPSDRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MacHPSDRAppDelegate.m */; };
@@ -424,8 +423,6 @@
 		09F4608311474F1D003EEA61 /* basket.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = basket.icns; sourceTree = "<group>"; };
 		09F467CA1149FA47003EEA61 /* XTWaterfallLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTWaterfallLayer.h; sourceTree = "<group>"; };
 		09F467CB1149FA47003EEA61 /* XTWaterfallLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTWaterfallLayer.m; sourceTree = "<group>"; };
-		09F46876114A18FB003EEA61 /* XTPanadapterLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTPanadapterLayer.h; sourceTree = "<group>"; };
-		09F46877114A18FB003EEA61 /* XTPanadapterLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTPanadapterLayer.m; sourceTree = "<group>"; };
 		09FAAAF01126EF4D000119AB /* OzyInputBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OzyInputBuffers.h; sourceTree = "<group>"; };
 		09FAAAF11126EF4D000119AB /* OzyInputBuffers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OzyInputBuffers.m; sourceTree = "<group>"; };
 		09FAAFCE112781BA000119AB /* OzyRingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OzyRingBuffer.h; sourceTree = "<group>"; };
@@ -519,8 +516,6 @@
 				09FAB2551128BB8B000119AB /* TransceiverController.m */,
 				09422F74112B96AE004937FC /* SystemAudio.h */,
 				09422F75112B96AE004937FC /* SystemAudio.m */,
-				09F46876114A18FB003EEA61 /* XTPanadapterLayer.h */,
-				09F46877114A18FB003EEA61 /* XTPanadapterLayer.m */,
 				094239CB112DA2BF004937FC /* XTWorkerThread.h */,
 				094239CC112DA2BF004937FC /* XTWorkerThread.m */,
 				0942372B112D4174004937FC /* XTPanAdapterView.h */,
@@ -1165,7 +1160,6 @@
 				09E357381131C4DF0049D5A7 /* XTPanadapterDataMUX.m in Sources */,
 				092DE5981137247E00B98CFA /* XTBanscopeView.m in Sources */,
 				09F467CC1149FA47003EEA61 /* XTWaterfallLayer.m in Sources */,
-				09F46878114A18FB003EEA61 /* XTPanadapterLayer.m in Sources */,
 				09F0AD561185C07900E7F6F4 /* XTMainWindow.m in Sources */,
 				0957655C12A831D40099B615 /* XTDTTSP.m in Sources */,
 				0978BCD31320C43200B8976C /* SystemAudio.m in Sources */,

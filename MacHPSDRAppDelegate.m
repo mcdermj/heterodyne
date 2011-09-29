@@ -118,4 +118,9 @@
     }
 }
 
+-(IBAction)doPreferences:(id)sender {
+    //  XXX This is *WAY* ugly.  Should be done some other way.
+    [transceiver doPreferences:sender];
+}
+
 @end

@@ -26,6 +26,9 @@
 #include <OpenGL/glu.h>
 
 
+static const float off = 1.0 / 511.0;
+
+
 @implementation XTWaterfallLayer
 
 @synthesize dataMUX;
@@ -76,6 +79,11 @@
         low = 0.0;
         
         autoScale = [[NSUserDefaults standardUserDefaults] boolForKey:@"autoWaterfall"];
+        
+        textureArray[0] = 0.0;
+        textureArray[2] = 1.0;
+        textureArray[4] = 1.0;
+        textureArray[6] = 0.0;
 	}
 	
 	return self;
@@ -124,6 +132,28 @@
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WATERFALL_SIZE, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, blankData);
 		glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 	}
+    
+    if(glIsBuffer(forwardVertexBuffer) == GL_FALSE) {
+        const float normalVertices[] = { 0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 1.0 };
+        
+        const float reversedVertices[] = { 0.0, 1.0,
+            1.0, 1.0,
+            1.0, 0.0,
+            0.0 ,0.0 };
+
+        glGenBuffers(1, &forwardVertexBuffer);
+        glGenBuffers(1, &reverseVertexBuffer);
+        glGenBuffers(1, &texCoordBuffer);
+        
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, forwardVertexBuffer);
+        glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(normalVertices), normalVertices, GL_STATIC_DRAW_ARB);
+        
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, reverseVertexBuffer);
+        glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(reversedVertices), reversedVertices, GL_STATIC_DRAW_ARB);
+    }
 	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -143,40 +173,32 @@
 	
 	glPushMatrix();
 	glScalef(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds), 1.0);
-	
-	glBegin(GL_QUADS);
-	{
-		float prop_y, off;
-		prop_y = (float) currentLine  / 511.0;
-		off = 1.0 / 511.0;
-		
-		if(flowsUp == NO) {
-			glTexCoord2f(0, prop_y);
-			glVertex2f(0, 0);
-			
-			glTexCoord2f(1, prop_y);
-			glVertex2f(1, 0);
-			
-			glTexCoord2f(1, prop_y + 1 - off);
-			glVertex2f(1, 1);
-			
-			glTexCoord2f(0, prop_y + 1 - off);
-			glVertex2f(0, 1);
-		} else {
-			glTexCoord2f(0, prop_y);
-			glVertex2f(0, 1);
-			
-			glTexCoord2f(1, prop_y);
-			glVertex2f(1, 1);
-			
-			glTexCoord2f(1, prop_y + 1 - off);
-			glVertex2f(1, 0);
-			
-			glTexCoord2f(0, prop_y + 1 - off);
-			glVertex2f(0, 0);
-		}
-	}
-	glEnd();
+    
+    float prop_y = (float) currentLine  / 511.0;
+
+    textureArray[1] = prop_y;
+    textureArray[3] = prop_y;
+    textureArray[5] = prop_y + 1 - off;
+    textureArray[7] = prop_y + 1 - off;
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    if(flowsUp == NO)
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, forwardVertexBuffer);
+    else
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, reverseVertexBuffer);
+    
+    glVertexPointer(2, GL_FLOAT, 0, 0);
+    
+    glBindBufferARB(GL_ARRAY_BUFFER_ARB, texCoordBuffer);
+    glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(textureArray), textureArray, GL_STREAM_DRAW_ARB);
+    glTexCoordPointer(2, GL_FLOAT, 0, 0);
+    
+    glDrawArrays(GL_QUADS, 0, 4);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    
 	glPopMatrix();
 	
 	glFlush();	

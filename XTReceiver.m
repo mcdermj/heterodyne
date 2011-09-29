@@ -22,6 +22,9 @@
 @synthesize autoNotchFilter;
 @synthesize noiseBlanker;
 @synthesize binaural;
+@synthesize mode;
+@synthesize filterHigh;
+@synthesize filterLow;
 
 static XTReceiver* _mainReceiver;
 static XTReceiver* _subReceiver;
@@ -142,6 +145,103 @@ static XTReceiver* _subReceiver;
     } else {
         
     }
+}
+
+-(void)setMode:(int)newMode {
+    mode = newMode;
+    
+    SetMode(0, receiverNumber, mode);
+    SetRXFilter(0, receiverNumber, filterLow, filterHigh);
+    
+    //  XXX This should go away
+    if(receiverNumber == 0) {
+        SetMode(1, 0, mode);
+        SetTXFilter(1, filterLow, filterHigh);
+    }
+}
+
+-(void)setFilterHigh:(float)newFilterHigh {
+    if(filterHigh == newFilterHigh) return;
+    
+    [self willChangeValueForKey:@"filterCenter"];
+    [self willChangeValueForKey:@"filterWidth"];
+
+    filterHigh = newFilterHigh;
+    
+    SetRXFilter(0, receiverNumber, filterLow, filterHigh);
+    
+    [self didChangeValueForKey:@"filterCenter"];
+    [self didChangeValueForKey:@"filterWidth"];
+    
+    //  XXX This should go away
+    if(receiverNumber == 0) 
+        SetTXFilter(1, filterLow, filterHigh);
+}
+
+-(void)setFilterLow:(float)newFilterLow {
+    if(filterLow == newFilterLow) return;
+    
+    [self willChangeValueForKey:@"filterCenter"];
+    [self willChangeValueForKey:@"filterWidth"];
+    
+    filterLow = newFilterLow;
+    
+    SetRXFilter(0, receiverNumber, filterLow, filterHigh);
+    
+    [self didChangeValueForKey:@"filterCenter"];
+    [self didChangeValueForKey:@"filterWidth"];
+    
+    //  XXX This should go away
+    if(receiverNumber == 0) 
+        SetTXFilter(1, filterLow, filterHigh);
+}
+
+-(void)setFilterLow:(float)newFilterLow andHigh:(float)newFilterHigh {
+    if(filterLow == newFilterLow && filterHigh == newFilterHigh) return;
+    
+    [self willChangeValueForKey:@"filterHigh"];
+    [self willChangeValueForKey:@"filterLow"];
+    [self willChangeValueForKey:@"filterCenter"];
+    [self willChangeValueForKey:@"filterWidth"];
+    
+    filterLow = newFilterLow;
+    filterHigh = newFilterHigh;
+    
+    SetRXFilter(0, receiverNumber, filterLow, filterHigh);
+    if(receiverNumber == 0)
+        SetTXFilter(1, filterLow, filterHigh);
+    
+    [self didChangeValueForKey:@"filterHigh"];
+    [self didChangeValueForKey:@"filterLow"];
+    [self didChangeValueForKey:@"filterCenter"];
+    [self didChangeValueForKey:@"filterWidth"];
+}
+
+
+-(float)filterWidth {
+    return filterHigh - filterLow;
+}
+
+-(float)filterCenter {
+    return filterLow + ([self filterWidth] / 2.0f);
+}
+
+-(void)setFilterCenter:(float)filterCenter {
+    float halfFilterWidth = [self filterWidth] / 2.0f;
+    
+    [self setFilterLow: filterCenter - halfFilterWidth andHigh:filterCenter + halfFilterWidth];
+}
+
+-(void)setFilterWidth:(float)filterWidth {
+    float halfFilterWidth = filterWidth / 2.0f;
+    
+    [self setFilterLow:[self filterCenter] - halfFilterWidth andHigh:[self filterCenter] + halfFilterWidth];
+}
+
+-(void)setFilterWidth:(float)filterWidth andCenter:(float)filterCenter {
+    float halfFilterWidth = filterWidth / 2.0f;
+    
+    [self setFilterLow:filterCenter - halfFilterWidth andHigh:filterCenter + halfFilterWidth];
 }
 
 @end

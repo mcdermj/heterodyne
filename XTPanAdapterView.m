@@ -22,17 +22,21 @@
 
 #import "XTPanAdapterView.h"
 
-#import "XTPanadapterLayer.h"
 #import "XTWorkerThread.h"
 #import "XTMainWindowController.h"
 #import "TransceiverController.h"
+#import "XTReceiver.h"
+#import "XTPanadapterDataMUX.h"
 
 #import <Accelerate/Accelerate.h>
 
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+
 @implementation XTPanAdapterView
 
-@synthesize lowPanLevel;
-@synthesize highPanLevel;
+@synthesize lowLevel;
+@synthesize highLevel;
 @synthesize windowController;
 
 -(id)initWithFrame:(NSRect)frameRect {
@@ -40,14 +44,8 @@
 	if(self) {				
 		path = [[NSBezierPath alloc] init];
 		[path setLineWidth:0.5];
-										
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector: @selector(doNotification:) 
-													 name: NSUserDefaultsDidChangeNotification 
-												   object: nil];
-						
-		startedLeft = startedRight = dragging = NO;
 		
+ 		startedLeft = startedRight = dragging = NO;		
         
 		rootLayer = [CALayer layer];
 		rootLayer.name = @"rootLayer";
@@ -108,7 +106,6 @@
 		[waveLayer addConstraint:ySameSize];
 		[waveLayer addConstraint:xWidthOfTicks];
 		[waveLayer setNeedsDisplayOnBoundsChange:YES];
-		// [waveLayer setDelegate: self];
 		[rootLayer addSublayer:waveLayer];
 		
 		[self setLayer: rootLayer];
@@ -122,26 +119,44 @@
 }
 
 -(void)awakeFromNib {	
-	lowPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"lowPanLevel"];
-	highPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"highPanLevel"];
+    [self bind:@"lowLevel" 
+      toObject:[NSUserDefaultsController sharedUserDefaultsController]
+   withKeyPath:@"values.lowPanLevel" 
+       options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] 
+                                           forKey:@"NSContinuouslyUpdatesValue"]];
+    
+    [self bind:@"highLevel" 
+      toObject:[NSUserDefaultsController sharedUserDefaultsController]
+   withKeyPath:@"values.highPanLevel" 
+       options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] 
+                                           forKey:@"NSContinuouslyUpdatesValue"]];
 		
-	filterRect = NSMakeRect(NSMidX(self.bounds) + ([windowController transceiver].filterLow / hzPerUnit), 0, ([windowController transceiver].filterHigh / hzPerUnit) - ([windowController transceiver].filterLow / hzPerUnit), NSHeight(self.bounds));	
-	subFilterRect = NSMakeRect(subPosition + ([windowController transceiver].subFilterLow / hzPerUnit), 0, ([windowController transceiver].subFilterHigh / hzPerUnit) - ([windowController transceiver].subFilterLow / hzPerUnit), NSHeight(self.bounds));
+	filterRect = NSMakeRect(NSMidX(self.bounds) + ([windowController transceiver].filterLow / hzPerUnit), 
+                            0, 
+                            ([windowController transceiver].filterHigh / hzPerUnit) - ([windowController transceiver].filterLow / hzPerUnit),
+                            NSHeight(self.bounds));	
+	subFilterRect = NSMakeRect(subPosition + ([windowController transceiver].subFilterLow / hzPerUnit), 
+                               0, ([windowController transceiver].subFilterHigh / hzPerUnit) - ([windowController transceiver].subFilterLow / hzPerUnit), 
+                               NSHeight(self.bounds));
 
-	[self.window invalidateCursorRectsForView:self];
+	[[self window] invalidateCursorRectsForView:self];
+    
+    // XXX This should be a loop around an array of XTReceivers to observe their filter and frequency changes.
+    // XXX We also should be changing the drawing layers to draw an arbitrary number of receivers on the display.
 	
-	[[windowController transceiver] addObserver:self 
+	[[XTReceiver mainReceiver] addObserver:self 
 							forKeyPath:@"filterLow" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];	
-	[[windowController transceiver] addObserver:self 
+	[[XTReceiver mainReceiver] addObserver:self 
 							forKeyPath:@"filterHigh" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
-	[[windowController transceiver] addObserver:self 
+	[[XTReceiver mainReceiver] addObserver:self 
 							forKeyPath:@"frequency" 
 							   options:NSKeyValueObservingOptionNew 
 							   context: NULL];
+    
 	[[windowController transceiver] addObserver:self 
 							forKeyPath:@"subFrequency" 
 							   options:NSKeyValueObservingOptionNew 
@@ -185,6 +200,7 @@
 		float startFrequency, endFrequency;
 		
 		hzPerUnit = (float) [windowController transceiver].sampleRate / CGRectGetWidth(layer.bounds);
+        dbPerUnit = (float) (highLevel - lowLevel) / CGRectGetHeight(layer.bounds);
 		startFrequency = ((float) [windowController transceiver].frequency) - (CGRectGetMidX(layer.bounds) * hzPerUnit);
 		endFrequency = startFrequency + (CGRectGetWidth(layer.bounds) * hzPerUnit);
 		
@@ -214,10 +230,10 @@
 						withAttributes:textAttributes];
 		}
 		
-		float slope = CGRectGetHeight(layer.bounds) / (highPanLevel - lowPanLevel);
+		float slope = CGRectGetHeight(layer.bounds) / (highLevel - lowLevel);
 		
-		for(mark = ceilf(lowPanLevel / 10.0) * 10.0; mark < highPanLevel; mark += 10.0) {
-			position = (mark - lowPanLevel) * slope;
+		for(mark = ceilf(lowLevel / 10.0) * 10.0; mark < highLevel; mark += 10.0) {
+			position = (mark - lowLevel) * slope;
 			
 			tickMark = [[NSBezierPath alloc] init];
 			[tickMark setLineWidth: 0.5];
@@ -291,9 +307,9 @@
 			}
 		}		
 		
-		filterRect = NSMakeRect(CGRectGetMidX(layer.bounds) + ([[windowController transceiver] filterLow] / hzPerUnit), 
+		filterRect = NSMakeRect(CGRectGetMidX(layer.bounds) + ([[XTReceiver mainReceiver] filterLow] / hzPerUnit), 
 								0, 
-								([[windowController transceiver] filterHigh] / hzPerUnit) - ([[windowController transceiver] filterLow ] / hzPerUnit), 
+								([[XTReceiver mainReceiver] filterHigh] / hzPerUnit) - ([[XTReceiver mainReceiver] filterLow ] / hzPerUnit), 
 								CGRectGetHeight(layer.bounds));
 		NSBezierPath *filter = [[NSBezierPath alloc] init];
 		[filter appendBezierPathWithRect:filterRect];
@@ -309,7 +325,7 @@
 		float *y;
 		float negativeLowPanLevel;
 		
-		float slope = CGRectGetHeight(layer.bounds) / (highPanLevel - lowPanLevel);
+		float slope = CGRectGetHeight(layer.bounds) / (highLevel - lowLevel);
 				
 		[path removeAllPoints];
 		
@@ -321,7 +337,7 @@
 		const float *smoothBuffer = [panData bytes];
 		y = malloc([panData length]);
 		
-		negativeLowPanLevel = -lowPanLevel;
+		negativeLowPanLevel = -lowLevel;
 		vDSP_vsadd((float *) smoothBuffer, 1, &negativeLowPanLevel, y, 1, [panData length] / sizeof(float));
 		vDSP_vsmul(y, 1, &slope, y, 1, [panData length] / sizeof(float)); 
 		
@@ -355,8 +371,8 @@
 	NSString *notificationName = [notification name];
 	
 	if(notification == nil || notificationName == NSUserDefaultsDidChangeNotification ) {
-		lowPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"lowPanLevel"];
-		highPanLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"highPanLevel"];
+		lowLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"lowPanLevel"];
+		highLevel = [[NSUserDefaults standardUserDefaults] floatForKey:@"highPanLevel"];
 		
 		[tickLayer setNeedsDisplay];
 	}
@@ -401,6 +417,8 @@
 		if([[NSCursor currentCursor] isNotEqualTo:[NSCursor closedHandCursor]]) {
 			[[NSCursor closedHandCursor] push];
 		}
+        self.highLevel += [theEvent deltaY] * dbPerUnit;
+        self.lowLevel += [theEvent deltaY] * dbPerUnit;
 		[windowController transceiver].frequency -= [theEvent deltaX] * hzPerUnit;
 	} 
 }
@@ -420,6 +438,8 @@
 			[windowController transceiver].subFrequency += [theEvent deltaX] * hzPerUnit;
 			[NSCursor pop];			
 		} else {
+            self.highLevel += [theEvent deltaY] * dbPerUnit;
+            self.lowLevel += [theEvent deltaY] * dbPerUnit;
 			[windowController transceiver].frequency -= [theEvent deltaX] * hzPerUnit;
 			[NSCursor pop];
 		}
@@ -523,6 +543,109 @@
 
 -(BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
     return [NSApp isActive];
+}
+
+-(void)setHighLevel:(float)newHighLevel {
+    highLevel = newHighLevel;
+    [waveLayer setHighLevel:highLevel];
+    [[NSUserDefaults standardUserDefaults] setFloat:highLevel forKey:@"highPanLevel"];
+    
+    [tickLayer setNeedsDisplay];
+}
+
+-(void)setLowLevel:(float)newLowLevel {
+    lowLevel = newLowLevel;
+    [waveLayer setLowLevel:lowLevel];
+    [[NSUserDefaults standardUserDefaults] setFloat:lowLevel forKey:@"lowPanLevel"];
+    
+    [tickLayer setNeedsDisplay];
+}
+
+@end
+
+@implementation XTPanadapterLayer
+
+@synthesize dataMUX;
+@synthesize highLevel;
+@synthesize lowLevel;
+
+-(id)init {
+	self = [super init];
+	if(self) {		
+	}
+	
+	return self;
+}
+
+-(void)drawInCGLContext:(CGLContextObj)ctx 
+			pixelFormat:(CGLPixelFormatObj)pf 
+		   forLayerTime:(CFTimeInterval)t 
+			displayTime:(const CVTimeStamp *)ts {
+	
+    float *vertices;
+	float negativeLowPanLevel;
+	
+	if(dataMUX == NULL) return;
+	
+	NSData *panData = [dataMUX smoothBufferData];
+	const float *smoothBuffer = [panData bytes];
+    int numSamples = [panData length] / sizeof(float);
+    vertices = malloc([panData length] * 2);
+	
+    //  Fill vector array with Y values
+	negativeLowPanLevel = -lowLevel;
+	vDSP_vsadd((float *) smoothBuffer, 1, &negativeLowPanLevel, &vertices[1], 2, numSamples);
+	
+	float range = highLevel - lowLevel;
+	vDSP_vsdiv(&vertices[1], 2, &range, &vertices[1], 2, numSamples);
+    
+    //  Generate X values
+    float zero = 0.0f;
+    float increment = 1.0f / numSamples;
+    vDSP_vramp(&zero, &increment, vertices, 2, numSamples);
+	
+	glClearColor(0, 0, 0, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, (GLsizei) CGRectGetWidth(self.bounds), (GLsizei) CGRectGetHeight(self.bounds));
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0, (GLdouble) CGRectGetWidth(self.bounds), 0.0, (GLdouble) CGRectGetHeight(self.bounds));
+    
+	glPushMatrix();
+	glScalef(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds), 1.0);
+	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_LINE_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glDepthMask(GL_FALSE);
+	glShadeModel(GL_SMOOTH);
+	
+	GLfloat lineSizes[2];
+	GLfloat lineStep;
+	glGetFloatv(GL_LINE_WIDTH_RANGE, lineSizes);
+	glGetFloatv(GL_LINE_WIDTH_GRANULARITY, &lineStep);
+	glLineWidth(lineSizes[0] + (lineStep * 5));
+	glColor4f(0.0, 0.0, 0.0, 1.0);
+	
+    //  Draw the line from the vertex array
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glDrawArrays(GL_LINE_STRIP, 0, numSamples);
+    glDisableClientState(GL_VERTEX_ARRAY);
+	
+	glDepthMask(GL_TRUE);
+	glDisable(GL_LINE_SMOOTH);
+	glDisable(GL_BLEND);
+	
+	glPopMatrix();
+	glFlush();	
+	
+    free(vertices);
+}
+
+-(id)actionForLayer:(CALayer *)theLayer forKey:(NSString *) aKey {	
+	return [NSNull null];
 }
 
 @end

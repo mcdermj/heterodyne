@@ -25,5 +25,13 @@
 @property BOOL binaural;
 @property (readonly) float signalLevel;
 @property float frequency;
+@property int mode;
+@property float filterLow;
+@property float filterHigh;
+@property float filterCenter;
+@property float filterWidth;
+
+-(void)setFilterWidth:(float)filterWidth andCenter:(float)filterCenter;
+-(void)setFilterLow:(float)filterLow andHigh:(float)filterHigh;
 
 @end

@@ -53,5 +53,6 @@
 -(IBAction)showBandscope:(id)sender;
 -(IBAction)swapMainWindow:(id)sender;
 -(void)doNotification:(NSNotification *) notification;
+-(IBAction)doPreferences:(id)sender;
 
 @end

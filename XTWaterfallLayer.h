@@ -45,11 +45,16 @@
 	UInt32 line[4096];
 	
 	GLuint texture;
+    GLuint forwardVertexBuffer;
+    GLuint reverseVertexBuffer;
+    GLuint texCoordBuffer;
 	
 	int currentLine;
 	
 	BOOL flowsUp;
     BOOL autoScale;
+    
+    float textureArray[8];
 }
 
 @property XTPanadapterDataMUX *dataMUX;
