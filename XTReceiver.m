@@ -8,7 +8,7 @@
 
 #import "XTReceiver.h"
 #import "TransceiverController.h"
-#import "MacHPSDRAppDelegate.h"
+#import "HeterodyneAppDelegate.h"
 #import "XTHeterodyneHardwareDriver.h"
 
 #include "dttsp.h"
@@ -127,7 +127,7 @@ static XTReceiver* _subReceiver;
 }
 
 -(float)frequency {
-    id<XTHeterodyneHardwareDriver> interface = (id<XTHeterodyneHardwareDriver>) [[((MacHPSDRAppDelegate *) [NSApp delegate]) transceiver] interface];
+    id<XTHeterodyneHardwareDriver> interface = (id<XTHeterodyneHardwareDriver>) [[((HeterodyneAppDelegate *) [NSApp delegate]) transceiver] interface];
     if(interface == nil) {
         NSLog(@"[%@ %s] No interface yet present.\n", [self class], (char *) _cmd);
         return -1.0;
@@ -139,7 +139,7 @@ static XTReceiver* _subReceiver;
 
 -(void)setFrequency:(float)newFrequency {
     if(receiverNumber == 0) {
-        id<XTHeterodyneHardwareDriver> interface = (id<XTHeterodyneHardwareDriver>) [[((MacHPSDRAppDelegate *) [NSApp delegate]) transceiver] interface];
+        id<XTHeterodyneHardwareDriver> interface = (id<XTHeterodyneHardwareDriver>) [[((HeterodyneAppDelegate *) [NSApp delegate]) transceiver] interface];
         [interface setFrequency:(int)newFrequency forReceiver:0];
         frequency = 0.0f;
     } else {

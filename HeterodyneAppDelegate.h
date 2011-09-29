@@ -29,7 +29,7 @@
 @class TransceiverController;
 @class XTMainWindow;
 
-@interface MacHPSDRAppDelegate : NSObject <NSApplicationDelegate> {
+@interface HeterodyneAppDelegate : NSObject <NSApplicationDelegate> {
     XTMainWindow *window;
 	
 	IBOutlet NSPanel *aboutPane;
