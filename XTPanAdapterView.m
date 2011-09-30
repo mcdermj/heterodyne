@@ -586,6 +586,11 @@
 	float negativeLowPanLevel;
 	
 	if(dataMUX == NULL) return;
+    
+    if(glIsBuffer(vertexBuffer) == GL_FALSE) {
+        glGenBuffers(1, &vertexBuffer);
+        glBindBufferARB(GL_ARRAY_BUFFER_ARB, vertexBuffer);
+    }
 	
 	NSData *panData = [dataMUX smoothBufferData];
 	const float *smoothBuffer = [panData bytes];
@@ -630,7 +635,8 @@
 	
     //  Draw the line from the vertex array
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glBufferDataARB(GL_ARRAY_BUFFER_ARB, [panData length] * 2, vertices, GL_STREAM_DRAW_ARB);
+    glVertexPointer(2, GL_FLOAT, 0, 0);
     glDrawArrays(GL_LINE_STRIP, 0, numSamples);
     glDisableClientState(GL_VERTEX_ARRAY);
 	

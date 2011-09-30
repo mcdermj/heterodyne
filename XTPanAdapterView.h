@@ -31,6 +31,8 @@
 
 @interface XTPanadapterLayer : CAOpenGLLayer {
 	XTPanadapterDataMUX *dataMUX;
+    
+    GLuint vertexBuffer;
 	
 	float highLevel, lowLevel;
     
